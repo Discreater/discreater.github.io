@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Link, graphql, useStaticQuery } from 'gatsby'
 import Helmet from 'react-helmet'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { Subject } from 'rxjs'
 
-import EE from '../utils/EventEmitter'
 import Toggle from './Toggle'
 import sun from '../assets/sun.png'
 import moon from '../assets/moon.png'
@@ -12,37 +12,30 @@ import moment from 'moment'
 
 const defaultTheme = createMuiTheme({})
 
-const Layout = (props) => {
+const Layout: React.FC<{
+  title: string
+}> = (props) => {
   const { title, children } = props
-  const [theme, setTheme] = useState(null)
-  const themeEvent = useMemo(() => new EE({
-    preferredTheme: null
-  }, conf => {
-    try {
-      conf.preferredTheme = window.localStorage.getItem('theme') || 'light'
-    } catch (err) {}
-  }), [])
+  const [theme, setTheme] = useState<'dark' | 'light' | null>(null)
+  const themeSubject = useMemo(() => new Subject<'light' | 'dark'>(), [])
   const themeConfig = useMemo(() => createMuiTheme({
     ...defaultTheme,
     palette: {
       // todo
       ...defaultTheme.palette,
-      type: theme
+      type: theme || 'light'
     }
   }), [theme])
   useEffect(() => {
-    setTheme(localStorage.getItem('theme') || 'light')
-    document.body.className = themeEvent.conf.preferredTheme
-    themeEvent.on('setTheme', function (themeKey) {
-      this.conf.preferredTheme = themeKey
-    }).on('setTheme', themeKey => {
-      document.body.className = themeKey
-    }).on('setTheme', themeKey => {
+    setTheme(document.body.className = window.localStorage.getItem('theme') as 'dark' | 'light' | null || 'light')
+    themeSubject.subscribe(themeKey => {
       try {
         window.localStorage.setItem('theme', themeKey)
-      } catch (err) {}
+      } catch (err) {} finally {
+        document.body.className = themeKey
+        setTheme(themeKey)
+      }
     })
-    themeEvent.on('setTheme', themeKey => setTheme(themeKey))
   }, [])
   const data = useStaticQuery(graphql`
     query LayoutQuery {
@@ -123,9 +116,8 @@ const Layout = (props) => {
                 )
               }}
               checked={theme === 'dark'}
-              onChange={e =>
-                themeEvent.emit('setTheme',
-                  e.target.checked ? 'dark' : 'light')
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                themeSubject.next(e.target.checked ? 'dark' : 'light')
               }
             />
           ) : (

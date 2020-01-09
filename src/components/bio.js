@@ -24,6 +24,7 @@ const Bio = ({ children }) => {
       site {
         siteMetadata {
           author
+          siteUrl
           social {
             twitter
             github
@@ -33,7 +34,7 @@ const Bio = ({ children }) => {
     }
   `)
 
-  const { author, social } = data.site.siteMetadata
+  const { author, siteUrl, social } = data.site.siteMetadata
   return (
     <div
       style={{
@@ -64,11 +65,15 @@ const Bio = ({ children }) => {
           href={`https://twitter.com/${social.twitter}`}>
           Twitter
         </a>
-        <br/>
         <span> Or </span>
         <a target='_blank' rel='noopener noreferrer'
           href={`https://github.com/${social.github}`}>
           Github
+        </a>
+        <span> Or </span>
+        <a target='_blank' rel='noopener noreferrer'
+          href={`${siteUrl}/rss.xml`}>
+          RSS
         </a>
       </p>}
     </div>

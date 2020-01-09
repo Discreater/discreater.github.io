@@ -1,8 +1,9 @@
 const friendship = require('./friendship')
+require('dotenv').config()
 
 module.exports = {
   siteMetadata: {
-    title: 'Alkaid',
+    title: 'Discreater Blog',
     author: 'Discreater',
     description: 'Nothing to do',
     siteUrl: 'https://discreater.github.io/',
@@ -23,6 +24,14 @@ module.exports = {
     friendship: [...friendship]
   },
   plugins: [
+    {
+      resolve: 'gatsby-plugin-typescript',
+      options: {
+        isTSX: true,
+        jsxPragma: 'React',
+        allExtensions: true
+      }
+    },
     {
       resolve: 'gatsby-remark-prismjs',
       options: {
