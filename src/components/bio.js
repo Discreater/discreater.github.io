@@ -65,7 +65,7 @@ const Bio = ({ children }) => {
           href={`https://twitter.com/${social.twitter}`}>
           Twitter
         </a>
-        <span> Or </span>
+        <span> , </span>
         <a target='_blank' rel='noopener noreferrer'
           href={`https://github.com/${social.github}`}>
           Github
