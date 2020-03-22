@@ -1,4 +1,194 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Discreater Blog]]></title><description><![CDATA[Nothing to do]]></description><link>https://discreater.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 17 Mar 2020 06:37:18 GMT</lastBuildDate><item><title><![CDATA[JS 按位操作符溢出问题]]></title><description><![CDATA[最近刷leetcode的时候，碰到要处理上边界()和下边界()的情况，这时候想当然地用了移位操作符来计算2的幂次，本以为js的number类型上限应该大于32位，但是实际情况并不是和想象中的一样，先看结果： 1左移31位变成了负数，出现这种情况是因为js…]]></description><link>https://discreater.github.io/JS-bit-operator/</link><guid isPermaLink="false">https://discreater.github.io/JS-bit-operator/</guid><pubDate>Sat, 14 Mar 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;最近刷leetcode的时候，碰到要处理&lt;code class=&quot;language-text&quot;&gt;int&lt;/code&gt;上边界(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;31&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^{31}-1&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.897438em;vertical-align:-0.08333em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;)和下边界(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;31&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;-2^{31}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.897438em;vertical-align:-0.08333em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;)的情况，这时候想当然地用了移位操作符&lt;code class=&quot;language-text&quot;&gt;&amp;lt;&amp;lt;&lt;/code&gt;来计算2的幂次，本以为js的number类型上限应该大于32位，但是实际情况并不是和想象中的一样，先看结果：&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Discreater Blog]]></title><description><![CDATA[Nothing to do]]></description><link>https://discreater.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 22 Mar 2020 16:04:28 GMT</lastBuildDate><item><title><![CDATA[在WSL2中启用GUI]]></title><description><![CDATA[参考 WSL github issue #4106 准备 本篇文章只适用于WSL2。WSL1的解决方案比较简单，网上的教程也很多，所以不再多讲。 首先在cmd或powershell中确认WSL的版本号为2 确定主机IP 把下面一行写入或者(根据你的shell…]]></description><link>https://discreater.github.io/WLS2-gui-hi-dpi/</link><guid isPermaLink="false">https://discreater.github.io/WLS2-gui-hi-dpi/</guid><pubDate>Sun, 22 Mar 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/microsoft/WSL/issues/4106&quot;&gt;WSL github issue #4106&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;准备&lt;/h2&gt;
+&lt;p&gt;本篇文章只适用于WSL2。WSL1的解决方案比较简单，网上的教程也很多，所以不再多讲。&lt;/p&gt;
+&lt;p&gt;首先在cmd或powershell中确认WSL的版本号为2&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;powershell&quot;&gt;&lt;pre class=&quot;language-powershell&quot;&gt;&lt;code class=&quot;language-powershell&quot;&gt;&lt;span class=&quot;token function&quot;&gt;PS&lt;/span&gt; C:\&gt; wsl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;l &lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;all &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;v
+  NAME            STATE           VERSION
+&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; Ubuntu&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;18&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;04    Running         2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;确定主机IP&lt;/h2&gt;
+&lt;p&gt;把下面一行写入&lt;code class=&quot;language-text&quot;&gt;~/.bashrc&lt;/code&gt;或者&lt;code class=&quot;language-text&quot;&gt;~/.zshrc&lt;/code&gt;(根据你的shell而定)&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;shell&quot;&gt;&lt;pre class=&quot;language-shell&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;&lt;span class=&quot;token environment constant&quot;&gt;DISPLAY&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;cat&lt;/span&gt; /etc/resolv.conf &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;grep&lt;/span&gt; nameserver &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;{print &lt;span class=&quot;token variable&quot;&gt;$2&lt;/span&gt;}&apos;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;:0.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;安装VcXsrv&lt;/h2&gt;
+&lt;p&gt;可以从sourceforge上下载安装包：&lt;a href=&quot;https://sourceforge.net/projects/vcxsrv/&quot;&gt;https://sourceforge.net/projects/vcxsrv/&lt;/a&gt;，一般来说默认安装即可。&lt;/p&gt;
+&lt;h2&gt;启动&lt;/h2&gt;
+&lt;p&gt;安装完成后点击Xlaunch启动，如图所示
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 510px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/0135f716dbb26806af6ca0602b4503c9/2a1cc/xlaunch1.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.17647058823529%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADGElEQVQ4y31US0tVURQ+0KxRA2vgpIKEoEGRJRhSOmoilYIVZkJwEanoYUVgFNJj0CSiQYMG/QJxFmH5uFzSUq+aeh96389z7vt1zrmvBl9r7eu+RYMuLPY9+/Gt9X37W1txu91IJpNQVQ2JRAK5XA6FQgHZbBbpdBqZTKYZPMfrPHLk83nxLdcZR4mEw4jFYlDjcUQjUaRSKcTjKkqlEur1OqrVKmq1mhgrlcp/o1wuQ/H5vPi5vg7rvBUzX2dgs9kwPf0Fdvsq3O5teH0+MItoNNqsSFRFFTYqa4xyngB9MA2jSZUPVUwDpl5EPpuGUaLD6RTRzzSpchiGjrJpwqS9PEoplEAgAF3XUSwWRehE1eENY9UZwJYngnm7F1GNgPWSkEEmXd/cwg9isby6JkbWm9cUv98vLiNMWjItTdPwfuo7vq1sYd0VxtvJFSxuBpDLpBAKhUWlDNjRO4C9J7qxr+M8Wk91Y9vjFUxFhSm6Hb8/gBCBJlQVzz7OYnbND/6Va7+wHVSRTibg9/mRokqY3oH2c1AOnobS1oU9R9rh2t75A2iSBjppUiLq9WoZH6YW8IJAPy84MTm3gZ1gnHQyxDrTZsAHE68wPPYENx5PwPJwXBTD0gnAfC4vqHLk8zmMv3yNzr4hnB0cxZlLg1hcWiYNdSENC18gytdujaGjfxhdVy3oGbgOHzE0JCAb0uPxUHiRTGjo6h+Csv8YlKM9UFra8GlmDjHS12q1YYnAeX/LSaLcehLK4U4oh443KBMLJRgMCkMa9MEl18jAz9+8Q6/lDi7ff4qLlttYsq+JPew5aY8Ronlh5B76bj7CldG7CARDDcp8y5qWoAqoW9RGh+SyGfJhCWapKEZd2KUobCGDbWTKIP2lnQTljY0NOB1OuHY7IkjZuP1i1I6cjOf4dtmnfEgelpHbnRM+ZEBNU6ElGpcSiUQaoIEg+S4k/MnBPS5brwm0S198y9ZjDZm7zCw7hqn//Z/XuRsYmG+bg3uY5/lhkS+TAJQH/g35jMXpAL9IsmKXywWHwyHmOYHT6QS/CZzkN2VPXjxBZ4i/AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;xlaunch-1&quot;
+        title=&quot;xlaunch-1&quot;
+        src=&quot;/static/0135f716dbb26806af6ca0602b4503c9/2a1cc/xlaunch1.png&quot;
+        srcset=&quot;/static/0135f716dbb26806af6ca0602b4503c9/00d96/xlaunch1.png 148w,
+/static/0135f716dbb26806af6ca0602b4503c9/0b23c/xlaunch1.png 295w,
+/static/0135f716dbb26806af6ca0602b4503c9/2a1cc/xlaunch1.png 510w&quot;
+        sizes=&quot;(max-width: 510px) 100vw, 510px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+4个模式的效果很容易看出来，看不出来也可以自己一个个试，选择自己习惯的就行。点击下一步
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 510px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/27cd9ebec355a4fb438f905ac400a57a/2a1cc/xlaunch2.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.17647058823529%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAB9klEQVQ4y41U2ZLiMAzM/38aOzzkJM4FFSAXISEJgQIeNGoNpjxTy84+dMmObanVkmLVdUXTNNHp1NM8X+h+v9PtdhN7vV7pcrn8inme6fF4UBRFZDVNQ2ma0Wazod1uJ9hut7IfhuH14F84n89CIEkSsvbswPcDipSSCGEYivU8j+q6YeYn6rqO+r5/i+PxKE5XqxVZRVHKBmxMjOMojnD5N7RtK/eDICCrLEv5iMcAGAGIDPszkIa+A+AdUkd24jDLMvI9nxzHpTzf0uFwIGh7ODScdi1omvq5bqiqKj5rX06/OcSljhmu12t2/IWUxUWQPM8piROKGWma8veU9ykp1jvnwv3VIRiCDaICXdf/d2W11tINJkMw+bP4oMViQa7rCSNUGkyUigRxFJMK1fMs5hZJpb2QCdplGEa5b2mN0DqKI3jsEFAqJNt2yHFdDuJSwOeO43A7+bKHNNC6LCsqikKGQxhigwMp/7PaaAPog7RwcZpGsUjPhFnxl4bQDc72+71MCay5RkAAWiMT3IfmdVV/2ee3bw4RASw1wNBcAwhq9p7uUz1JL4dgoUv/DqYTc68nCRbyyKSAIXR4N6eaQVWVknrLrDGuesJwDnlO7EMcYoMDMz2dMiw0QkP7vi8/jIwbHJXGGu2GILZt82BsaLlc0idmrKhzEhi+zgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;xlaunch-2&quot;
+        title=&quot;xlaunch-2&quot;
+        src=&quot;/static/27cd9ebec355a4fb438f905ac400a57a/2a1cc/xlaunch2.png&quot;
+        srcset=&quot;/static/27cd9ebec355a4fb438f905ac400a57a/00d96/xlaunch2.png 148w,
+/static/27cd9ebec355a4fb438f905ac400a57a/0b23c/xlaunch2.png 295w,
+/static/27cd9ebec355a4fb438f905ac400a57a/2a1cc/xlaunch2.png 510w&quot;
+        sizes=&quot;(max-width: 510px) 100vw, 510px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+直接点击下一步
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 510px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/e88c44be7e55e0d3fcc68500aed734aa/2a1cc/xlaunch3.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.17647058823529%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACSElEQVQ4y5VUaZOaUBD0//8b42bXo5Kt2ipP1CCuiyLIJah4IB6g5YfOzFMSTFJb5kPXw8fQMz0zbc51bCyCJRzbwW63w+VyQZIkOJ1OD4Pj+Ttd15Gbz2cwDAP6WIc2HmO7jRDHMQ6HA47H40Pg2PP5DMuykPN9H9pohOFwiF6vB382I9ItNpsNwjB8CBzL6iaTCVc4v2a5ZeKX6/X6v7BarRBF0ZVwRhW5rgvTNLFYLEQmrjCLR6rc7/eCIxcEAUYkudVqQVWH0DRN9JT7YVGA605FcBZRdE2STXhHyDIV6l+tVsfr6yuazRYl0aB+fIjTpg1gOZZpiUkGy6WQmJLeEc6I0LRtDKg6uf8Om+TzYDzPgzud0rMvnh3HgW3Z9NEEvudjQ73b/lPyaAiDqquWKmh++45urYZ2owFJakNqNAkNyEofTamDCVXq+h4Makew3iCiIf5F6JNE/e0N7cJXKKUy3ssVKMUSXCLzJAlOvUGow65WMe90EHR/YEHnqttFSC3Z3qT/IpxToFYuoZ0voPOlAPnpCQqdg3weJierVGAUixg/PwvoL0WohQKmdB+2JYS0FSz/d4XUH20wgKUbMLUxTHKLSy9sQkj7teVe0dCyiFgm3W9uS73OEvKU4zhBnGRA1ouTGHvqUYodfbC7rY04+T79TVWyOa5Tpomm2/4nsm5IrZg+Zx11Zz12x2duSH3NFp3yGpH3eYUYfMf7yPccK/5tuMLP/Mst4cyqqqJPezqiNVN6CmRZFo5iUkVRhNwBzeIntACdBEOW4BgAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;xlaunch-3&quot;
+        title=&quot;xlaunch-3&quot;
+        src=&quot;/static/e88c44be7e55e0d3fcc68500aed734aa/2a1cc/xlaunch3.png&quot;
+        srcset=&quot;/static/e88c44be7e55e0d3fcc68500aed734aa/00d96/xlaunch3.png 148w,
+/static/e88c44be7e55e0d3fcc68500aed734aa/0b23c/xlaunch3.png 295w,
+/static/e88c44be7e55e0d3fcc68500aed734aa/2a1cc/xlaunch3.png 510w&quot;
+        sizes=&quot;(max-width: 510px) 100vw, 510px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+注意这里要勾选&lt;code class=&quot;language-text&quot;&gt;Disable access control&lt;/code&gt;，然后点击下一步
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 510px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/ab80043c88331c5756b93c81bdf45bb1/2a1cc/xlaunch4.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.17647058823529%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABmUlEQVQ4y5VU2ZKCMBDk/39ONkiJcsipHHIE77Ks2fRILHdLcPehK0wSOt0zkxhxFFFZlrTZbChNU/6+3+90u93ocrn8Cefzmfd7nkdGWRTk+z4tl0tyXZfiOKEgCPiA0+lEh8OBjsfjJLDner1SGIZk5Nstk1mWRc5iwaeYsxmPXddR0zSMtm1HgfX9fs/CjK0iRAD0fU9SSj6x7yXVdf0kBBC/w2634//g0CiUZUwAekNVVQwmrJthrWHFYwohghWCcLVyybZtNRGQ4zgqXpGvLHuuR65aQxyGkSKUTADiV2DuSYiqarsaiLFBpwKQw49jKp+EeZET8pilGWVZplono4QrvaZItRQqh8r/JhtXWJVsS3wJMk1TVXtO6zXI4uGAlMdXwknLSD7UQQ36D4owxzZV5XTlx8gmc6jHsTz9SSEIxwj+gx+E2tInfLKMlBl5nk/eAn1bNNm724M1pOrxOHyw3HUt3xYcnAyvUZLE3F6Yk7JT8aOt+OqhB6cUggBWFurhEMLib8sSNJ/b3F4gFUKo75AfmG8m+LFXQb2bSgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;xlaunch-4&quot;
+        title=&quot;xlaunch-4&quot;
+        src=&quot;/static/ab80043c88331c5756b93c81bdf45bb1/2a1cc/xlaunch4.png&quot;
+        srcset=&quot;/static/ab80043c88331c5756b93c81bdf45bb1/00d96/xlaunch4.png 148w,
+/static/ab80043c88331c5756b93c81bdf45bb1/0b23c/xlaunch4.png 295w,
+/static/ab80043c88331c5756b93c81bdf45bb1/2a1cc/xlaunch4.png 510w&quot;
+        sizes=&quot;(max-width: 510px) 100vw, 510px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+这里的保存配置会生成一个文件并让你选择保存的位置，推荐保存，下一次启动的时候就可以直接启动这个配置文件（也可以在命令行里打开）。点击完成之后，在右下角托盘区就会有VcXsrv的图标，表示已经启动。&lt;/p&gt;
+&lt;h2&gt;防火墙配置&lt;/h2&gt;
+&lt;p&gt;实际上这样子还不能启动gui，试图启动的时候会被Windows的防火墙阻止。可以直接关掉防火墙，或者用在管理员模式的powershell里输入下面的命令：&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;powershell&quot;&gt;&lt;pre class=&quot;language-powershell&quot;&gt;&lt;code class=&quot;language-powershell&quot;&gt;&lt;span class=&quot;token function&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;NetFirewallProfile &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;Name public &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;DisabledInterfaceAliases &lt;span class=&quot;token string&quot;&gt;&quot;vEthernet (WSL)&quot;&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个命令指挥关掉WSL的虚拟局域网的防火墙。&lt;/p&gt;
+&lt;h2&gt;保存为脚本&lt;/h2&gt;
+&lt;p&gt;为方便使用，可以把这行命令保存成脚本，后缀为.ps1，例如&lt;code class=&quot;language-text&quot;&gt;G:\\Scripts\\disableWSLFirewall.ps1&lt;/code&gt;，但是powershell的管理员权限脚本会限制直接运行，可以再套一个cmd脚本，内容是提升权限运行powershell脚本&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;cmd&quot;&gt;&lt;pre class=&quot;language-cmd&quot;&gt;&lt;code class=&quot;language-cmd&quot;&gt;Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;里面的路径需要换成你的ps1脚本路径。另外，如果你也保存了VcXsrv的脚本的话，也可以直接在这个cmd脚本中添加VcXsrv脚本的路径。
+所以我的cmd脚本&lt;code class=&quot;language-text&quot;&gt;wslGui.bat&lt;/code&gt;内容如下&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;cmd&quot;&gt;&lt;pre class=&quot;language-cmd&quot;&gt;&lt;code class=&quot;language-cmd&quot;&gt;Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1
+G:\Scripts\multiWindow.xlaunch&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：这个脚本的运行需要以管理员模式，并且需要在启动过一次WSL之后才会有效（Windows重启以后，WSL启动之前，是不存在WSL的虚拟局域网的，所以这时候脚本会报错）。&lt;/p&gt;
+&lt;h2&gt;HiDPI的设置&lt;/h2&gt;
+&lt;p&gt;在高分屏下(Win10 显示设置中的缩放比率大于100%），VcXsrv的显示会模糊，这不只是WSL的原因，我目前的解决办法是让VcXsrv使用100%的缩放。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先找到VcXsrv.exe的位置，右键开始菜单中的Xlaunch图标，&lt;code class=&quot;language-text&quot;&gt;更多&lt;/code&gt;-&gt;&lt;code class=&quot;language-text&quot;&gt;打开文件位置&lt;/code&gt;，找到Xlaunch的快捷方式的位置&lt;/li&gt;
+&lt;li&gt;然后右键这个快捷方式，点击&lt;code class=&quot;language-text&quot;&gt;打开文件所在的位置&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在打开的目录里找到&lt;code class=&quot;language-text&quot;&gt;vcxsrv.exe&lt;/code&gt;这个文件，右键-&gt;&lt;code class=&quot;language-text&quot;&gt;属性&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;选择&lt;code class=&quot;language-text&quot;&gt;兼容性&lt;/code&gt;选项卡，点击&lt;code class=&quot;language-text&quot;&gt;更改高DPI设置&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在弹出的窗口中修改下面的选项&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/766a22e6a8abc8aa3b0da39a0876fcb7/a1bbd/vcxsrv.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 82.19354838709677%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAC40lEQVQ4y4VU2U4iURDtB+MXiP6Cia++qSQTdeKHmEn8ynFkFkBZlL2BBpoGGrrphX2LZ+pcxOjLTIfK7b7UPXXqVNXV+v0++v0BuNq2jVazBcuy0Gg01N5oNEIQBJjPFzg5OYGmaf8213WQzWbQ63bgD10Mh0MFEAQhwjBUQQjuuC5ub29xenqKi4sLnJ+fKzs7O1Pf3N/b24MWhCMYZhfZfAWpbB7liq5A1+s1+IxGIXq9Hur1Ojzfx2w2w2q1erflcqn8ms0mDg4OoIWTOVr9MSxvoWy+2gCvr/J7VY6uMCsU8sLSQLttKnDK4As4M+E6nU5VwEgkAm06naBSLsIyW3CdASjBNvpSsfQ9D3qtjnxJR6mso1arQdd1AW+rd5phGCiVSjg8PIQ2n8/VRkVS5WoYDZimiVarhU6no9IvGx3Ecw0UapYqFPdZuJ2RdaFQ3AKS4WQyxceH6W42G7V6wvBnLIZY7AHx+B88Pj7i/v67vCfw8vKCTCaLjBQ1kUjg6OiIDGcqIlPw3vRYLBbv4EyZbN9TFK24sgi7jvikIVNuSlvU64ZqDzqT1e7hgedcDr8TccSFRTqdRjqVQjKxZUgJJpOJOqcAWXZWynEcEJzfTBdvVQ58D5WCgbxo6NoDBGGgAvoSaCjnyPITINMzpcLlclnSspTjm5Bq8apVVJNJZH48oJZIwi0WEUiVfQEIRCrKNB6PPwAKK05DVQ7mJDXTbCuHnY4jcUyJ6L9ST2iIjp2eDUdYOVLZgZBwxT4xZJocMWrBFmCB2MycCFUUKUhd9GpKMFuCdgTAyufRfn6GKdZ7ekIo/rr8F+GkzKZS5W5Xmrao+pATwblVOlJDCTYeDDAWnwX3JcW1TIot3zanRtixD3lWtQ3HaGcsDpuaDgMBsYQtWyadzaIgzL7d3SH65Qu+3tzg8upqa5eXuL6+RjQaxf7+PjSC7IwVI2CX0XmVCdjutqEcx8fH/72+/gLD9jD0SoI5dQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;vcxsrv&quot;
+        title=&quot;vcxsrv&quot;
+        src=&quot;/static/766a22e6a8abc8aa3b0da39a0876fcb7/799d3/vcxsrv.png&quot;
+        srcset=&quot;/static/766a22e6a8abc8aa3b0da39a0876fcb7/00d96/vcxsrv.png 148w,
+/static/766a22e6a8abc8aa3b0da39a0876fcb7/0b23c/vcxsrv.png 295w,
+/static/766a22e6a8abc8aa3b0da39a0876fcb7/799d3/vcxsrv.png 590w,
+/static/766a22e6a8abc8aa3b0da39a0876fcb7/a1bbd/vcxsrv.png 775w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确定，搞定&lt;/p&gt;
+&lt;p&gt;15.7寸笔记本100%分辨率对于对我来说还能勉强看，至于选择清晰的字体还是大的字体，这取决于你自己了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;由于代理出现的异常&lt;/h2&gt;
+&lt;p&gt;说个和GUI无关的事。有时候会因为代理的原因导致WSL无法启动，出现&lt;code class=&quot;language-text&quot;&gt;参考的对象类型不支持尝试的操作。&lt;/code&gt;，这时候用管理员模式运行&lt;code class=&quot;language-text&quot;&gt;netsh winsock reset&lt;/code&gt;即可（会提示重启，但是实际上不需要重启），参考 &lt;a href=&quot;https://github.com/microsoft/WSL/issues/4194&quot;&gt;WSL github issue #4194&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[JS 按位操作符溢出问题]]></title><description><![CDATA[最近刷leetcode的时候，碰到要处理上边界()和下边界()的情况，这时候想当然地用了移位操作符来计算2的幂次，本以为js的number类型上限应该大于32位，但是实际情况并不是和想象中的一样，先看结果： 1左移31位变成了负数，出现这种情况是因为js…]]></description><link>https://discreater.github.io/JS-bit-operator/</link><guid isPermaLink="false">https://discreater.github.io/JS-bit-operator/</guid><pubDate>Sat, 14 Mar 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;最近刷leetcode的时候，碰到要处理&lt;code class=&quot;language-text&quot;&gt;int&lt;/code&gt;上边界(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;31&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;2^{31}-1&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.897438em;vertical-align:-0.08333em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mbin&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mspace&quot; style=&quot;margin-right:0.2222222222222222em;&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.64444em;vertical-align:0em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;)和下边界(&lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;31&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;-2^{31}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:0.897438em;vertical-align:-0.08333em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;−&lt;/span&gt;&lt;span class=&quot;mord&quot;&gt;&lt;span class=&quot;mord&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;msupsub&quot;&gt;&lt;span class=&quot;vlist-t&quot;&gt;&lt;span class=&quot;vlist-r&quot;&gt;&lt;span class=&quot;vlist&quot; style=&quot;height:0.8141079999999999em;&quot;&gt;&lt;span style=&quot;top:-3.063em;margin-right:0.05em;&quot;&gt;&lt;span class=&quot;pstrut&quot; style=&quot;height:2.7em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;sizing reset-size6 size3 mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;&lt;span class=&quot;mord mtight&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;mord mtight&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;)的情况，这时候想当然地用了移位操作符&lt;code class=&quot;language-text&quot;&gt;&amp;lt;&amp;lt;&lt;/code&gt;来计算2的幂次，本以为js的number类型上限应该大于32位，但是实际情况并不是和想象中的一样，先看结果：&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;31&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2147483648&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// -2^31&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt;
