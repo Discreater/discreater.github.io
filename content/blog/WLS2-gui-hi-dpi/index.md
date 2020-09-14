@@ -4,6 +4,8 @@ tags: "WSL"
 date: "2020-03-22"
 ---
 
+# 在WSL2中启用GUI
+
 ## 参考
 
 [WSL github issue #4106](https://github.com/microsoft/WSL/issues/4106)

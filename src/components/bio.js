@@ -26,7 +26,6 @@ const Bio = ({ children }) => {
           author
           siteUrl
           social {
-            twitter
             github
           }
         }
@@ -62,15 +61,10 @@ const Bio = ({ children }) => {
         <br/>
         <span>You can follow him on </span>
         <a target='_blank' rel='noopener noreferrer'
-          href={`https://twitter.com/${social.twitter}`}>
-          Twitter
-        </a>
-        <span> , </span>
-        <a target='_blank' rel='noopener noreferrer'
           href={`https://github.com/${social.github}`}>
           Github
         </a>
-        <span> Or </span>
+        <span> Or by </span>
         <a target='_blank' rel='noopener noreferrer'
           href={`${siteUrl}/rss.xml`}>
           RSS

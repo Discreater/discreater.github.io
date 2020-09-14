@@ -8,7 +8,6 @@ module.exports = {
     description: 'Nothing to do',
     siteUrl: 'https://discreater.github.io/',
     social: {
-      twitter: 'discreater',
       github: 'Discreater'
     },
     menuLinks: [
