@@ -11,6 +11,9 @@ export default defineConfig({
     typography(),
   ],
   theme: {
+    maxWidth: {
+      '42rem': '42rem',
+    },
     extend: {
       typography: {
         DEFAULT: {

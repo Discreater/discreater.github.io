@@ -9,9 +9,11 @@ import Markdown from 'vite-plugin-md'
 import WindiCSS from 'vite-plugin-windicss'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
+import { replaceCodePlugin } from 'vite-plugin-replace'
 import Prism from 'markdown-it-prism'
 // @ts-expect-error missing types
 import LinkAttributes from 'markdown-it-link-attributes'
+import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -24,6 +26,15 @@ export default defineConfig({
   plugins: [
     Vue({
       include: [/\.vue$/, /\.md$/],
+    }),
+
+    replaceCodePlugin ({
+      replacements: [
+        {
+          from: '__BLOGS__',
+          to: () => get_all_blogs(path.resolve(__dirname)),
+        },
+      ],
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages

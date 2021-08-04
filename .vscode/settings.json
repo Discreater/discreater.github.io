@@ -11,6 +11,7 @@
     "source.fixAll.eslint": true,
   },
   "files.associations": {
-    "*.css": "postcss",
+    "*.css": "css"
   },
+  "editor.tabSize": 2,
 }
