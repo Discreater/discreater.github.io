@@ -32,6 +32,7 @@ export default defineConfig({
             },
             b: { color: 'inherit' },
             strong: { color: 'inherit' },
+            blockquote: { color: 'inherit' },
             em: { color: 'inherit' },
             h1: { color: 'inherit' },
             h2: { color: 'inherit' },

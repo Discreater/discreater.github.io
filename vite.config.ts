@@ -13,6 +13,9 @@ import { replaceCodePlugin } from 'vite-plugin-replace'
 import Prism from 'markdown-it-prism'
 // @ts-expect-error missing types
 import LinkAttributes from 'markdown-it-link-attributes'
+// @ts-expect-error missing types
+import TexMath from 'markdown-it-texmath'
+import Katex from 'katex'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
@@ -88,6 +91,10 @@ export default defineConfig({
             target: '_blank',
             rel: 'noopener',
           },
+        })
+        md.use(TexMath, {
+          engine: Katex,
+          delimiters: 'dollars',
         })
       },
     }),
