@@ -17,7 +17,7 @@ jobs:
         with:
           version: 6.0.2
       - run: |
-          pnpm install --frozen-lockfile
+          pnpm install
           pnpm build
           echo "build finish"
           cd dist
@@ -31,5 +31,5 @@ jobs:
           git add -A
           git commit -m 'deploy'
           echo "committed"
-          git push -f 
+          git push -f --set-upstream origin gh-pages
           cd ..
