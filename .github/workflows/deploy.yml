@@ -1,9 +1,9 @@
 name: deploy
 on: [push]
 jobs:
-  Deploy:
+  run:
     runs-on: ubuntu-latest
-    setps:
+    steps:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Cache pnpm modules
