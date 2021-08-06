@@ -1,7 +1,7 @@
 name: deploy
 on: [push]
 jobs:
-  run:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -17,4 +17,15 @@ jobs:
         with:
           version: 6.0.2
       - run: |
-          bash deploy.sh
+          pnpm install --frozen-lockfile
+          pnpm build
+          cd dist
+          git init
+          git config user.name ${{ secrets.GH_USER }}
+          git config user.email "${{ secrets.GH_MAIL }}"
+          git remote add origin "https://${{ secrets.GH_TOKEN }}@github.com/Discreater/Discreater.github.io.git"
+          git checkout -b gh-pages
+          git add -A
+          git commit -m 'deploy'
+          git push -f 
+          cd ..
