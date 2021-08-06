@@ -11,6 +11,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import { replaceCodePlugin } from 'vite-plugin-replace'
 import Prism from 'markdown-it-prism'
+import Anchor from 'markdown-it-anchor'
 // @ts-expect-error missing types
 import LinkAttributes from 'markdown-it-link-attributes'
 // @ts-expect-error missing types
@@ -84,47 +85,34 @@ export default defineConfig({
       headEnabled: true,
       markdownItSetup(md) {
         // https://prismjs.com/
-        md.use(Prism)
-        md.use(LinkAttributes, {
-          pattern: /^https?:\/\//,
-          attrs: {
-            target: '_blank',
-            rel: 'noopener',
-          },
-        })
-        md.use(TexMath, {
-          engine: Katex,
-          delimiters: 'dollars',
-        })
+        md
+          .use(Prism, {
+            defaultLanguageForUnknown: 'text',
+            defaultLanguageForUnspecified: 'text',
+          })
+          .use(LinkAttributes, {
+            pattern: /^https?:\/\//,
+            attrs: {
+              target: '_blank',
+              rel: 'noopener',
+            },
+          })
+          .use(TexMath, {
+            engine: Katex,
+            delimiters: 'dollars',
+          })
+          .use(Anchor)
       },
     }),
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'robots.txt', 'safari-pinned-tab.svg'],
+      includeAssets: ['favicon.png', 'robots.txt'],
       manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
+        name: 'Discreater\'s Blog',
+        short_name: 'Discreater',
         theme_color: '#ffffff',
-        icons: [
-          {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
       },
     }),
 

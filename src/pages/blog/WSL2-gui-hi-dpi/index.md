@@ -6,16 +6,12 @@ date: "2020-03-22"
 
 # 在WSL2中启用GUI
 
-[[toc]]
-
 ## 参考
 
 [WSL github issue #4106](https://github.com/microsoft/WSL/issues/4106)
 
 ## 准备
-::: tip
-本篇文章只适用于WSL2。WSL1的解决方案比较简单，网上的教程也很多，所以不再多讲。
-:::
+> 本篇文章只适用于WSL2。WSL1的解决方案比较简单，网上的教程也很多，所以不再多讲。
 
 首先在cmd或powershell中确认WSL的版本号为2
 

@@ -13,6 +13,14 @@ export default defineConfig({
   theme: {
     maxWidth: {
       '42rem': '42rem',
+      '4/5': '80%',
+    },
+    top: {
+      '40px': '40px',
+    },
+    height: {
+      '70px': '70px',
+      '50px': '50px',
     },
     extend: {
       typography: {
@@ -39,6 +47,7 @@ export default defineConfig({
             h3: { color: 'inherit' },
             h4: { color: 'inherit' },
             code: { color: 'inherit' },
+            img: { display: 'block' },
           },
         },
       },

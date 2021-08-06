@@ -1,7 +1,35 @@
 import path from 'path'
 import fs from 'fs'
 import fm from 'front-matter'
-import type { BlogInfo, FrontMatter } from '../src/types/blog_info'
+import MarkdownIt from 'markdown-it'
+import Anchor from 'markdown-it-anchor'
+import type { AnchorOptions } from 'markdown-it-anchor'
+
+import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info'
+
+function extractBodyIt(body: string) {
+  const headers: BlogHeader[] = []
+  const md = MarkdownIt().use(Anchor, {
+    callback: (_token, { slug, title }) => {
+      headers.push({
+        slug,
+        title,
+      })
+    },
+  } as AnchorOptions)
+  md.render(body)
+  return headers
+}
+
+// function extractBody(body: string) {
+//   const tokens = marked.lexer(body)
+//   const headers = tokens.filter(token => token.type === 'heading' && token.depth === 2).map((token) => {
+//     const tokenList = [token];
+//     (tokenList as TokensList).links = {}
+//     return { html: marked.parser(tokenList as TokensList), token: token as Tokens.Heading }
+//   })
+//   return headers
+// }
 
 export function get_all_blogs(project_path: string): string {
   const base_path = path.resolve(project_path, 'src/pages/blog')
@@ -12,9 +40,11 @@ export function get_all_blogs(project_path: string): string {
     try {
       data = fs.readFileSync(blog.path, 'utf-8')
       const fmResult = fm(data)
+      const headers = extractBodyIt(fmResult.body)
       return [
         {
           fm: fmResult.attributes as FrontMatter,
+          headers,
           path: `blog/${blog.name}`,
         } as BlogInfo,
       ]
@@ -22,6 +52,25 @@ export function get_all_blogs(project_path: string): string {
     catch (_) {
       return []
     }
+  })
+  blog_attributes.sort((a, b) => {
+    let aDate: Date | undefined
+    let bDate: Date | undefined
+    try {
+      aDate = new Date(a.fm.date)
+      bDate = new Date(b.fm.date)
+    }
+    catch (_) {
+    }
+    let dateRes: number
+    if (aDate === undefined && bDate === undefined)
+      dateRes = 0
+    else if (aDate === undefined || bDate === undefined)
+      return aDate === undefined ? -1 : 1
+    else
+      dateRes = bDate.getTime() - aDate.getTime()
+    if (dateRes !== 0) return dateRes
+    return a.path > b.path ? -1 : 1
   })
   return JSON.stringify(blog_attributes)
 }

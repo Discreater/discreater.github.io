@@ -6,8 +6,11 @@ button:
   toggle_dark: Toggle dark mode
   toggle_langs: Change languages
 intro:
+  blogs: Blogs
   desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
   hi: Hi, {name}!
   whats-your-name: What's your name?
+  whos-blog: '{name}''s Blog'
+  whos-site: '{name}''s Site'
 not-found: Not found

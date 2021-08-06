@@ -2,6 +2,7 @@
 import { useHead } from '@vueuse/head'
 import { darkTheme, NConfigProvider } from 'naive-ui'
 
+import meta from './meta'
 import { isDark } from '~/logic'
 
 const theme = computed(() => {
@@ -12,9 +13,9 @@ const theme = computed(() => {
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
-  title: 'Vitesse',
+  title: `${meta.name}'s Site`,
   meta: [
-    { name: 'description', content: 'Opinionated Vite Starter Template' },
+    { name: 'description', content: 'Blogs and others' },
   ],
 })
 </script>
