@@ -60,12 +60,12 @@ Set-NetFirewallProfile -Name public -DisabledInterfaceAliases "vEthernet (WSL)"
 ## 保存为脚本
 
 为方便使用，可以把这行命令保存成脚本，后缀为.ps1，例如`G:\\Scripts\\disableWSLFirewall.ps1`，但是powershell的管理员权限脚本会限制直接运行，可以再套一个cmd脚本，内容是提升权限运行powershell脚本
-```shell
+```cmd
 Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1
 ```
 里面的路径需要换成你的ps1脚本路径。另外，如果你也保存了VcXsrv的脚本的话，也可以直接在这个cmd脚本中添加VcXsrv脚本的路径。
 所以我的cmd脚本`wslGui.bat`内容如下
-```shell
+```cmd
 Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1
 G:\Scripts\multiWindow.xlaunch
 ```

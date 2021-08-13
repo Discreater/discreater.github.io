@@ -10,13 +10,13 @@ import WindiCSS from 'vite-plugin-windicss'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import { replaceCodePlugin } from 'vite-plugin-replace'
-import Prism from 'markdown-it-prism'
 import Anchor from 'markdown-it-anchor'
 // @ts-expect-error missing types
 import LinkAttributes from 'markdown-it-link-attributes'
 // @ts-expect-error missing types
 import TexMath from 'markdown-it-texmath'
 import Katex from 'katex'
+import { markdownItShiki } from './vite-plugins/md_plugins'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
@@ -86,10 +86,7 @@ export default defineConfig({
       markdownItSetup(md) {
         // https://prismjs.com/
         md
-          .use(Prism, {
-            defaultLanguageForUnknown: 'text',
-            defaultLanguageForUnspecified: 'text',
-          })
+          .use(markdownItShiki)
           .use(LinkAttributes, {
             pattern: /^https?:\/\//,
             attrs: {
