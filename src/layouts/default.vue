@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { NLayout, NLayoutFooter, NLayoutHeader, NGradientText, NAnchor, NAnchorLink } from 'naive-ui'
+import { NLayout, NLayoutSider, NLayoutFooter, NLayoutHeader, NGradientText, NAnchor, NAnchorLink } from 'naive-ui'
 import { useRoute } from 'vue-router'
+
+import MyHeader from '~/components/MyHeader.vue'
+import MyFooter from '~/components/MyFooter.vue'
 import meta from '~/meta'
 import type { FrontMatter } from '~/types/blog_info'
+
 const current = ref()
 const frontmatter = computed(() => current.value?.frontmatter as FrontMatter)
 const route = useRoute()
@@ -13,7 +17,7 @@ const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1
 <template>
   <n-layout position="absolute" content-style="padding: 4px 24px;" class="px-4 text-center text-gray-700 dark:text-gray-200">
     <n-layout-header bordered class="h-50px">
-      <Header />
+      <my-header />
     </n-layout-header>
     <n-layout has-sider position="absolute" style="top: 70px; margin: 0 24px;">
       <n-layout :native-scrollbar="false">
@@ -24,7 +28,7 @@ const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1
           <component :is="Component" ref="current" />
         </router-view>
         <n-layout-footer>
-          <Footer />
+          <my-footer />
           <div class="mt-5 mx-auto text-center opacity-25 text-sm">
             [Default Layout]
           </div>

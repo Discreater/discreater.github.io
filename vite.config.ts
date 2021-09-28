@@ -3,15 +3,13 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
-import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
-import ViteComponents from 'vite-plugin-components'
 import Markdown from 'vite-plugin-md'
 import WindiCSS from 'vite-plugin-windicss'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
+import Inspect from 'vite-plugin-inspect'
 import { replaceCodePlugin } from 'vite-plugin-replace'
 import Anchor from 'markdown-it-anchor'
-// @ts-expect-error missing types
 import LinkAttributes from 'markdown-it-link-attributes'
 // @ts-expect-error missing types
 import TexMath from 'markdown-it-texmath'
@@ -48,30 +46,6 @@ export default defineConfig({
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
-
-    // https://github.com/antfu/vite-plugin-components
-    ViteComponents({
-      // allow auto load markdown components under `./src/components/`
-      extensions: ['vue', 'md'],
-
-      // allow auto import and register components used in markdown
-      customLoaderMatcher: id => id.endsWith('.md'),
-
-      // generate `components.d.ts` for ts support with Volar
-      globalComponentsDeclaration: true,
-
-      // auto import icons
-      customComponentResolvers: [
-        // https://github.com/antfu/vite-plugin-icons
-        ViteIconsResolver({
-          componentPrefix: '',
-          // enabledCollections: ['carbon']
-        }),
-      ],
-    }),
-
-    // https://github.com/antfu/vite-plugin-icons
-    ViteIcons(),
 
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS({
@@ -113,11 +87,17 @@ export default defineConfig({
       },
     }),
 
-    // https://github.com/intlify/vite-plugin-vue-i18n
+    // https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n
     VueI18n({
       runtimeOnly: true,
       compositionOnly: true,
       include: [path.resolve(__dirname, 'locales/**')],
+    }),
+
+    // https://github.com/antfu/vite-plugin-inspect
+    Inspect({
+      // change this to enable inspect for debugging
+      enabled: false,
     }),
   ],
 
@@ -138,6 +118,7 @@ export default defineConfig({
       'vue',
       'vue-router',
       '@vueuse/core',
+      '@vueuse/head',
     ],
     exclude: [
       'vue-demi',

@@ -3,7 +3,6 @@ import fs from 'fs'
 import fm from 'front-matter'
 import MarkdownIt from 'markdown-it'
 import Anchor from 'markdown-it-anchor'
-import type { AnchorOptions } from 'markdown-it-anchor'
 
 import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info'
 
@@ -16,7 +15,7 @@ function extractBodyIt(body: string) {
         title,
       })
     },
-  } as AnchorOptions)
+  })
   md.render(body)
   return headers
 }
