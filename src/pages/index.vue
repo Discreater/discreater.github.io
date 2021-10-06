@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { NText, NSkeleton, NButton, NTag, NThing, NListItem, NList, NH1, NAvatar, NA, NIcon, NTabs, NTabPane } from 'naive-ui'
+import { NSpace, NText, NSkeleton, NButton, NTag, NThing, NListItem, NList, NH1, NAvatar, NA, NIcon, NTabs, NTabPane } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { BookOutline } from '@vicons/ionicons5'
 import axios from 'axios'
 
 import MioIcon from '~/assets/icons/mio.png'
 import meta from '~/meta'
+import QClock from '~/components/QClock.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -45,7 +46,10 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
 
 <template>
   <div>
-    <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
+    <n-space justify="space-around">
+      <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
+      <q-clock></q-clock>
+    </n-space>
     <n-a rel="noreferrer" href="https://github.com/discreater" target="_blank">
       <n-avatar size="large" :src="MioIcon" />
       <p>Discreater</p>
