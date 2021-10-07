@@ -46,10 +46,9 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
 
 <template>
   <div>
-    <n-space justify="space-around">
-      <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
-      <q-clock></q-clock>
-    </n-space>
+    <q-clock class="fixed" />
+
+    <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
     <n-a rel="noreferrer" href="https://github.com/discreater" target="_blank">
       <n-avatar size="large" :src="MioIcon" />
       <p>Discreater</p>
@@ -90,6 +89,10 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
     </n-tabs>
   </div>
 </template>
+
+<style>
+
+</style>
 
 <route lang="yaml">
 meta:

@@ -16,15 +16,16 @@ onMounted(() => {
   const minuteAngle = minutes * 6
   const hourAngle = (hours * 30) + (minutes / 2)
 
-  hourHand.value!.style.transform = `rotateZ(${hourAngle}deg)`
-  minuteHand.value!.style.transform = `rotateZ(${minuteAngle}deg)`
-  secondHand.value!.style.transform = `rotateZ(${secondAngle}deg)`
+  hourHand.value!.style.transform = `rotateZ(${hourAngle - secondAngle}deg)`
+  minuteHand.value!.style.transform = `rotateZ(${minuteAngle - secondAngle}deg)`
+  clockRef.value!.style.transform = `rotateZ(${-secondAngle}deg)`
 })
 
 </script>
 
 <template>
-  <article ref="clockRef" class="clock simple show">
+  <article class="clock-container">
+    <div ref="clockRef" class="clock" />
     <div class="hours-container">
       <div ref="hourHand" class="hours"></div>
     </div>
@@ -38,28 +39,23 @@ onMounted(() => {
 </template>
 
 <style>
+.clock-container {
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(to top, #F80, #2ED);
+  border-image-slice: 10;
+  height: 6em;
+  width: 6em;
+  position: relative;
+  animation: reverse rotate 60s infinite linear;
+}
+
 .clock {
   border-radius: 50%;
   background: #fff url(~/assets/images/ios_clock.svg) no-repeat center;
   background-size: 88%;
-  height: 6em;
-  width: 6em;
-  padding-bottom: 31%;
-  position: relative;
-  animation: reverse rotate 60s infinite steps(60);
-}
-
-.clock.simple:after {
-  background: #000;
-  border-radius: 50%;
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 5%;
-  height: 5%;
-  z-index: 10;
+  width: 100%;
+  height: 100%;
 }
 
 .minutes-container, .hours-container, .seconds-container {
@@ -91,7 +87,7 @@ onMounted(() => {
 }
 
 .seconds {
-  background: #000;
+  background: rgb(255, 0, 0);
   height: 45%;
   left: 49.5%;
   position: absolute;
@@ -112,9 +108,9 @@ onMounted(() => {
 }
 
 .minutes-container {
-  animation: rotate 3600s infinite steps(60);
+  animation: rotate 3600s infinite linear;
 }
 .seconds-container {
-  animation: rotate 60s infinite steps(60);
+  animation: rotate 60s infinite linear;
 }
 </style>
