@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { NSpace, NText, NSkeleton, NButton, NTag, NThing, NListItem, NList, NH1, NAvatar, NA, NIcon, NTabs, NTabPane } from 'naive-ui'
+import { NText, NSkeleton, NButton, NTag, NThing, NListItem, NList, NH1, NAvatar, NA, NIcon, NTabs, NTabPane } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { BookOutline } from '@vicons/ionicons5'
 import axios from 'axios'
