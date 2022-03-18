@@ -1,5 +1,5 @@
 import * as shiki from 'shiki'
-import MarkdownIt from 'markdown-it'
+import type MarkdownIt from 'markdown-it'
 
 export function markdownItShiki(md: MarkdownIt): void {
   shiki.getHighlighter({

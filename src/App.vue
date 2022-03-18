@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
-import { darkTheme, NConfigProvider } from 'naive-ui'
+import { NConfigProvider, darkTheme } from 'naive-ui'
 
 import meta from './meta'
 import { isDark } from '~/logic'

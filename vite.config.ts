@@ -4,7 +4,6 @@ import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Markdown from 'vite-plugin-md'
-import WindiCSS from 'vite-plugin-windicss'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Inspect from 'vite-plugin-inspect'
@@ -14,6 +13,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 // @ts-expect-error missing types
 import TexMath from 'markdown-it-texmath'
 import Katex from 'katex'
+import Unocss from 'unocss/vite'
 import { markdownItShiki } from './vite-plugins/md_plugins'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
@@ -47,10 +47,7 @@ export default defineConfig({
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
 
-    // https://github.com/antfu/vite-plugin-windicss
-    WindiCSS({
-      safelist: markdownWrapperClasses,
-    }),
+    Unocss(),
 
     // https://github.com/antfu/vite-plugin-md
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
@@ -100,12 +97,6 @@ export default defineConfig({
       enabled: false,
     }),
   ],
-
-  server: {
-    fs: {
-      strict: true,
-    },
-  },
 
   // https://github.com/antfu/vite-ssg
   ssgOptions: {
