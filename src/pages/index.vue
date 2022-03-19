@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { NA, NAvatar, NButton, NH1, NIcon, NList, NListItem, NSkeleton, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui'
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { BookOutline } from '@vicons/ionicons5'
 import axios from 'axios'
 
 import MioIcon from '~/assets/icons/mio.png'
@@ -60,11 +59,7 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
           <n-list-item v-for="blog in blogs" :key="blog.path">
             <n-thing>
               <template #avatar>
-                <n-button text @click="() => handleBlogTitleClick(blog.path)">
-                  <n-icon size="45">
-                    <book-outline />
-                  </n-icon>
-                </n-button>
+                <button primary-clickable i-carbon-blog class="text-4xl" text @click="() => handleBlogTitleClick(blog.path)" />
               </template>
               <template #header>
                 <n-button text @click="() => handleBlogTitleClick(blog.path)">

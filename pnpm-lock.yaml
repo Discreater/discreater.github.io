@@ -11,7 +11,6 @@ specifiers:
   '@types/nprogress': ^0.2.0
   '@unocss/reset': ^0.29.3
   '@unocss/transformer-directives': ^0.29.3
-  '@vicons/ionicons5': ^0.12.0
   '@vitejs/plugin-vue': ^2.2.4
   '@vueuse/core': ^8.1.1
   '@vueuse/head': ^0.7.5
@@ -25,6 +24,7 @@ specifiers:
   markdown-it: ^12.3.2
   markdown-it-anchor: ^8.4.1
   markdown-it-link-attributes: ^4.0.0
+  markdown-it-shiki: ^0.4.0
   markdown-it-texmath: ^0.9.7
   marked: ^4.0.12
   naive-ui: ^2.26.4
@@ -71,7 +71,6 @@ devDependencies:
   '@types/nprogress': 0.2.0
   '@unocss/reset': 0.29.3
   '@unocss/transformer-directives': 0.29.3
-  '@vicons/ionicons5': 0.12.0
   '@vitejs/plugin-vue': 2.2.4_vite@2.8.6+vue@3.2.31
   critters: 0.0.16
   cross-env: 7.0.3
@@ -80,6 +79,7 @@ devDependencies:
   markdown-it: 12.3.2
   markdown-it-anchor: 8.4.1_d643ca6eb40ae68ab966a77bead78073
   markdown-it-link-attributes: 4.0.0
+  markdown-it-shiki: 0.4.0
   marked: 4.0.12
   shiki: 0.10.1
   typescript: 4.6.2
@@ -2025,10 +2025,6 @@ packages:
       - less
       - sass
       - stylus
-    dev: true
-
-  /@vicons/ionicons5/0.12.0:
-    resolution: {integrity: sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA==}
     dev: true
 
   /@vitejs/plugin-vue/2.2.4_vite@2.8.6+vue@3.2.31:
@@ -4891,6 +4887,16 @@ packages:
     resolution: {integrity: sha512-ssjxSLlLfQBkX6BvAx1rCPrx7ZoK91llQQvS3P7KXvlbnVD34OUkfXwWecN7su/7mrI/HOW0RI5szdJOIqYC3w==}
     dev: true
 
+  /markdown-it-shiki/0.4.0:
+    resolution: {integrity: sha512-AvCqhnDdskhU6KGZzqm5BXbjwcC7PIk9wRfdxzZITM4nNBBB1tvC+G+4NN5oQleVwPFcBHmxxTKSONcWwoZvfQ==}
+    dependencies:
+      debug: 4.3.3
+      shiki: 0.10.1
+      synckit: 0.6.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /markdown-it-texmath/0.9.7:
     resolution: {integrity: sha512-2oZ7WO+xQCvQpfCwxUsCzDpz5jRjiY+FbSJSVz+66+Z9NoPR7ljzUNaOp1CDHYj0JWx+drQLxO0XUjuSsuqc0A==}
     dev: false
@@ -6067,6 +6073,13 @@ packages:
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
+    dev: true
+
+  /synckit/0.6.0:
+    resolution: {integrity: sha512-AYuCJsMNa/3m1UKxfM9edZEjsdz0Hj7namBHs1RAMcMxEJIBNrq3pUI5EmwtGNWPxOvozuVQtixMnzcMSWJ0xg==}
+    engines: {node: '>=12.3'}
+    dependencies:
+      tslib: 2.3.1
     dev: true
 
   /temp-dir/2.0.0:

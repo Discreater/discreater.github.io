@@ -7,6 +7,10 @@
   @apply font-bold;
 }
 
+/* .prose h2,h3,h4 {
+  scroll-margin: 1rem;
+} */
+
 .prose h1 {
   @apply text-4xl mt-10px mb-6;
 }
@@ -16,7 +20,7 @@
 }
 
 .prose h2,h3 {
-  @apply border-b-1 border-solid border-gray/40  pb-0.8;
+  @apply border-b-1 border-gray/40  pb-0.8;
 }
 
 .prose h3 {

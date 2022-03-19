@@ -16,7 +16,7 @@ import Katex from 'katex'
 import Unocss from 'unocss/vite'
 import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import transformerDirective from '@unocss/transformer-directives'
-import { markdownItShiki } from './vite-plugins/md_plugins'
+import Shiki from 'markdown-it-shiki'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
@@ -69,9 +69,10 @@ export default defineConfig({
       wrapperClasses: markdownWrapperClasses,
       headEnabled: true,
       markdownItSetup(md) {
-        // https://prismjs.com/
         md
-          .use(markdownItShiki)
+          .use(Shiki, {
+            theme: 'nord',
+          })
           .use(LinkAttributes, {
             pattern: /^https?:\/\//,
             attrs: {
@@ -124,7 +125,6 @@ export default defineConfig({
       'vue-router',
       '@vueuse/core',
       '@vueuse/head',
-      '@vicons/ionicons5',
       'axios',
     ],
     exclude: [
