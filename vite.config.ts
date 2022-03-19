@@ -14,6 +14,8 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import TexMath from 'markdown-it-texmath'
 import Katex from 'katex'
 import Unocss from 'unocss/vite'
+import { presetAttributify, presetIcons, presetUno } from 'unocss'
+import transformerDirective from '@unocss/transformer-directives'
 import { markdownItShiki } from './vite-plugins/md_plugins'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 
@@ -47,7 +49,19 @@ export default defineConfig({
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
 
-    Unocss(),
+    Unocss({
+      presets: [
+        presetAttributify({}),
+        presetUno({}),
+        presetIcons({}),
+      ],
+      transformers: [
+        transformerDirective(),
+      ],
+      shortcuts: {
+        'primary-clickable': 'transition-colors duration-300 hover:text-green-300',
+      },
+    }),
 
     // https://github.com/antfu/vite-plugin-md
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
@@ -110,6 +124,8 @@ export default defineConfig({
       'vue-router',
       '@vueuse/core',
       '@vueuse/head',
+      '@vicons/ionicons5',
+      'axios',
     ],
     exclude: [
       'vue-demi',

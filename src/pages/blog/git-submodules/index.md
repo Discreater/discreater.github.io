@@ -23,17 +23,18 @@ git add [<options>] [--] <repository> [<path>]
 ### clone
 
 1. clone 时拉取所有子模块
-```bash
-git clone --recurse-submodules <repository>
-```
+  ```bash
+  git clone --recurse-submodules <repository>
+  ```
 
 2. clone 后拉取子模块
-```bash
-git submodule update --init --recursive
-```
-- `update` 命令拉取所有数据并 checkout 到正确的 commit。
-- `--init` 初始化本地配置文件。
-- `--recursive` 递归执行
+  ```bash
+  git submodule update --init --recursive
+  ```
+
+3. `update` 命令拉取所有数据并 checkout 到正确的 commit。
+4. `--init` 初始化本地配置文件。
+5. `--recursive` 递归执行
 
 ### 移除
 

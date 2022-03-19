@@ -10,6 +10,7 @@ specifiers:
   '@types/marked': ^4.0.2
   '@types/nprogress': ^0.2.0
   '@unocss/reset': ^0.29.3
+  '@unocss/transformer-directives': ^0.29.3
   '@vicons/ionicons5': ^0.12.0
   '@vitejs/plugin-vue': ^2.2.4
   '@vueuse/core': ^8.1.1
@@ -69,6 +70,7 @@ devDependencies:
   '@types/marked': 4.0.2
   '@types/nprogress': 0.2.0
   '@unocss/reset': 0.29.3
+  '@unocss/transformer-directives': 0.29.3
   '@vicons/ionicons5': 0.12.0
   '@vitejs/plugin-vue': 2.2.4_vite@2.8.6+vue@3.2.31
   critters: 0.0.16

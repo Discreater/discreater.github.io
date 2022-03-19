@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="text-center mx-auto">
+  <div h-100vh w-100vw flex justify="center" items="center">
     <router-view />
   </div>
 </template>

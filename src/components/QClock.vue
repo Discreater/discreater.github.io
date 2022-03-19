@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const clockRef = ref<HTMLElement|null>(null)
 const hourHand = ref<HTMLDivElement|null>(null)
@@ -27,13 +27,13 @@ onMounted(() => {
   <article class="clock-container">
     <div ref="clockRef" class="clock" />
     <div class="hours-container">
-      <div ref="hourHand" class="hours"></div>
+      <div ref="hourHand" class="hours" />
     </div>
     <div class="minutes-container">
-      <div ref="minuteHand" class="minutes"></div>
+      <div ref="minuteHand" class="minutes" />
     </div>
     <div class="seconds-container">
-      <div ref="secondHand" class="seconds"></div>
+      <div ref="secondHand" class="seconds" />
     </div>
   </article>
 </template>
@@ -41,7 +41,7 @@ onMounted(() => {
 <style>
 .clock-container {
   border-radius: 50%;
-  padding: 2px;
+  padding: 0.25em;
   background: linear-gradient(to top, #F80, #2ED);
   border-image-slice: 10;
   height: 6em;

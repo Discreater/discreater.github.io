@@ -1,22 +1,68 @@
-.prose :not(pre) > code {
-  border-radius: .3em;
-  background: var(--inlineCode-bg)!important;
-  color: var(--inlineCode-text)!important;
-  padding: .15em .2em .05em;
-  white-space: normal;
+
+.prose {
+  font-size: 1.1rem;
 }
 
-.prose code::after,
-.prose code::before {
-  content: "";
+.prose h1,h2,h3,h4,h5 {
+  @apply font-bold;
 }
 
-html:not(.dark) .prose {
-  --inlineCode-bg: rgba(255,229,100,0.2);
-  --inlineCode-text: #1a1a1a;
+.prose h1 {
+  @apply text-4xl mt-10px mb-6;
 }
 
-html.dark .prose {
-  --inlineCode-bg: rgba(115,124,153,0.2);
-  --inlineCode-text: #ffee93;
+.prose h2 {
+  @apply text-3xl mt-4 mb-2;
+}
+
+.prose h2,h3 {
+  @apply border-b-1 border-solid border-gray/40  pb-0.8;
+}
+
+.prose h3 {
+  @apply text-2xl mt-4.5 mb-2.3;
+}
+
+.prose h4 {
+  @apply text-xl mt-5.3 mb-2.67;
+}
+
+.prose a {
+  @apply text-sky-500 hover:text-green-500 underline primary-clickable;
+}
+
+.prose p {
+  @apply mb-4;
+}
+
+.prose p>code {
+  @apply px-1.6 py-0.8 bg-gray/20 dark:bg-gray/40;
+  font-size: 85%;
+  border-radius: 6px;
+}
+
+.prose ol {
+  @apply list-decimal list-outside ml-8 my-4;
+}
+
+.prose ul {
+  @apply list-disc list-outside ml-8 my-4;
+}
+
+.prose li {
+  @apply mt-4;
+}
+
+.prose img {
+  @apply;
+}
+
+.prose blockquote {
+  @apply px-6 py-5 bg-gray/20 dark:bg-gray/40;
+  border-left: 5px solid #dbdbdb;
+}
+
+.prose strong {
+  color: #363636;
+  font-weight: 700;
 }
