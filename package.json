@@ -6,7 +6,8 @@
     "build-ssg": "cross-env NODE_ENV=production vite-ssg build",
     "preview": "vite preview",
     "preview-https": "serve dist",
-    "lint": "eslint \"**/*.{vue,ts,js}\""
+    "lint": "eslint \"**/*.{vue,ts,js}\"",
+    "test": "vitest"
   },
   "dependencies": {
     "@types/markdown-it-link-attributes": "^3.0.1",
@@ -33,6 +34,7 @@
     "@unocss/reset": "^0.29.6",
     "@unocss/transformer-directives": "^0.29.6",
     "@vitejs/plugin-vue": "^2.2.4",
+    "cheerio": "^1.0.0-rc.10",
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
@@ -53,6 +55,7 @@
     "vite-plugin-replace": "^0.1.1",
     "vite-plugin-vue-layouts": "^0.6.0",
     "vite-ssg": "^0.19.0",
+    "vitest": "^0.7.11",
     "vue-tsc": "^0.33.9"
   }
 }

@@ -12,6 +12,7 @@ html:not(.dark) .prose {
     --hljs-hue-6-2: #c18401;
     --hljs-bg-color: #fafafa;
     --hljs-color: #383a42;
+    --hljs-cap-color: #f3f3f3;
 }
 
 
@@ -27,24 +28,21 @@ html.dark .prose {
     --hljs-hue-6-2: #e6c07b;
     --hljs-bg-color: #282c34;
     --hljs-color: #abb2bf;
+    --hljs-cap-color: #1c1c1c;
 }
 
-.prose pre {
+.prose .code-block {
     @apply my-6 border-gray/20 border-1;
+    border-radius: 6px;
+    background-color: var(--hljs-cap-color);
 }
 
 .prose pre code.hljs {
     display: block;
     overflow-x: auto;
-    padding: 1em
-}
-
-.prose code.hljs {
-    padding: 3px 5px
 }
 
 .prose .hljs {
-    @apply q-trans;
     color: var(--hljs-color);
     background: var(--hljs-bg-color);
 }
@@ -93,3 +91,93 @@ html.dark .prose {
 .prose .hljs-link {
     text-decoration: underline
 }
+
+/* code caption */
+
+.prose .code-block figcaption {
+    @apply select-none flex justify-between py-1.2 px-4 border-gray/20 border-b-1 items-center;
+}
+
+.prose .code-block figcaption div:first-child {
+    @apply flex text-sm;
+}
+
+.prose .code-block figcaption .copy {
+    @apply cursor-not-allowed i-ic-baseline-content-copy opacity-38;
+}
+
+.prose .code-block input[type='checkbox']{
+    display: none;
+}
+
+.prose .code-block .lbl-toggle {
+    @apply primary-clickable;
+    font-family: monospace;
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+.prose .code-block .lbl-toggle::before {
+    content: ' ';
+    display: inline-block;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid currentColor;
+
+    vertical-align: middle;
+    margin-right: .7rem;
+    transform: translateY(-2px);
+
+    transition: transform .2s ease-out;
+}
+
+.prose .code-block .collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.prose .code-block .toggle:checked ~ .collapsible-content {
+    max-height: 100%;
+}
+
+.prose .code-block .toggle:checked + figcaption>div>.lbl-toggle::before {
+    transform: rotate(90deg) translateX(-3px);
+}
+
+.prose .code-block table {
+    @apply w-full;
+}
+
+.toggle:checked + .lbl-toggle {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* line number */
+
+.prose .hljs-ln-n:before {
+    content: attr(data-line-number)
+}
+
+.prose .hljs-ln-numbers {
+    @apply select-none text-right text-gray/80 border-gray/20 border-r-1;
+    vertical-align: top;
+}
+
+.prose .hljs-ln td:last-child {
+    @apply px-2.4 w-full;
+}
+
+.prose .hljs-ln {
+    border-collapse: collapse;
+}
+
+.prose .hljs-ln td {
+    @apply py-0 px-1.2;
+}
+
+.prose .hljs-ln td:first-child {
+    background-color: var(--hljs-cap-color);
+}
+

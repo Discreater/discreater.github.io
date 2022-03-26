@@ -1,19 +1,48 @@
-import type MarkdownIt from 'markdown-it'
+import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+import { addLineNumber } from './line_number'
 
 export function markdownItTaOqi(md: MarkdownIt): void {
   md.options.highlight = (code, lang, _attrs) => {
     const hres = hljs.highlight(code, { language: lang })
-    return hres.value
+    return addLineNumber(hres.value)
   }
   const defaultRender = md.renderer.rules.fence ?? ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options))
 
   md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const aIndex = tokens[idx].attrIndex('class')
+    const cap = tokens[idx].info.trim()
     if (aIndex < 0)
       tokens[idx].attrPush(['class', 'hljs'])
     else
       tokens[idx].attrs![aIndex].push('hljs')
-    return defaultRender(tokens, idx, options, env, self)
+
+    const content = defaultRender(tokens, idx, options, env, self).replace('<pre', '<pre class="collapsible-content"')
+
+    return '<figure class="code-block">'
+      + ` <input id="collapse-code-${idx}" class="toggle" type="checkbox" checked>`
+      + ' <figcaption> '
+      + '   <div>'
+      + `     <label for="collapse-code-${idx}" class="lbl-toggle" />`
+      + `     <span>${cap}</span>`
+      + '   </div>'
+      + '   <button class="copy" title="unimplemented, not now" />'
+      + ' </figcaption>'
+      + `${content}`
+      + '</figure>'
   }
+}
+
+if (import.meta.vitest) {
+  const { it } = import.meta.vitest
+  it('should work', () => {
+    const md = MarkdownIt().use(markdownItTaOqi)
+    const _rendered = md.render('# 添加\n\n```js\n    const aIndex = tokens[idx].attrIndex(\'class\')\n'
+      + '    if (aIndex < 0)\n'
+      + '      tokens[idx].attrPush([\'class\', \'hljs\'])\n'
+      + '    else\n'
+      + '      tokens[idx].attrs![aIndex].push(\'hljs\')\n'
+      + '```\n')
+    console.log(_rendered)
+  })
 }
