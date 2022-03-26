@@ -16,8 +16,8 @@ import Katex from 'katex'
 import Unocss from 'unocss/vite'
 import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import transformerDirective from '@unocss/transformer-directives'
-import Shiki from 'markdown-it-shiki'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
+import { markdownItTaOqi } from './vite-plugins/md_plugins'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -59,20 +59,26 @@ export default defineConfig({
         transformerDirective(),
       ],
       shortcuts: {
-        'primary-clickable': 'transition-colors duration-300 hover:text-green-300',
+        'q-trans': 'transition-all duration-300 ease-in-out',
+        'primary-clickable': 'q-trans hover:text-green-300',
+      },
+      theme: {
+        colors: {
+          strong: {
+            light: '#363636',
+            dark: '#f3f3f3',
+          },
+        },
       },
     }),
 
     // https://github.com/antfu/vite-plugin-md
-    // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
     Markdown({
       wrapperClasses: markdownWrapperClasses,
       headEnabled: true,
       markdownItSetup(md) {
         md
-          .use(Shiki, {
-            theme: 'nord',
-          })
+          .use(markdownItTaOqi)
           .use(LinkAttributes, {
             pattern: /^https?:\/\//,
             attrs: {

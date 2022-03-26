@@ -3,7 +3,8 @@ button:
   back: Back
   go: GO
   home: Home
-  toggle_dark: Toggle dark mode
+  toggle_dark: Toggle to dark mode
+  toggle_light: Toggle to light mode
   toggle_langs: Change languages
 intro:
   blogs: Blogs

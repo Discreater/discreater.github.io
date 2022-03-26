@@ -62,11 +62,11 @@
 }
 
 .prose blockquote {
-  @apply px-6 py-5 bg-gray/20 dark:bg-gray/40;
+  @apply px-6 py-5 bg-gray/20 dark:bg-gray/40 mb-4;
   border-left: 5px solid #dbdbdb;
 }
 
 .prose strong {
-  color: #363636;
+  @apply text-strong-light dark:text-strong-dark;
   font-weight: 700;
 }

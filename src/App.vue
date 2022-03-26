@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useHead } from '@vueuse/head'
-import { NConfigProvider, darkTheme, dateEnUS, dateZhCN, enUS, zhCN } from 'naive-ui'
+import {
+  NConfigProvider, darkTheme,
+  dateDeDE, dateEnUS, dateEsAR, dateFrFR, dateItIT, dateJaJP, dateRuRU, dateZhCN,
+  deDE, enUS, esAR, frFR, itIT, jaJP, ruRU, zhCN,
+} from 'naive-ui'
 
 import { useI18n } from 'vue-i18n'
+import hljs from 'highlight.js'
+import javascript from 'highlight.js/lib/languages/javascript'
 import meta from './meta'
 import { isDark } from '~/logic'
+
+hljs.registerLanguage('javascript', javascript)
 
 const theme = computed(() => {
   return isDark.value ? darkTheme : null
@@ -16,6 +24,12 @@ const { locale } = useI18n()
 const localeMap: Record<string, [any, any]> = {
   'en': [enUS, dateEnUS],
   'zh-CN': [zhCN, dateZhCN],
+  'ja': [jaJP, dateJaJP],
+  'de': [deDE, dateDeDE],
+  'es': [esAR, dateEsAR],
+  'fr': [frFR, dateFrFR],
+  'it': [itIT, dateItIT],
+  'ru': [ruRU, dateRuRU],
 }
 
 function getLocale(locale: string) {
@@ -37,7 +51,7 @@ useHead({
 </script>
 
 <template>
-  <n-config-provider :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
+  <n-config-provider :hljs="hljs" :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
     <router-view />
   </n-config-provider>
 </template>

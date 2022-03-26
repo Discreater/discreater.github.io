@@ -23,14 +23,14 @@ git add [<options>] [--] <repository> [<path>]
 ### clone
 
 1. clone 时拉取所有子模块
-  ```bash
-  git clone --recurse-submodules <repository>
-  ```
+   ```bash
+   git clone --recurse-submodules <repository>
+   ```
 
 2. clone 后拉取子模块
-  ```bash
-  git submodule update --init --recursive
-  ```
+   ```bash
+   git submodule update --init --recursive
+   ```
 
 3. `update` 命令拉取所有数据并 checkout 到正确的 commit。
 4. `--init` 初始化本地配置文件。
@@ -39,19 +39,19 @@ git add [<options>] [--] <repository> [<path>]
 ### 移除
 
 - 只移除本地的子模块文件, 不改变 git 记录，`init` 命令的反命令。若对文件有更改，则需要 `-f` 选项。
-```bash
-git submodule deinit [-f] -- [<path>]
-```
+  ```bash
+  git submodule deinit [-f] -- [<path>]
+  ```
 
 - 完全移除
-```bash
-git submodule deinit -f -- [<path>]
-git rm -f <path>
-# sh
-rm -rf .git/modules/<path>
-# powershell
-rm -Force .git\modules\egui
-```
+    ```bash
+    git submodule deinit -f -- [<path>]
+    git rm -f <path>
+    # sh
+    rm -rf .git/modules/<path>
+    # powershell
+    rm -Force .git\modules\egui
+    ```
 
 ## 使用场景
 
@@ -60,14 +60,15 @@ rm -Force .git\modules\egui
 #### 若子模块仓库上游有更新
 
 - 在子模块目录中
-```bash
-git fetch
-git merge <branch>
-```
+  ```bash
+  git fetch
+  git merge <branch>
+  ```
+
 - 在主目录（默认更新 master， 省略 path 将会更新所有子模块）
-```bash
-git submodule update --remote <path>
-```
+  ```bash
+  git submodule update --remote <path>
+  ```
 
 此时会在主目录留下子模块更新的记录。
 

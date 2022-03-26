@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { NDropdown } from 'naive-ui'
 
-import { toggleDark } from '~/logic'
+import { isDark, toggleDark } from '~/logic'
 
 const { t, availableLocales, locale } = useI18n()
 
@@ -20,23 +20,17 @@ function handleLocaleSelect(key: unknown) {
 </script>
 
 <template>
-  <nav text="xl" m="t-6" space="x-2">
-    <router-link to="/" :title="t('button.home')">
-      <button primary-clickable i-mdi-home />
-    </router-link>
+  <nav text="xl" m="t-6" flex justify-center items-center space="x-2">
+    <router-link primary-clickable i-mdi-home inline-block to="/" :title="t('button.home')" />
 
-    <button primary-clickable i-ri-moon-fill dark:i-ri-sun-fill :title="t('button.toggle_dark')" @click="() => toggleDark()" />
+    <button primary-clickable i-ri-moon-fill dark:i-ri-sun-fill :title="isDark ? t('button.toggle_light') : t('button.toggle_dark')" @click="() => toggleDark()" />
 
     <n-dropdown trigger="click" :options="localeDropdownMenuOptions" @select="handleLocaleSelect">
       <button i-ooui-language primary-clickable :title="t('button.toggle_langs')" />
     </n-dropdown>
 
-    <router-link class="icon-btn mx-2" to="/about" :title="t('button.about')">
-      <button primary-clickable i-ri-information-fill />
-    </router-link>
+    <router-link primary-clickable i-ri-information-fill to="/about" :title="t('button.about')" />
 
-    <a class="icon-btn mx-2" rel="noreferrer" href="https://github.com/Discreater" target="_blank" title="GitHub">
-      <button primary-clickable i-mdi-github />
-    </a>
+    <a primary-clickable i-mdi-github rel="noreferrer" href="https://github.com/Discreater" target="_blank" title="GitHub" />
   </nav>
 </template>

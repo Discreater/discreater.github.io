@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/markdown-it-link-attributes": "^3.0.1",
-    "@vueuse/core": "^8.1.1",
+    "@vueuse/core": "^8.1.2",
     "@vueuse/head": "^0.7.5",
     "axios": "^0.26.1",
     "front-matter": "^4.0.2",
@@ -24,28 +24,28 @@
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.18.8",
-    "@iconify/json": "^2.1.16",
+    "@antfu/eslint-config": "^0.18.9",
+    "@iconify/json": "^2.1.20",
     "@intlify/vite-plugin-vue-i18n": "^3.3.1",
     "@types/katex": "^0.11.1",
     "@types/markdown-it": "^12.2.3",
-    "@types/marked": "^4.0.2",
+    "@types/marked": "^4.0.3",
     "@types/nprogress": "^0.2.0",
-    "@unocss/reset": "^0.29.3",
-    "@unocss/transformer-directives": "^0.29.3",
+    "@unocss/reset": "^0.29.6",
+    "@unocss/transformer-directives": "^0.29.6",
     "@vitejs/plugin-vue": "^2.2.4",
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
+    "highlight.js": "^11.5.0",
     "https-localhost": "^4.7.1",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
     "markdown-it-link-attributes": "^4.0.0",
-    "markdown-it-shiki": "^0.4.0",
     "marked": "^4.0.12",
     "shiki": "^0.10.1",
-    "typescript": "^4.6.2",
-    "unocss": "^0.29.3",
+    "typescript": "^4.6.3",
+    "unocss": "^0.29.6",
     "vite": "2.8.6",
     "vite-plugin-inspect": "^0.4.3",
     "vite-plugin-md": "^0.11.9",
@@ -54,6 +54,6 @@
     "vite-plugin-replace": "^0.1.1",
     "vite-plugin-vue-layouts": "^0.6.0",
     "vite-ssg": "^0.19.0",
-    "vue-tsc": "^0.33.2-patch.1"
+    "vue-tsc": "^0.33.9"
   }
 }

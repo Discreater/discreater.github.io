@@ -1,0 +1,95 @@
+/* Atom one light and dark */
+
+html:not(.dark) .prose {
+    --hljs-mono-3: #a0a1a7;
+    --hljs-hue-1: #0184bb;
+    --hljs-hue-2: #4078f2;
+    --hljs-hue-3: #a626a4;
+    --hljs-hue-4: #50a14f;
+    --hljs-hue-5: #e45649;
+    --hljs-hue-5-2: #c91243;
+    --hljs-hue-6: #986801;
+    --hljs-hue-6-2: #c18401;
+    --hljs-bg-color: #fafafa;
+    --hljs-color: #383a42;
+}
+
+
+html.dark .prose {
+    --hljs-mono-3: #5c6370;
+    --hljs-hue-1: #56b6c2;
+    --hljs-hue-2: #61aeee;
+    --hljs-hue-3: #c678dd;
+    --hljs-hue-4: #98c379;
+    --hljs-hue-5: #e06c75;
+    --hljs-hue-5-2: #be5046;
+    --hljs-hue-6: #d19a66;
+    --hljs-hue-6-2: #e6c07b;
+    --hljs-bg-color: #282c34;
+    --hljs-color: #abb2bf;
+}
+
+.prose pre {
+    @apply my-6 border-gray/20 border-1;
+}
+
+.prose pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+
+.prose code.hljs {
+    padding: 3px 5px
+}
+
+.prose .hljs {
+    @apply q-trans;
+    color: var(--hljs-color);
+    background: var(--hljs-bg-color);
+}
+
+.prose .hljs-comment, .hljs-quote {
+    color: var(--hljs-mono-3);
+    font-style: italic
+}
+
+.prose .hljs-doctag, .hljs-formula, .hljs-keyword {
+    color: var(--hljs-hue-3);
+}
+
+.prose .hljs-deletion, .hljs-name, .hljs-section, .hljs-selector-tag, .hljs-subst {
+    color: var(--hljs-hue-5);
+}
+
+.prose .hljs-literal {
+    color: var(--hljs-hue-1);
+}
+
+.prose .hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
+    color: var(--hljs-hue-4);
+}
+
+.prose .hljs-attr, .hljs-number, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-pseudo, .hljs-template-variable, .hljs-type, .hljs-variable {
+    color: var(--hljs-hue-6);
+}
+
+.prose .hljs-bullet, .hljs-link, .hljs-meta, .hljs-selector-id, .hljs-symbol, .hljs-title {
+    color: var(--hljs-hue-2);
+}
+
+.prose .hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ {
+    color: var(--hljs-hue-6-2);
+}
+
+.prose .hljs-emphasis {
+    font-style: italic
+}
+
+.prose .hljs-strong {
+    font-weight: 700
+}
+
+.prose .hljs-link {
+    text-decoration: underline
+}

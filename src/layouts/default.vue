@@ -31,9 +31,6 @@ const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1
           </router-view>
           <div>
             <my-footer />
-            <div m="t-5 x-auto" text="center sm" opacity="25">
-              [Default Layout]
-            </div>
           </div>
         </n-card>
         <aside sticky top="4" self-start>

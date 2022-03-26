@@ -3,7 +3,8 @@ button:
   back: 返回
   go: 确定
   home: 首页
-  toggle_dark: 切换深色模式
+  toggle_dark: 切换到深色模式
+  toggle_light: 切换到亮色模式
   toggle_langs: 切换语言（并不能切换文章语言
 intro:
   blogs: 博客
