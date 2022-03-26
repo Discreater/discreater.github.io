@@ -8,6 +8,7 @@ export interface FrontMatter {
 export interface BlogHeader {
   slug: string
   title: string
+  children: BlogHeader[]
 }
 
 export interface BlogInfo {

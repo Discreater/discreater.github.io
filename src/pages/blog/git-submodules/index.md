@@ -89,7 +89,7 @@ git submodule sync --recursive
 git submodule update --init --recursive
 ```
 
-### 1.在主项目中修改子模块
+### 2.在主项目中修改子模块
 
 拉取远程主项目的更改
 ```bash
@@ -106,6 +106,7 @@ git commit
 ```
 
 > TODO...
+
 发布子模块的修改
 ```bash
 

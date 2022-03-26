@@ -4,4 +4,5 @@ Blogs and others. Use template from [Vitesse](https://github.com/antfu/vitesse) 
 
 ## Todo
 
-- [ ] aside
+- better highlight
+- mobile

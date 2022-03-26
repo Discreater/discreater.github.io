@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { NAnchor, NAnchorLink, NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui'
+import { computed, ref, watch } from 'vue'
+import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui'
 import { useRoute } from 'vue-router'
 
 import MyHeader from '~/components/MyHeader.vue'
 import MyFooter from '~/components/MyFooter.vue'
+import BlogAnchor from '~/components/BlogAnchor'
 import meta from '~/meta'
 import QTime from '~/components/QTime.vue'
-import type { FrontMatter } from '~/types/blog_info'
+import type { BlogInfo, FrontMatter } from '~/types/blog_info'
 
 const current = ref()
-const frontmatter = computed(() => current.value?.frontmatter as FrontMatter)
+const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined)
+
 const route = useRoute()
-const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1))
+const currentBlog = ref<BlogInfo|undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)))
+watch(() => route.path, async(path) => {
+  currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1))
+})
 </script>
 
 <template>
@@ -23,7 +28,7 @@ const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1
     <section p="y-6 x-6">
       <div container max-w="320" m="auto" flex space="x-2">
         <n-card embedded flex-grow>
-          <n-gradient-text v-if="current" class="block m-auto">
+          <n-gradient-text v-if="frontmatter && frontmatter.date" class="block m-auto">
             <q-time :time="frontmatter.date" />
           </n-gradient-text>
           <router-view v-slot="{ Component }">
@@ -35,13 +40,7 @@ const currentBlog = meta.blogs.find(blog => blog.path === route.path.substring(1
         </n-card>
         <aside sticky top="4" self-start>
           <n-card embedded hoverable content-style="padding-left: 0.5rem;">
-            <n-anchor
-              v-if="currentBlog"
-              text="left"
-              ignore-gap
-            >
-              <n-anchor-link v-for="header in currentBlog.headers" :key="header.slug" :title="header.title" :href="`#${header.slug}`" />
-            </n-anchor>
+            <blog-anchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
           </n-card>
         </aside>
       </div>

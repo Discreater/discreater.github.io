@@ -6,14 +6,25 @@ import Anchor from 'markdown-it-anchor'
 
 import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info'
 
+function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
+  if (level === 1 || headers.length === 0)
+    headers.push(header)
+  else
+    insertHeader(headers[headers.length - 1].children, header, level - 1)
+}
+
 function extractBodyIt(body: string) {
   const headers: BlogHeader[] = []
   const md = MarkdownIt().use(Anchor, {
     callback: (_token, { slug, title }) => {
-      headers.push({
-        slug,
+      const header = {
         title,
-      })
+        slug,
+        children: [],
+      }
+      const level = parseInt(_token.tag.substring(1))
+      if (!isNaN(level))
+        insertHeader(headers, header, level)
     },
   })
   md.render(body)

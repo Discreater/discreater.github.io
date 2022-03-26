@@ -7,7 +7,6 @@ specifiers:
   '@types/katex': ^0.11.1
   '@types/markdown-it': ^12.2.3
   '@types/markdown-it-link-attributes': ^3.0.1
-  '@types/marked': ^4.0.3
   '@types/nprogress': ^0.2.0
   '@unocss/reset': ^0.29.6
   '@unocss/transformer-directives': ^0.29.6
@@ -67,7 +66,6 @@ devDependencies:
   '@intlify/vite-plugin-vue-i18n': 3.3.1_vite@2.8.6+vue-i18n@9.1.9
   '@types/katex': 0.11.1
   '@types/markdown-it': 12.2.3
-  '@types/marked': 4.0.3
   '@types/nprogress': 0.2.0
   '@unocss/reset': 0.29.6
   '@unocss/transformer-directives': 0.29.6
@@ -1694,10 +1692,6 @@ packages:
     dependencies:
       '@types/linkify-it': 3.0.2
       '@types/mdurl': 1.0.2
-
-  /@types/marked/4.0.3:
-    resolution: {integrity: sha512-HnMWQkLJEf/PnxZIfbm0yGJRRZYYMhb++O9M36UCTA9z53uPvVoSlAwJr3XOpDEryb7Hwl1qAx/MV6YIW1RXxg==}
-    dev: true
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
