@@ -103,7 +103,11 @@ html.dark .prose {
 }
 
 .prose .code-block figcaption .copy {
-    @apply cursor-not-allowed i-ic-baseline-content-copy opacity-38;
+    @apply cursor-pointer i-mdi-sticker-outline primary-clickable;
+}
+
+.prose .code-block figcaption .copied {
+    @apply cursor-pointer i-mdi-sticker-check text-green-300;
 }
 
 .prose .code-block input[type='checkbox']{

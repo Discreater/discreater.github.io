@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui'
 import { useRoute } from 'vue-router'
 
@@ -17,6 +17,27 @@ const route = useRoute()
 const currentBlog = ref<BlogInfo|undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)))
 watch(() => route.path, async(path) => {
   currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1))
+})
+
+onMounted(() => {
+  const copies = document.querySelectorAll('figure.code-block button.copy')
+  copies.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.parentNode && btn.parentNode.nextSibling) {
+        const pre = btn.parentNode.nextSibling
+        const content = pre.textContent
+        if (content) {
+          navigator.clipboard.writeText(content)
+          btn.classList.remove('copy')
+          btn.classList.add('copied')
+          setTimeout(() => {
+            btn.classList.remove('copied')
+            btn.classList.add('copy')
+          }, 1000)
+        }
+      }
+    })
+  })
 })
 </script>
 
@@ -38,8 +59,8 @@ watch(() => route.path, async(path) => {
             <my-footer />
           </div>
         </n-card>
-        <aside sticky top="4" self-start class="hidden xl:block">
-          <n-card embedded hoverable content-style="padding-left: 0.5rem;" max-w="50">
+        <aside sticky top="4" self-start class="hidden xl:block" max-w="70">
+          <n-card embedded hoverable content-style="padding-left: 0.5rem;">
             <blog-anchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
           </n-card>
         </aside>

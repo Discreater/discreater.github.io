@@ -45,7 +45,7 @@ function addLineNumbersBlockFor($: CheerioAPI, options: LnOptions) {
         + `<td class="${LINE_NAME} ${NUMBERS_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">`
         + `<div class="${NUMBER_LINE_NAME}" ${DATA_ATTR_NAME}="${ln}" />`
         + '</td>'
-        + `<td class="${LINE_NAME} ${CODE_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">${content}</td>`
+        + `<td class="${LINE_NAME} ${CODE_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">${content}\n</td>`
         + '</tr>'
     }
 

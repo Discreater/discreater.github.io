@@ -26,7 +26,7 @@ export function markdownItTaOqi(md: MarkdownIt): void {
       + `     <label for="collapse-code-${idx}" class="lbl-toggle" ></label>`
       + `     <span>${cap}</span>`
       + '   </div>'
-      + '   <button class="copy" title="unimplemented, not now" />'
+      + '   <button class="copy" title="click to copy"/>'
       + ' </figcaption>'
       + `${content}`
       + '</figure>'
