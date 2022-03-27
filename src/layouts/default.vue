@@ -38,8 +38,8 @@ watch(() => route.path, async(path) => {
             <my-footer />
           </div>
         </n-card>
-        <aside sticky top="4" self-start>
-          <n-card embedded hoverable content-style="padding-left: 0.5rem;">
+        <aside sticky top="4" self-start class="hidden xl:block">
+          <n-card embedded hoverable content-style="padding-left: 0.5rem;" max-w="50">
             <blog-anchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
           </n-card>
         </aside>

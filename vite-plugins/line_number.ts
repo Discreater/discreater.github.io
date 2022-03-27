@@ -52,7 +52,7 @@ function addLineNumbersBlockFor($: CheerioAPI, options: LnOptions) {
     return `<table class="${TABLE_NAME}">${html}</table>`
   }
 
-  return inputHtml
+  return `<span class="single-line-code">${inputHtml}</span>`
 }
 
 function duplicateMultilineNodes($: CheerioAPI, node?: Element) {
@@ -84,10 +84,41 @@ function duplicateMultilineNode($: CheerioAPI, element: Node) {
 }
 
 function getLinesCount(text: string) {
-  return (text.trim().match(BREAK_LINE_REGEXP) || []).length
+  return (text.match(BREAK_LINE_REGEXP) || []).length
 }
 
-function getLines(text: string) {
+function skipCloseTag(text: string, start: number): number {
+  let i = start
+  while (i < text.length && text.substring(i, i + 2) === '</') {
+    i += 2
+    while (i < text.length && text.charAt(i) !== '>')
+      i++
+    i++
+    while (i < text.length && text.charAt(i) === ' ')
+      i++
+  }
+  return i
+}
+
+export function getLines(text: string) {
   if (text.length === 0) return []
-  return text.split(BREAK_LINE_REGEXP)
+  const lines = []
+  let lastIndex = 0
+  let i = 0
+  for (i = 0; i < text.length;) {
+    if (text.charAt(i).match(BREAK_LINE_REGEXP)) {
+      const break_position = i
+      i = skipCloseTag(text, i + 1)
+      lines.push(text.substring(lastIndex, break_position) + text.substring(break_position + 1, i))
+      lastIndex = i
+    } else {
+      i++
+    }
+  }
+  if (lastIndex < text.length) {
+    const lastLine = text.substring(lastIndex, text.length)
+    if (lastLine.trim() !== '')
+      lines.push(lastLine)
+  }
+  return lines
 }

@@ -23,7 +23,7 @@ const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
 export default defineConfig({
   test: {
-    includeSource: ['vite-plugins/**/*.{js,ts}'],
+    includeSource: ['*.test.ts'],
   },
   resolve: {
     alias: {
@@ -71,6 +71,14 @@ export default defineConfig({
             light: '#363636',
             dark: '#f3f3f3',
           },
+        },
+        breakpoints: {
+          xs: '320px',
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1280px',
+          xxl: '1600px',
         },
       },
     }),

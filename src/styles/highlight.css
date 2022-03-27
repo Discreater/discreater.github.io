@@ -169,6 +169,11 @@ html.dark .prose {
     @apply px-2.4 w-full;
 }
 
+.prose .hljs .single-line-code {
+    @apply px-2.4 w-full;
+    display: inline-block;
+}
+
 .prose .hljs-ln {
     border-collapse: collapse;
 }
