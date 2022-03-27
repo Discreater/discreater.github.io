@@ -1,3 +1,4 @@
+<script src="../../vite.config.ts"></script>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
@@ -41,11 +42,11 @@ onMounted(() => {
 <style>
 .clock-container {
   border-radius: 50%;
-  padding: 0.25em;
+  padding: 0.25rem;
   background: linear-gradient(to top, #F80, #2ED);
   border-image-slice: 10;
-  height: 6em;
-  width: 6em;
+  height: 6rem;
+  width: 6rem;
   position: relative;
   animation: reverse rotate 60s infinite linear;
 }
