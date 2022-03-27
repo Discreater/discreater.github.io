@@ -1,8 +1,10 @@
 # Site
 
-Blogs and others. Use template from [Vitesse](https://github.com/antfu/vitesse) and naive ui.
+Blogs and others. 
 
-## Todo
+## Tech stack
 
-- better highlight
-- mobile
+- [Vitesse](https://github.com/antfu/vitesse) as template
+- [Naive ui](https://www.naiveui.com/) for some components
+- [UnoCSS](https://github.com/unocss/unocss) for stlyes
+- [Highlightjs](https://highlightjs.org/) for code highlighting
