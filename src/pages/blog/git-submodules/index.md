@@ -13,7 +13,7 @@ ref: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 ### 添加
 
 ```bash
-git add [<options>] [--] <repository> [<path>]
+git submodule add [<options>] [--] <repository> [<path>]
 ```
 
 若 `path` 为空，默认添加至项目根目录中与子模块同名的文件夹。
