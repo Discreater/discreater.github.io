@@ -42,7 +42,7 @@ onMounted(() => {
 .clock-container {
   border-radius: 50%;
   padding: 0.25rem;
-  background: linear-gradient(to top, #F80, #2ED);
+  background: linear-gradient(to top,#b65eba,#2e8de1);
   border-image-slice: 10;
   height: 6rem;
   width: 6rem;

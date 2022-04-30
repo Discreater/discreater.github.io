@@ -62,7 +62,7 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
                 <button primary-clickable i-carbon-blog class="text-4xl" text @click="() => handleBlogTitleClick(blog.path)" />
               </template>
               <template #header>
-                <n-button text @click="() => handleBlogTitleClick(blog.path)">
+                <n-button class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
                   {{ blog.fm.title }}
                 </n-button>
               </template>

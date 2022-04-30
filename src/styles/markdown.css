@@ -32,7 +32,7 @@
 }
 
 .prose a {
-  @apply text-sky-500 hover:text-green-500 underline primary-clickable break-words;
+  @apply text-sky-500 hover:text-green-500 hover:underline primary-clickable break-words;
 }
 
 .prose p {
