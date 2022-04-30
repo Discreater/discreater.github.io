@@ -44,10 +44,10 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
 </script>
 
 <template>
-  <div>
-    <n-a href="/meaningless">
-      <q-clock class="fixed" />
-    </n-a>
+  <n-a href="/meaningless">
+    <q-clock class="fixed" />
+  </n-a>
+  <div flex flex-col items-center>
     <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
     <n-a rel="noreferrer" href="https://github.com/discreater" target="_blank">
       <n-avatar size="large" :src="MioIcon" />
