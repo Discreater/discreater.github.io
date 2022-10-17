@@ -7,6 +7,7 @@ import App from './App.vue'
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
 import './styles/main.css'
+import type { UserModule } from './types'
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -16,6 +17,7 @@ export const createApp = ViteSSG(
   { routes },
   (ctx) => {
     // install all modules under `modules/`
-    Object.values(import.meta.globEager('./modules/*.ts')).map(i => i.install?.(ctx))
+    Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
+      .forEach(i => i.install?.(ctx))
   },
 )
