@@ -15,7 +15,7 @@ jobs:
             ${{ runner.os }}-
       - uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.0.2
+          version: latest
       - run: |
           pnpm config set auto-install-peers true
           pnpm install
