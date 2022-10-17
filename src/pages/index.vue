@@ -40,49 +40,48 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
 }).catch((reason) => {
   console.error(reason)
 })
-
 </script>
 
 <template>
-  <n-a href="/meaningless">
-    <q-clock class="fixed" />
-  </n-a>
+  <NA href="/meaningless">
+    <QClock class="fixed" />
+  </NA>
   <div flex flex-col items-center>
-    <n-h1>{{ t('intro.whos-site', { name: "Discreater" }) }}</n-h1>
-    <n-a rel="noreferrer" href="https://github.com/discreater" target="_blank">
-      <n-avatar size="large" :src="MioIcon" />
+    <NH1>{{ t('intro.whos-site', { name: "Discreater" }) }}</NH1>
+    <NA rel="noreferrer" href="https://github.com/discreater" target="_blank">
+      <NAvatar size="large" :src="MioIcon" />
       <p>Discreater</p>
-    </n-a>
-    <n-tabs type="line" justify-content="space-evenly" default-value="blogs">
-      <n-tab-pane name="blogs" :tab="t('intro.blogs')" class="text-left">
-        <n-list>
-          <n-list-item v-for="blog in blogs" :key="blog.path">
-            <n-thing>
+    </NA>
+    <NTabs type="line" justify-content="space-evenly" default-value="blogs">
+      <NTabPane name="blogs" :tab="t('intro.blogs')" class="text-left">
+        <NList>
+          <NListItem v-for="blog in blogs" :key="blog.path">
+            <NThing>
               <template #avatar>
                 <button primary-clickable i-carbon-blog class="text-4xl" text @click="() => handleBlogTitleClick(blog.path)" />
               </template>
               <template #header>
-                <n-button class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
+                <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
                   {{ blog.fm.title }}
-                </n-button>
+                </NButton>
               </template>
               <template #header-extra>
                 {{ blog.fm.date }}
               </template>
               <template #description>
-                <n-tag type="success">
+                <NTag type="success">
                   {{ blog.fm.tags }}
-                </n-tag>
+                </NTag>
               </template>
-            </n-thing>
-          </n-list-item>
-        </n-list>
-      </n-tab-pane>
-      <n-tab-pane name="lan-ip" tab="LAN-ip">
-        <n-skeleton v-if="ip.loading" text class="w-1/3" />
-        <n-text>{{ ip.ip }}</n-text>
-      </n-tab-pane>
-    </n-tabs>
+            </NThing>
+          </NListItem>
+        </NList>
+      </NTabPane>
+      <NTabPane name="lan-ip" tab="LAN-ip">
+        <NSkeleton v-if="ip.loading" text class="w-1/3" />
+        <NText>{{ ip.ip }}</NText>
+      </NTabPane>
+    </NTabs>
   </div>
 </template>
 

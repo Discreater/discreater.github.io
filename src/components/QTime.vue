@@ -14,9 +14,8 @@ onMounted(() => {
   const months = years - now.getMonth() + date.value.getMonth()
   date_type.value = (months <= 0 || months > 2) ? 'relative' : 'date'
 })
-
 </script>
 
 <template>
-  <n-time :time="date" :type="date_type" />
+  <NTime :time="date" :type="date_type" />
 </template>

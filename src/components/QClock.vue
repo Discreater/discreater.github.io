@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-const clockRef = ref<HTMLElement|null>(null)
-const hourHand = ref<HTMLDivElement|null>(null)
-const minuteHand = ref<HTMLDivElement|null>(null)
-const secondHand = ref<HTMLDivElement|null>(null)
+const clockRef = ref<HTMLElement | null>(null)
+const hourHand = ref<HTMLDivElement | null>(null)
+const minuteHand = ref<HTMLDivElement | null>(null)
+const secondHand = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
   const date = new Date()
@@ -20,7 +20,6 @@ onMounted(() => {
   minuteHand.value!.style.transform = `rotateZ(${minuteAngle - secondAngle}deg)`
   clockRef.value!.style.transform = `rotateZ(${-secondAngle}deg)`
 })
-
 </script>
 
 <template>

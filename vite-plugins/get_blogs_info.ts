@@ -58,8 +58,7 @@ export function get_all_blogs(project_path: string): string {
           path: `blog/${blog.name}`,
         } as BlogInfo,
       ]
-    }
-    catch (_) {
+    } catch (_) {
       return []
     }
   })
@@ -69,8 +68,7 @@ export function get_all_blogs(project_path: string): string {
     try {
       aDate = new Date(a.fm.date)
       bDate = new Date(b.fm.date)
-    }
-    catch (_) {
+    } catch (_) {
     }
     let dateRes: number
     if (aDate === undefined && bDate === undefined)
@@ -79,7 +77,8 @@ export function get_all_blogs(project_path: string): string {
       return aDate === undefined ? -1 : 1
     else
       dateRes = bDate.getTime() - aDate.getTime()
-    if (dateRes !== 0) return dateRes
+    if (dateRes !== 0)
+      return dateRes
     return a.path > b.path ? -1 : 1
   })
   return JSON.stringify(blog_attributes)

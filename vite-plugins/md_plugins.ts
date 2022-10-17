@@ -4,7 +4,7 @@ import { addLineNumber } from './line_number'
 
 export function markdownItTaOqi(md: MarkdownIt): void {
   md.options.highlight = (code, lang, _attrs) => {
-    const hres = hljs.highlight(code, { language: lang })
+    const hres = lang === '' ? hljs.highlightAuto(code) : hljs.highlight(code, { language: lang })
     return addLineNumber(hres.value)
   }
   const defaultRender = md.renderer.rules.fence ?? ((tokens, idx, options, env, self) => self.renderToken(tokens, idx, options))

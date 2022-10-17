@@ -14,8 +14,8 @@ const current = ref()
 const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined)
 
 const route = useRoute()
-const currentBlog = ref<BlogInfo|undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)))
-watch(() => route.path, async(path) => {
+const currentBlog = ref<BlogInfo | undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)))
+watch(() => route.path, async (path) => {
   currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1))
 })
 
@@ -42,29 +42,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <n-layout position="absolute" class="text-gray-700 dark:text-gray-200" :native-scrollbar="false">
-    <n-layout-header bordered min-h="13">
-      <my-header />
-    </n-layout-header>
+  <NLayout position="absolute" class="text-gray-700 dark:text-gray-200" :native-scrollbar="false">
+    <NLayoutHeader bordered min-h="13">
+      <MyHeader />
+    </NLayoutHeader>
     <section p="y-6 x-6">
       <div container max-w="320" m="auto" flex space="x-2">
-        <n-card embedded flex-grow>
-          <n-gradient-text v-if="frontmatter && frontmatter.date" class="block m-auto">
-            <q-time :time="frontmatter.date" />
-          </n-gradient-text>
+        <NCard embedded flex-grow>
+          <NGradientText v-if="frontmatter && frontmatter.date" class="block m-auto">
+            <QTime :time="frontmatter.date" />
+          </NGradientText>
           <router-view v-slot="{ Component }">
             <component :is="Component" ref="current" />
           </router-view>
           <div>
-            <my-footer />
+            <MyFooter />
           </div>
-        </n-card>
+        </NCard>
         <aside sticky top="4" self-start class="hidden xl:block" max-w="70">
-          <n-card embedded hoverable content-style="padding-left: 0.5rem;">
-            <blog-anchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
-          </n-card>
+          <NCard embedded hoverable content-style="padding-left: 0.5rem;">
+            <BlogAnchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
+          </NCard>
         </aside>
       </div>
     </section>
-  </n-layout>
+  </NLayout>
 </template>

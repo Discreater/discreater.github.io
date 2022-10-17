@@ -4,7 +4,7 @@ import QClock from '~/components/QClock.vue'
 
 <template>
   <div flex flex-col items="center" space="y-2">
-    <q-clock w-60 h-60 />
+    <QClock w-60 h-60 />
   </div>
 </template>
 

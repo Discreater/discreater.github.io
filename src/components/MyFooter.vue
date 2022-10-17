@@ -16,7 +16,6 @@ const localeDropdownMenuOptions = availableLocales.map((al) => {
 function handleLocaleSelect(key: unknown) {
   locale.value = key as string
 }
-
 </script>
 
 <template>
@@ -25,9 +24,9 @@ function handleLocaleSelect(key: unknown) {
 
     <button primary-clickable i-ri-moon-fill dark:i-ri-sun-fill :title="isDark ? t('button.toggle_light') : t('button.toggle_dark')" @click="() => toggleDark()" />
 
-    <n-dropdown trigger="click" :options="localeDropdownMenuOptions" @select="handleLocaleSelect">
+    <NDropdown trigger="click" :options="localeDropdownMenuOptions" @select="handleLocaleSelect">
       <button i-ooui-language primary-clickable :title="t('button.toggle_langs')" />
-    </n-dropdown>
+    </NDropdown>
 
     <router-link primary-clickable i-ri-information-fill to="/about" :title="t('button.about')" />
 

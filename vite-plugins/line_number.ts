@@ -1,4 +1,4 @@
-import type { CheerioAPI, Element, Node } from 'cheerio'
+import type { CheerioAPI, Element } from 'cheerio'
 import cheerio from 'cheerio'
 
 const TABLE_NAME = 'hljs-ln'
@@ -30,8 +30,8 @@ function addLineNumbersBlockFor($: CheerioAPI, options: LnOptions) {
   const inputHtml = $.root().html()!
   const lines = getLines(inputHtml)
 
-  // if last line contains only carriage return remove it
-  if (lines[lines.length - 1].trim() === '')
+  // If last line contains only carriage return remove it
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '')
     lines.pop()
 
   if (lines.length > 1 || options.singleLine) {
@@ -62,15 +62,16 @@ function duplicateMultilineNodes($: CheerioAPI, node?: Element) {
       if (child.childNodes.length > 0)
         duplicateMultilineNodes($, child)
       else
-        duplicateMultilineNode($, child.parentNode!)
+        duplicateMultilineNode($, child.parentNode as Element)
     }
   }
 }
 
-function duplicateMultilineNode($: CheerioAPI, element: Node) {
+function duplicateMultilineNode($: CheerioAPI, element: Element) {
   const className = $(element).attr('class')
 
-  if (className && !/hljs-/.test(className)) return
+  if (className && !/hljs-/.test(className))
+    return
 
   const lines = getLines($(element).html()!)
   let result = ''
@@ -101,7 +102,8 @@ function skipCloseTag(text: string, start: number): number {
 }
 
 export function getLines(text: string) {
-  if (text.length === 0) return []
+  if (text.length === 0)
+    return []
   const lines = []
   let lastIndex = 0
   let i = 0

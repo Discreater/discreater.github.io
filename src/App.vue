@@ -47,7 +47,7 @@ useHead({
 </script>
 
 <template>
-  <n-config-provider :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
+  <NConfigProvider :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
     <router-view />
-  </n-config-provider>
+  </NConfigProvider>
 </template>
