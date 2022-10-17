@@ -18,6 +18,8 @@ import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import transformerDirective from '@unocss/transformer-directives'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 import { markdownItTaOqi } from './vite-plugins/md_plugins'
+// @ts-expect-error missing types
+import markdownItPseudocode from './vite-plugins/pseudocode.js'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -97,6 +99,9 @@ export default defineConfig({
           .use(TexMath, {
             engine: Katex,
             delimiters: 'dollars',
+          })
+          .use(markdownItPseudocode, {
+            lineNumber: true,
           })
           .use(Anchor)
       },

@@ -30,6 +30,7 @@ specifiers:
   marked: ^4.1.1
   naive-ui: ^2.33.5
   nprogress: ^0.2.0
+  pseudocode: github:SaswatPadhi/pseudocode.js
   shiki: ^0.11.1
   typescript: ^4.8.4
   unocss: ^0.45.29
@@ -59,6 +60,7 @@ dependencies:
   markdown-it-texmath: 1.0.0
   naive-ui: 2.33.5_vue@3.2.41
   nprogress: 0.2.0
+  pseudocode: github.com/SaswatPadhi/pseudocode.js/fbaa581d9b76ab12afc5c8ca5e68730b8739765f
   vue: 3.2.41
   vue-demi: 0.13.11_vue@3.2.41
   vue-i18n: 9.2.2_vue@3.2.41
@@ -7476,3 +7478,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/SaswatPadhi/pseudocode.js/fbaa581d9b76ab12afc5c8ca5e68730b8739765f:
+    resolution: {tarball: https://codeload.github.com/SaswatPadhi/pseudocode.js/tar.gz/fbaa581d9b76ab12afc5c8ca5e68730b8739765f}
+    name: pseudocode
+    version: 2.1.1
+    dev: false

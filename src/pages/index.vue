@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui'
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NSpace, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
@@ -69,9 +69,11 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
                 {{ blog.fm.date }}
               </template>
               <template #description>
-                <NTag type="success">
-                  {{ blog.fm.tags }}
-                </NTag>
+                <NSpace>
+                  <NTag v-for="tag, idx in blog.fm.tags.split(',')" :key="idx" type="success">
+                    {{ tag }}
+                  </NTag>
+                </NSpace>
               </template>
             </NThing>
           </NListItem>
