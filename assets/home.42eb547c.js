@@ -1,0 +1,1 @@
+import{d as o,o as a,c as r,e,l as n,S as s,r as c}from"./index.fcd881fb.js";const m={class:"px-4 py-10 text-center max-w-42rem ml-auto mr-auto text-gray-700 dark:text-gray-200"},u=o({__name:"home",setup(_){return(p,i)=>{const t=c("router-view");return a(),r("main",m,[e(t),e(n),e(s)])}}});export{u as default};
