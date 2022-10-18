@@ -9,6 +9,7 @@ import BlogAnchor from '~/components/BlogAnchor'
 import meta from '~/meta'
 import QTime from '~/components/QTime.vue'
 import type { BlogInfo, FrontMatter } from '~/types/blog_info'
+import SpotLight from '~/components/SpotLight.vue'
 
 const current = ref()
 const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined)
@@ -20,6 +21,7 @@ watch(() => route.path, async (path) => {
 })
 
 onMounted(() => {
+  // Add copy function to code blocks
   const copies = document.querySelectorAll('figure.code-block button.copy')
   copies.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -48,7 +50,8 @@ onMounted(() => {
     </NLayoutHeader>
     <section p="y-6 x-6">
       <div container max-w="320" m="auto" flex space="x-2">
-        <NCard embedded flex-grow>
+        <!-- z-15 to render above the spotlight (which is z-10) -->
+        <NCard embedded flex-grow z-15>
           <NGradientText v-if="frontmatter && frontmatter.date" class="block m-auto">
             <QTime :time="frontmatter.date" />
           </NGradientText>
@@ -67,4 +70,5 @@ onMounted(() => {
       </div>
     </section>
   </NLayout>
+  <SpotLight />
 </template>
