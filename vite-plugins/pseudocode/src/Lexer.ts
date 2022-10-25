@@ -106,7 +106,8 @@ export class Lexer {
       throw new ParseError(`Expect \`${text}\` but received \`${nextAtom.text}\``, this._pos, this._input)
 
     this._next()
-    return this._currentAtom.text
+    // Not EOF
+    return this._currentAtom.text!
   }
 
   get() {

@@ -91,23 +91,32 @@ import type { Lexer } from './Lexer'
 interface TypedNode {
   root: undefined
   algorithm: undefined
-  algorithmc: undefined
+  algorithmic: undefined
   caption: undefined
   block: undefined
   function: {
     type: string
     name: string
   }
-  ifNode: undefined
-  loopNode: string
-  repeatNode: string
-  stmtNode: string
-  cmdNode: string
-  commentNode: undefined
-  callNode: undefined
+  if: undefined | {
+    numElif: number
+    hasElse: boolean
+  }
+  loop: string
+  repeat: string
+  statement: string
+  command: string
+  comment: undefined
+  call: undefined | string
   'open-text': undefined
   'close-text': undefined
 }
+
+type OmitUndefined<T extends readonly unknown[]> = T extends readonly [...infer Front, infer R]
+  ? undefined extends R
+    ? OmitUndefined<Front> | T
+    : T
+  : T
 
 type NodeType = keyof TypedNode
 
@@ -117,8 +126,9 @@ export class ParseNode<T extends NodeType> {
   whitespace?: boolean
 
   children: ParseNode<NodeType>[]
-  constructor(type: T, val: TypedNode[T]) {
+  constructor(type: T, ...[val]: OmitUndefined<[TypedNode[T]]>) {
     this.type = type
+    // @ts-expect-error we know when the value will be undefined
     this.value = val
     this.children = []
   }
@@ -154,8 +164,8 @@ export class ParseNode<T extends NodeType> {
 }
 
 /* AtomNode is the leaf node of parse tree */
-class AtomNode extends ParseNode {
-  constructor(type: keyof typeof ACCEPTED_TOKEN_BY_ATOM, value: string, whitespace: boolean) {
+class AtomNode<T extends keyof typeof ACCEPTED_TOKEN_BY_ATOM> extends ParseNode<T> {
+  constructor(type: T, value: string, whitespace: boolean) {
     super(type, value)
     this.whitespace = whitespace
   }
@@ -337,15 +347,15 @@ export class Parser {
   }
 
   _parseControl() {
-    let controlNode = this._parseIf()
-    if (controlNode)
-      return controlNode
-    controlNode = this._parseLoop()
-    if (controlNode)
-      return controlNode
-    controlNode = this._parseRepeat()
-    if (controlNode)
-      return controlNode
+    const controlNodeIf = this._parseIf()
+    if (controlNodeIf)
+      return controlNodeIf
+    const controlNodeLoop = this._parseLoop()
+    if (controlNodeLoop)
+      return controlNodeLoop
+    const controlNodeRepeat = this._parseRepeat()
+    if (controlNodeRepeat)
+      return controlNodeRepeat
   }
 
   _parseFunction() {
@@ -354,7 +364,7 @@ export class Parser {
       return null
 
     // \FUNCTION{funcName}{funcArgs}
-    const funcType = this._lexer.get().text // FUNCTION or PROCEDURE
+    const funcType = this._lexer.get().text! // FUNCTION or PROCEDURE
     lexer.expect('open')
     const funcName = lexer.expect('ordinary')
     lexer.expect('close')
