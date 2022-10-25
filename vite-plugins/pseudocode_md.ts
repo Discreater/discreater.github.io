@@ -3,6 +3,7 @@
 /**
 The MIT License (MIT)
 
+Copyright (c) 2022 Discreater (D)
 Copyright (c) 2018 Samuel Horwitz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,9 +27,13 @@ SOFTWARE.
 
 'use strict'
 
-const pseudocode = require('pseudocode')
+import type MarkdownIt from 'markdown-it'
+import type ParserBlock from 'markdown-it/lib/parser_block.js'
+import type Token from 'markdown-it/lib/token.js'
+import type { Options } from './pseudocode'
+import * as pseudocode from './pseudocode'
 
-function pseudocode_block(state, start, end, silent) {
+const pseudocode_block: ParserBlock.RuleBlock = (state, start, end, silent) => {
   let lastLine
   let pos = state.bMarks[start] + state.tShift[start]
   let max = state.eMarks[start]
@@ -83,22 +88,18 @@ function pseudocode_block(state, start, end, silent) {
   return true
 }
 
-module.exports = function pseudocode_plugin(md, options) {
-  // Default options
-
-  options = options || {}
-
-  const pseudocodeBlock = function (code) {
+export const markdownItPseudocode: MarkdownIt.PluginWithOptions<Options> = (md, options) => {
+  const pseudocodeBlock = (code: string) => {
+    const html = pseudocode.renderToString(code, options)
     try {
-      return `<p>${pseudocode.renderToString(code, options)}</p>`
+      return `<p>${html}</p>`
     } catch (error) {
-      if (options.throwOnError)
-        console.error(error)
+      console.error(error)
       return code
     }
   }
 
-  const blockRenderer = function (tokens, idx) {
+  const blockRenderer = (tokens: Token[], idx: number) => {
     return `${pseudocodeBlock(tokens[idx].content)}\n`
   }
 

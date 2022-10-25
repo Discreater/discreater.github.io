@@ -18,8 +18,7 @@ import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import transformerDirective from '@unocss/transformer-directives'
 import { get_all_blogs } from './vite-plugins/get_blogs_info'
 import { markdownItTaOqi } from './vite-plugins/md_plugins'
-// @ts-expect-error missing types
-import markdownItPseudocode from './vite-plugins/pseudocode.js'
+import { markdownItPseudocode } from './vite-plugins/pseudocode_md.js'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -102,6 +101,7 @@ export default defineConfig({
           })
           .use(markdownItPseudocode, {
             lineNumber: true,
+            commentDelimiter: '▷ ',
           })
           .use(Anchor)
       },
@@ -115,6 +115,24 @@ export default defineConfig({
         name: 'Discreater\'s Blog',
         short_name: 'Discreater',
         theme_color: '#ffffff',
+        icons: [
+          {
+            src: '/pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable',
+          },
+        ],
       },
     }),
 
