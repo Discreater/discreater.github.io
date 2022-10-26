@@ -15,3 +15,7 @@ export function toString(obj: any): string {
     parts.push(`${member}: ${toString(obj[member])}`)
   return parts.join(', ')
 }
+
+export type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][]

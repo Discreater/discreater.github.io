@@ -87,8 +87,9 @@
 import * as utils from './utils'
 import { ParseError } from './ParseError'
 import type { Lexer } from './Lexer'
+import type { Entries } from './utils'
 
-interface TypedNode {
+interface TypedBaseNode {
   root: undefined
   algorithm: undefined
   algorithmic: undefined
@@ -112,6 +113,10 @@ interface TypedNode {
   'close-text': undefined
 }
 
+type TypedAtomNode = Record<keyof typeof ACCEPTED_TOKEN_BY_ATOM, string>
+
+interface TypedNode extends TypedBaseNode, TypedAtomNode { }
+
 type OmitUndefined<T extends readonly unknown[]> = T extends readonly [...infer Front, infer R]
   ? undefined extends R
     ? OmitUndefined<Front> | T
@@ -120,8 +125,8 @@ type OmitUndefined<T extends readonly unknown[]> = T extends readonly [...infer 
 
 type NodeType = keyof TypedNode
 
-export class ParseNode<T extends NodeType> {
-  type: NodeType
+export class ParseNode<T extends NodeType = NodeType> {
+  type: T
   value: TypedNode[T]
   whitespace?: boolean
 
@@ -177,8 +182,12 @@ const COMMANDS = ['break', 'continue'] as const
 
 // type Suit<T extends (readonly string[])> = T[number]
 
+interface Token { tokenType: string; tokenValues?: string[] }
+
+const typedValue = <R>(value: R) => value as Record<keyof R, Token>
+
 /* The token accepted by atom of specific type */
-const ACCEPTED_TOKEN_BY_ATOM = {
+const ACCEPTED_TOKEN_BY_ATOM = typedValue({
   'ordinary': { tokenType: 'ordinary' },
   'math': { tokenType: 'math' },
   'special': { tokenType: 'special' },
@@ -210,7 +219,7 @@ const ACCEPTED_TOKEN_BY_ATOM = {
     tokenType: 'func',
     tokenValues: ['textbackslash'],
   },
-} as const
+} as const)
 
 export class Parser {
   _lexer: Lexer
@@ -565,7 +574,7 @@ export class Parser {
   }
 
   _parseAtom() {
-    for (const tokens of Object.entries(ACCEPTED_TOKEN_BY_ATOM)) {
+    for (const tokens of Object.entries(ACCEPTED_TOKEN_BY_ATOM) as Entries<typeof ACCEPTED_TOKEN_BY_ATOM>) {
       const [atomType, acceptToken] = tokens
       let tokenText = this._lexer.accept(acceptToken.tokenType, acceptToken.tokenValues)
       if (tokenText === null)
