@@ -1,6 +1,6 @@
 ---
 title: Git Submodules 总结
-tags: "git"
+tags: "git,WIP"
 date: "2021-08-6"
 ---
 
@@ -50,7 +50,7 @@ git submodule add [<options>] [--] <repository> [<path>]
     # sh
     rm -rf .git/modules/<path>
     # powershell
-    rm -Force .git\modules\egui
+    rm -Force .git\modules\<path>
     ```
 
 ## 使用场景

@@ -1,5 +1,7 @@
 @import './markdown.css';
 @import './highlight.css';
+@import './pseudocode.css';
+@import './katex.css';
 
 body {
   font-family: bitter,'noto serif sc','source han serif sc',pingfang sc,hiragino sans gb,wenquanyi micro hei,sans-serif;

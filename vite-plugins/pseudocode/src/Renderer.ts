@@ -313,7 +313,7 @@ class HTMLBuilder {
     this._textBuf = []
   }
 
-  beginDiv(className: string, style?: string | Record<string, string>, extraStyle?) {
+  beginDiv(className: string, style?: string | Record<string, string>, extraStyle?: string) {
     this._beginTag('div', className, style, extraStyle)
     this._body.push('\n') // make the generated HTML more human friendly
     return this
