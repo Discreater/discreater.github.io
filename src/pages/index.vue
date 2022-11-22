@@ -8,11 +8,17 @@ import axios from 'axios'
 import MioIcon from '~/assets/icons/mio.png'
 import meta from '~/meta'
 import QClock from '~/components/QClock.vue'
+import { BlogInfo } from '~/types/blog_info'
 
 const router = useRouter()
 const { t } = useI18n()
 
-const blogs = meta.blogs
+const tags = (blog: BlogInfo) => {
+  return blog.fm.tags.split(',').map((tag) => tag.trim())
+}
+
+const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP'))
+
 
 const handleBlogTitleClick = (key: unknown) => {
   router.push(`/${key}`)
@@ -70,8 +76,8 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
               </template>
               <template #description>
                 <NSpace>
-                  <NTag v-for="tag, idx in blog.fm.tags.split(',')" :key="idx" type="success">
-                    {{ tag }}
+                  <NTag v-for="tag, idx in tags(blog)" :key="idx" type="success">
+                    {{ tag.trim() }}
                   </NTag>
                 </NSpace>
               </template>
