@@ -7,7 +7,7 @@ import Markdown from 'vite-plugin-md'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Inspect from 'vite-plugin-inspect'
-import { replaceCodePlugin } from 'vite-plugin-replace'
+import { replaceCodePlugin } from './vite-plugins/replace'
 import Anchor from 'markdown-it-anchor'
 import LinkAttributes from 'markdown-it-link-attributes'
 // @ts-expect-error missing types
