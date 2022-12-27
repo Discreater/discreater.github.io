@@ -209,6 +209,7 @@ class TextEnvironment {
             '\\%': '%',
             '\\_': '_',
           }
+          // @ts-expect-error It is beyond my ability
           const replaceStr = replace[text]
           this._html.putText(replaceStr)
           break
@@ -217,6 +218,7 @@ class TextEnvironment {
           const name2Values = {
             textbackslash: '\\',
           }
+          // @ts-expect-error It is beyond my ability
           const symbolValue = name2Values[text]
           this._html.putText(symbolValue)
           break
@@ -228,6 +230,7 @@ class TextEnvironment {
             '\'': '’',
             '\'\'': '”',
           }
+          // @ts-expect-error It is beyond my ability
           const realQuote = quoteReplace[text]
           this._html.putText(realQuote)
           break
@@ -236,6 +239,7 @@ class TextEnvironment {
           // \CALL{funcName}{funcArgs}
           // ==>
           // funcName(funcArgs)
+          // @ts-expect-error It is beyond my ability
           this._html.beginSpan('ps-funcname').putText(text).endSpan()
           this._html.write('(')
           const argsTextNode = node.children[0]
@@ -266,6 +270,7 @@ class TextEnvironment {
         //      }           --> restore the last typestyle
         case 'font-dclr':
         case 'sizing-dclr': {
+          // @ts-expect-error It is beyond my ability
           this._textStyle.updateByCommand(text)
           this._html.beginSpan(null, this._textStyle.toCSS())
           const textEnvForDclr = new TextEnvironment(this._nodes,
@@ -280,6 +285,7 @@ class TextEnvironment {
             continue
 
           const innerTextStyle = new TextStyle(this._textStyle.fontSize())
+          // @ts-expect-error It is beyond my ability
           innerTextStyle.updateByCommand(text)
           this._html.beginSpan(null, innerTextStyle.toCSS())
           const textEnvForCmd = new TextEnvironment(textNode.children,
@@ -338,7 +344,7 @@ class HTMLBuilder {
     return this
   }
 
-  beginSpan(className: string, style?: string | Record<string, string>, extraStyle?: string) {
+  beginSpan(className: string | null, style?: string | Record<string, string>, extraStyle?: string) {
     this._flushText()
     return this._beginTag('span', className, style, extraStyle)
   }
@@ -393,7 +399,7 @@ class HTMLBuilder {
               either a string, e.g., 'color:red', or an object, e.g.
               { color: 'red', margin-left: '1em'}
   */
-  _beginTag(tag: string, className: string, style?: string | Record<string, string>, extraStyle?: string) {
+  _beginTag(tag: string, className: string | null, style?: string | Record<string, string>, extraStyle?: string) {
     let spanHTML = `<${tag}`
     if (className)
       spanHTML += ` class="${className}"`
@@ -694,7 +700,9 @@ export class Renderer {
         // function <ordinary>(<text>)
         // ...
         // end function
+        // @ts-expect-error It is beyond my ability
         const funcType = node.value.type.toLowerCase()
+        // @ts-expect-error It is beyond my ability
         const defFuncName = node.value.name
         textNode = node.children[0]
         const blockNode = node.children[1]
@@ -733,6 +741,7 @@ export class Renderer {
         this._buildTree(ifBlock)
 
         // ( \ELIF {<cond>} <block> )[0..n]
+        // @ts-expect-error It is beyond my ability
         const numElif = node.value.numElif
         for (let ei = 0; ei < numElif; ei++) {
           // \ELIF {<cond>}
@@ -755,6 +764,7 @@ export class Renderer {
         }
 
         // ( \ELSE <block> )[0..1]
+        // @ts-expect-error It is beyond my ability
         const hasElse = node.value.hasElse
         if (hasElse) {
           // \ELSE
@@ -793,6 +803,7 @@ export class Renderer {
           forall: 'for all',
           while: 'while',
         }
+        // @ts-expect-error It is beyond my ability
         this._typeKeyword(`${displayLoopName[loopType]} `)
         const loopCond = node.children[0]
         this._buildTree(loopCond)
@@ -843,7 +854,7 @@ export class Renderer {
       }
       // ------------------- Lines -------------------
       case 'command': {
-        const cmdName = node.value
+        const cmdName = node.value as string
         const displayCmdName = {
           break: 'break',
           continue: 'continue',
@@ -862,14 +873,14 @@ export class Renderer {
         break
       case 'comment':
         textNode = node.children[0]
-        this._html.beginSpan('ps-comment')
-        this._html.putText(this._options.commentDelimiter)
+        this._html!.beginSpan('ps-comment')
+        this._html!.putText(this._options.commentDelimiter)
         this._buildTree(textNode)
-        this._html.endSpan()
+        this._html!.endSpan()
         break
       case 'statement': {
         // statements: \STATE, \ENSURE, \PRINT, \RETURN, etc.
-        const stmtName = node.value
+        const stmtName = node.value as string
         const displayStmtName = {
           state: '',
           ensure: 'Ensure: ',

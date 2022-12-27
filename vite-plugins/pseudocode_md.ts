@@ -29,7 +29,7 @@ SOFTWARE.
 
 import type MarkdownIt from 'markdown-it'
 import type ParserBlock from 'markdown-it/lib/parser_block.js'
-import type Token from 'markdown-it/lib/token.js'
+import type { RenderRule } from 'markdown-it/lib/renderer'
 import type { Options } from './pseudocode'
 import * as pseudocode from './pseudocode'
 
@@ -99,7 +99,7 @@ export const markdownItPseudocode: MarkdownIt.PluginWithOptions<Options> = (md, 
     }
   }
 
-  const blockRenderer = (tokens: Token[], idx: number) => {
+  const blockRenderer: RenderRule = (tokens, idx, _options, _env, _render) => {
     return `${pseudocodeBlock(tokens[idx].content)}\n`
   }
 
