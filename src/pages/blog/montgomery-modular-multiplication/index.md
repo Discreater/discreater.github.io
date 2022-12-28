@@ -164,3 +164,7 @@ This algorithm replaces all multiplications and additions in each iteration with
 <img src="./imgs/compress1.png" alt="compress1" width="400" height="400" />
 
 $\tilde{Z}_L*M''$ has $m$ partial products, and each partial products has a tail bit. Why there exists a tail bit? Because when encoded group of  $\tilde{Z}_L$ is negative, the $M''$ need to be complemented. To remove the add operation, we split the `+1` operation from the complement procedure. 
+
+### Compress2
+
+![compress2](./imgs/compress2.png)
