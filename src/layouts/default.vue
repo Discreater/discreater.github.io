@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
-import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui'
-import { useRoute } from 'vue-router'
+import { computed, onMounted, ref, watch } from 'vue';
+import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
+import { useRoute } from 'vue-router';
 
-import MyHeader from '~/components/MyHeader.vue'
-import MyFooter from '~/components/MyFooter.vue'
-import BlogAnchor from '~/components/BlogAnchor'
-import meta from '~/meta'
-import QTime from '~/components/QTime.vue'
-import type { BlogInfo, FrontMatter } from '~/types/blog_info'
-import SpotLight from '~/components/SpotLight.vue'
+import MyHeader from '~/components/MyHeader.vue';
+import MyFooter from '~/components/MyFooter.vue';
+import BlogAnchor from '~/components/BlogAnchor';
+import meta from '~/meta';
+import QTime from '~/components/QTime.vue';
+import type { BlogInfo, FrontMatter } from '~/types/blog_info';
+import SpotLight from '~/components/SpotLight.vue';
 
-const current = ref()
-const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined)
+const current = ref();
+const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined);
 
-const route = useRoute()
-const currentBlog = ref<BlogInfo | undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)))
+const route = useRoute();
+const currentBlog = ref<BlogInfo | undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)));
 watch(() => route.path, async (path) => {
-  currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1))
-})
+  currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1));
+});
 
 onMounted(() => {
   // Add copy function to code blocks
-  const copies = document.querySelectorAll('figure.code-block button.copy')
+  const copies = document.querySelectorAll('figure.code-block button.copy');
   copies.forEach((btn) => {
     btn.addEventListener('click', () => {
       if (btn.parentNode && btn.parentNode.nextSibling) {
-        const pre = btn.parentNode.nextSibling
-        const content = pre.textContent
+        const pre = btn.parentNode.nextSibling;
+        const content = pre.textContent;
         if (content) {
-          navigator.clipboard.writeText(content)
-          btn.classList.remove('copy')
-          btn.classList.add('copied')
+          navigator.clipboard.writeText(content);
+          btn.classList.remove('copy');
+          btn.classList.add('copied');
           setTimeout(() => {
-            btn.classList.remove('copied')
-            btn.classList.add('copy')
-          }, 1000)
+            btn.classList.remove('copied');
+            btn.classList.add('copy');
+          }, 1000);
         }
       }
-    })
-  })
-})
+    });
+  });
+});
 </script>
 
 <template>

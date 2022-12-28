@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
 
-const clockRef = ref<HTMLElement | null>(null)
-const hourHand = ref<HTMLDivElement | null>(null)
-const minuteHand = ref<HTMLDivElement | null>(null)
-const secondHand = ref<HTMLDivElement | null>(null)
+const clockRef = ref<HTMLElement | null>(null);
+const hourHand = ref<HTMLDivElement | null>(null);
+const minuteHand = ref<HTMLDivElement | null>(null);
+const secondHand = ref<HTMLDivElement | null>(null);
 
 onMounted(() => {
-  const date = new Date()
-  const seconds = date.getSeconds()
-  const minutes = date.getMinutes()
-  const hours = date.getHours()
+  const date = new Date();
+  const seconds = date.getSeconds();
+  const minutes = date.getMinutes();
+  const hours = date.getHours();
 
-  const secondAngle = seconds * 6
-  const minuteAngle = minutes * 6
-  const hourAngle = (hours * 30) + (minutes / 2)
+  const secondAngle = seconds * 6;
+  const minuteAngle = minutes * 6;
+  const hourAngle = (hours * 30) + (minutes / 2);
 
-  hourHand.value!.style.transform = `rotateZ(${hourAngle - secondAngle}deg)`
-  minuteHand.value!.style.transform = `rotateZ(${minuteAngle - secondAngle}deg)`
-  clockRef.value!.style.transform = `rotateZ(${-secondAngle}deg)`
-})
+  hourHand.value!.style.transform = `rotateZ(${hourAngle - secondAngle}deg)`;
+  minuteHand.value!.style.transform = `rotateZ(${minuteAngle - secondAngle}deg)`;
+  clockRef.value!.style.transform = `rotateZ(${-secondAngle}deg)`;
+});
 </script>
 
 <template>

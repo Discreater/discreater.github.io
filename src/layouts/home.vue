@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import MyFooter from '~/components/MyFooter.vue'
-import SpotLight from '~/components/SpotLight.vue'
+import MyFooter from '~/components/MyFooter.vue';
+import SpotLight from '~/components/SpotLight.vue';
 </script>
 
 <template>

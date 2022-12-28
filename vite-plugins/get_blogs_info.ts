@@ -1,34 +1,34 @@
-import path from 'path'
-import fs from 'fs'
-import fm from 'front-matter'
-import MarkdownIt from 'markdown-it'
-import Anchor from 'markdown-it-anchor'
+import path from 'path';
+import fs from 'fs';
+import fm from 'front-matter';
+import MarkdownIt from 'markdown-it';
+import Anchor from 'markdown-it-anchor';
 
-import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info'
+import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info';
 
 function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
   if (level === 1 || headers.length === 0)
-    headers.push(header)
+    headers.push(header);
   else
-    insertHeader(headers[headers.length - 1].children, header, level - 1)
+    insertHeader(headers[headers.length - 1].children, header, level - 1);
 }
 
 function extractBodyIt(body: string) {
-  const headers: BlogHeader[] = []
+  const headers: BlogHeader[] = [];
   const md = MarkdownIt().use(Anchor, {
     callback: (_token, { slug, title }) => {
       const header = {
         title,
         slug,
         children: [],
-      }
-      const level = parseInt(_token.tag.substring(1))
+      };
+      const level = parseInt(_token.tag.substring(1));
       if (!isNaN(level))
-        insertHeader(headers, header, level)
+        insertHeader(headers, header, level);
     },
-  })
-  md.render(body)
-  return headers
+  });
+  md.render(body);
+  return headers;
 }
 
 // function extractBody(body: string) {
@@ -42,44 +42,44 @@ function extractBodyIt(body: string) {
 // }
 
 export function get_all_blogs(project_path: string): string {
-  const base_path = path.resolve(project_path, 'src/pages/blog')
-  const blogs = fs.readdirSync(base_path)
-  const blogs_path = blogs.map(blog => ({ path: path.join(base_path, blog, 'index.md'), name: blog }))
+  const base_path = path.resolve(project_path, 'src/pages/blog');
+  const blogs = fs.readdirSync(base_path);
+  const blogs_path = blogs.map(blog => ({ path: path.join(base_path, blog, 'index.md'), name: blog }));
   const blog_attributes = blogs_path.flatMap((blog) => {
-    let data
+    let data;
     try {
-      data = fs.readFileSync(blog.path, 'utf-8')
-      const fmResult = fm(data)
-      const headers = extractBodyIt(fmResult.body)
+      data = fs.readFileSync(blog.path, 'utf-8');
+      const fmResult = fm(data);
+      const headers = extractBodyIt(fmResult.body);
       return [
         {
           fm: fmResult.attributes as FrontMatter,
           headers,
           path: `blog/${blog.name}`,
         } as BlogInfo,
-      ]
+      ];
     } catch (_) {
-      return []
+      return [];
     }
-  })
+  });
   blog_attributes.sort((a, b) => {
-    let aDate: Date | undefined
-    let bDate: Date | undefined
+    let aDate: Date | undefined;
+    let bDate: Date | undefined;
     try {
-      aDate = new Date(a.fm.date)
-      bDate = new Date(b.fm.date)
+      aDate = new Date(a.fm.date);
+      bDate = new Date(b.fm.date);
     } catch (_) {
     }
-    let dateRes: number
+    let dateRes: number;
     if (aDate === undefined && bDate === undefined)
-      dateRes = 0
+      dateRes = 0;
     else if (aDate === undefined || bDate === undefined)
-      return aDate === undefined ? -1 : 1
+      return aDate === undefined ? -1 : 1;
     else
-      dateRes = bDate.getTime() - aDate.getTime()
+      dateRes = bDate.getTime() - aDate.getTime();
     if (dateRes !== 0)
-      return dateRes
-    return a.path > b.path ? -1 : 1
-  })
-  return JSON.stringify(blog_attributes)
+      return dateRes;
+    return a.path > b.path ? -1 : 1;
+  });
+  return JSON.stringify(blog_attributes);
 }

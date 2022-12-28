@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QClock from '~/components/QClock.vue'
+import QClock from '~/components/QClock.vue';
 </script>
 
 <template>

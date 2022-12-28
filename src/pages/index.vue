@@ -1,51 +1,50 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NSpace, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui'
-import { useI18n } from 'vue-i18n'
-import axios from 'axios'
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NSpace, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui';
+import { useI18n } from 'vue-i18n';
+import axios from 'axios';
 
-import MioIcon from '~/assets/icons/mio.png'
-import meta from '~/meta'
-import QClock from '~/components/QClock.vue'
-import { BlogInfo } from '~/types/blog_info'
+import MioIcon from '~/assets/icons/mio.png';
+import meta from '~/meta';
+import QClock from '~/components/QClock.vue';
+import type { BlogInfo } from '~/types/blog_info';
 
-const router = useRouter()
-const { t } = useI18n()
+const router = useRouter();
+const { t } = useI18n();
 
 const tags = (blog: BlogInfo) => {
-  return blog.fm.tags.split(',').map((tag) => tag.trim())
-}
+  return blog.fm.tags.split(',').map(tag => tag.trim());
+};
 
-const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP'))
-
+const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP') || import.meta.env.DEV);
 
 const handleBlogTitleClick = (key: unknown) => {
-  router.push(`/${key}`)
-}
+  router.push(`/${key}`);
+};
 
 const ip = reactive({
   ip: '',
   loading: true,
-})
+});
 
 axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2/comments', {
 }).then((resp) => {
-  const data = (resp.data as any[])
+  const data = (resp.data as any[]);
   const comment = data.reduce((p, c) => {
-    const pDate = new Date(p.created_at)
-    const cDate = new Date(c.created_at)
+    const pDate = new Date(p.created_at);
+    const cDate = new Date(c.created_at);
     if (pDate > cDate)
-      return p
+      return p;
     else
-      return c
-  })
+      return c;
+  });
 
-  ip.ip = JSON.stringify(comment.body)
-  ip.loading = false
+  ip.ip = JSON.stringify(comment.body);
+  ip.loading = false;
 }).catch((reason) => {
-  console.error(reason)
-})
+  console.error(reason);
+});
 </script>
 
 <template>

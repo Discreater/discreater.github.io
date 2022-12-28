@@ -1,7 +1,7 @@
-import { NAnchor, NAnchorLink } from 'naive-ui'
-import type { PropType, VNode } from 'vue'
-import { defineComponent, h } from 'vue'
-import type { BlogHeader } from '~/types/blog_info'
+import { NAnchor, NAnchorLink } from 'naive-ui';
+import type { PropType, VNode } from 'vue';
+import { defineComponent, h } from 'vue';
+import type { BlogHeader } from '~/types/blog_info';
 
 function _renderAnchor(headers: BlogHeader[]): VNode[] {
   return headers.map((header) => {
@@ -9,8 +9,8 @@ function _renderAnchor(headers: BlogHeader[]): VNode[] {
       key: header.slug,
       href: `#${header.slug}`,
       title: header.title,
-    }, () => _renderAnchor(header.children))
-  })
+    }, () => _renderAnchor(header.children));
+  });
 }
 
 export default defineComponent({
@@ -27,6 +27,6 @@ export default defineComponent({
         ignoreGap: true,
       },
       () => _renderAnchor(props.headers),
-    )
+    );
   },
-})
+});

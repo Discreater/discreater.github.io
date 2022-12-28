@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useHead } from '@vueuse/head'
+import { computed } from 'vue';
+import { useHead } from '@vueuse/head';
 import {
   NConfigProvider, darkTheme,
   dateDeDE, dateEnUS, dateEsAR, dateFrFR, dateItIT, dateJaJP, dateRuRU, dateZhCN,
   deDE, enUS, esAR, frFR, itIT, jaJP, ruRU, zhCN,
-} from 'naive-ui'
+} from 'naive-ui';
 
-import { useI18n } from 'vue-i18n'
-import meta from './meta'
-import { isDark } from '~/logic'
+import { useI18n } from 'vue-i18n';
+import { RouterView } from 'vue-router';
+import meta from './meta';
+import { isDark } from '~/logic';
 
 const theme = computed(() => {
-  return isDark.value ? darkTheme : null
-})
+  return isDark.value ? darkTheme : null;
+});
 
-const { locale } = useI18n()
+const { locale } = useI18n();
 
 const localeMap: Record<string, [any, any]> = {
   'en': [enUS, dateEnUS],
@@ -26,13 +27,13 @@ const localeMap: Record<string, [any, any]> = {
   'fr': [frFR, dateFrFR],
   'it': [itIT, dateItIT],
   'ru': [ruRU, dateRuRU],
-}
+};
 
 function getLocale(locale: string) {
   if (locale in localeMap)
-    return localeMap[locale]
+    return localeMap[locale];
 
-  return localeMap.en
+  return localeMap.en;
 }
 
 // https://github.com/vueuse/head
@@ -43,11 +44,11 @@ useHead({
   meta: [
     { name: 'description', content: 'Blogs and others' },
   ],
-})
+});
 </script>
 
 <template>
   <NConfigProvider :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
-    <router-view />
+    <RouterView />
   </NConfigProvider>
 </template>

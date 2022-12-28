@@ -25,86 +25,86 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-'use strict'
+'use strict';
 
-import type MarkdownIt from 'markdown-it'
-import type ParserBlock from 'markdown-it/lib/parser_block.js'
-import type { RenderRule } from 'markdown-it/lib/renderer'
-import type { Options } from './pseudocode'
-import * as pseudocode from './pseudocode'
+import type MarkdownIt from 'markdown-it';
+import type ParserBlock from 'markdown-it/lib/parser_block.js';
+import type { RenderRule } from 'markdown-it/lib/renderer';
+import type { Options } from './pseudocode';
+import * as pseudocode from './pseudocode';
 
 const pseudocode_block: ParserBlock.RuleBlock = (state, start, end, silent) => {
-  let lastLine
-  let pos = state.bMarks[start] + state.tShift[start]
-  let max = state.eMarks[start]
+  let lastLine;
+  let pos = state.bMarks[start] + state.tShift[start];
+  let max = state.eMarks[start];
 
   if (pos + 14 > max)
-    return false
+    return false;
   if (state.src.slice(pos, pos + 14) !== '::: pseudocode')
-    return false
+    return false;
 
-  pos += 14
-  let firstLine = state.src.slice(pos, max)
+  pos += 14;
+  let firstLine = state.src.slice(pos, max);
 
   if (silent)
-    return true
-  let found = false
+    return true;
+  let found = false;
   if (firstLine.trim().slice(-3) === ':::') {
     // Single line expression
-    firstLine = firstLine.trim().slice(0, -3)
-    found = true
+    firstLine = firstLine.trim().slice(0, -3);
+    found = true;
   }
-  let next = start
+  let next = start;
   while (!found) {
-    next++
+    next++;
 
     if (next >= end)
-      break
+      break;
 
-    pos = state.bMarks[next] + state.tShift[next]
-    max = state.eMarks[next]
+    pos = state.bMarks[next] + state.tShift[next];
+    max = state.eMarks[next];
 
     if (pos < max && state.tShift[next] < state.blkIndent) {
       // non-empty line with negative indent should stop the list:
-      break
+      break;
     }
 
     if (state.src.slice(pos, max).trim().slice(-3) === ':::') {
-      const lastPos = state.src.slice(0, max).lastIndexOf(':::')
-      lastLine = state.src.slice(pos, lastPos)
-      found = true
+      const lastPos = state.src.slice(0, max).lastIndexOf(':::');
+      lastLine = state.src.slice(pos, lastPos);
+      found = true;
     }
   }
 
-  state.line = next + 1
+  state.line = next + 1;
 
-  const token = state.push('pseudocode_block', 'pseudocode', 0)
-  token.block = true
+  const token = state.push('pseudocode_block', 'pseudocode', 0);
+  token.block = true;
   token.content = (firstLine && firstLine.trim() ? `${firstLine}\n` : '')
     + state.getLines(start + 1, next, state.tShift[start], true)
-    + (lastLine && lastLine.trim() ? lastLine : '')
-  token.map = [start, state.line]
-  token.markup = '::: pseudocode'
-  return true
-}
+    + (lastLine && lastLine.trim() ? lastLine : '');
+  token.map = [start, state.line];
+  token.markup = '::: pseudocode';
+  return true;
+};
 
 export const markdownItPseudocode: MarkdownIt.PluginWithOptions<Options> = (md, options) => {
   const pseudocodeBlock = (code: string) => {
-    const html = pseudocode.renderToString(code, options)
+    const html = pseudocode.renderToString(code, options);
     try {
-      return `<p>${html}</p>`
+      return `<p>${html}</p>`;
     } catch (error) {
-      console.error(error)
-      return code
+      console.error(error);
+      return code;
     }
-  }
+  };
 
   const blockRenderer: RenderRule = (tokens, idx, _options, _env, _render) => {
-    return `${pseudocodeBlock(tokens[idx].content)}\n`
-  }
+    return `${pseudocodeBlock(tokens[idx].content)}\n`;
+  };
 
   md.block.ruler.after('blockquote', 'pseudocode_block', pseudocode_block, {
     alt: ['paragraph', 'reference', 'blockquote', 'list'],
-  })
-  md.renderer.rules.pseudocode_block = blockRenderer
-}
+  });
+  md.renderer.rules.pseudocode_block = blockRenderer;
+};
