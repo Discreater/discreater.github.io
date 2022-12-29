@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NSkeleton, NSpace, NTabPane, NTabs, NTag, NText, NThing } from 'naive-ui';
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
-import axios from 'axios';
 
-import MioIcon from '~/assets/icons/mio.png';
+import MxlIcon from '~/assets/icons/mxl.png';
 import meta from '~/meta';
 import QClock from '~/components/QClock.vue';
 import type { BlogInfo } from '~/types/blog_info';
@@ -22,29 +20,6 @@ const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP') || import.me
 const handleBlogTitleClick = (key: unknown) => {
   router.push(`/${key}`);
 };
-
-const ip = reactive({
-  ip: '',
-  loading: true,
-});
-
-axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2/comments', {
-}).then((resp) => {
-  const data = (resp.data as any[]);
-  const comment = data.reduce((p, c) => {
-    const pDate = new Date(p.created_at);
-    const cDate = new Date(c.created_at);
-    if (pDate > cDate)
-      return p;
-    else
-      return c;
-  });
-
-  ip.ip = JSON.stringify(comment.body);
-  ip.loading = false;
-}).catch((reason) => {
-  console.error(reason);
-});
 </script>
 
 <template>
@@ -54,7 +29,7 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
   <div flex flex-col items-center>
     <NH1>{{ t('intro.whos-site', { name: "Discreater" }) }}</NH1>
     <NA rel="noreferrer" href="https://github.com/discreater" target="_blank">
-      <NAvatar size="large" :src="MioIcon" />
+      <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
       <p>Discreater</p>
     </NA>
     <NTabs type="line" justify-content="space-evenly" default-value="blogs">
@@ -83,10 +58,6 @@ axios.get('https://api.github.com/repos/discreater/discreater.github.io/issues/2
             </NThing>
           </NListItem>
         </NList>
-      </NTabPane>
-      <NTabPane name="lan-ip" tab="LAN-ip">
-        <NSkeleton v-if="ip.loading" text class="w-1/3" />
-        <NText>{{ ip.ip }}</NText>
       </NTabPane>
     </NTabs>
   </div>
