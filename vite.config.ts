@@ -33,6 +33,12 @@ export default defineConfig({
   plugins: [
     Vue({
       include: [/\.vue$/, /\.md$/],
+      template: {
+        compilerOptions: {
+          // TODO: remove vite plugin md
+          isCustomElement: tag => ['msubsup', 'mtext', 'mspace', 'msub', 'eq', 'math', 'semantics', 'annotation', 'mrow', 'msup', 'mn', 'mo', 'mi'].includes(tag),
+        },
+      },
     }),
 
     replaceCodePlugin ({

@@ -70,3 +70,41 @@
   @apply text-strong-light dark:text-strong-dark;
   font-weight: 700;
 }
+
+html:not(.dark) .prose > table {
+  --prose-table-header-bg-color: #eaf4fc;
+  --prose-table-even-bg-color: #f9f9f9;
+  --prose-table-shadow-color: #00000026;
+  --prose-table-border-color: #dddddd;
+}
+
+html.dark .prose > table {
+  --prose-table-header-bg-color: #222a32;
+  --prose-table-even-bg-color: #232323;
+  --prose-table-shadow-color: #ffffff14;
+  --prose-table-border-color: #555555;
+}
+
+.prose > table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px var(--prose-table-shadow-color);
+}
+
+.prose > table thead tr {
+  background-color: var(--prose-table-header-bg-color);
+}
+
+.prose > table tbody tr {
+  border-bottom: thin solid var(--prose-table-border-color);
+}
+
+.prose > table th, table td {
+  padding: 12px 15px;
+}
+
+.prose > table tbody tr:nth-of-type(even) {
+  background-color: var(--prose-table-even-bg-color);
+}
+
