@@ -171,7 +171,6 @@ export default defineConfig({
       'vue-router',
       '@vueuse/core',
       '@vueuse/head',
-      'axios',
     ],
     exclude: [
       'vue-demi',
