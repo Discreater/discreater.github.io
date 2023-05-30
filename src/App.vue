@@ -16,6 +16,16 @@ const theme = computed(() => {
   return isDark.value ? darkTheme : null;
 });
 
+const themePrint = computed(() => {
+  return isDark.value
+    ? undefined
+    : {
+        Card: {
+          colorEmbedded: '#fff',
+        },
+      };
+});
+
 const { locale } = useI18n();
 
 const localeMap: Record<string, [any, any]> = {
@@ -48,7 +58,10 @@ useHead({
 </script>
 
 <template>
-  <NConfigProvider :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme">
+  <NConfigProvider
+    :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme"
+    :theme-overrides="themePrint"
+  >
     <RouterView />
   </NConfigProvider>
 </template>
