@@ -26,14 +26,14 @@ function handleBlogTitleClick(key: unknown) {
 }
 
 const diaries = generatedRoutes.filter((route) => {
-  // route: /diary/2022/11
+  // route: /diaries/2022/11
   const splitted = route.path.split('/');
   return splitted[1] === 'diaries' && splitted.length >= 4;
 }).map((route) => {
-  const splitted = route.path.split('/');
+  const [_0, _1, year, month] = route.path.split('/');
   return {
-    year: splitted[2],
-    month: splitted[3],
+    year,
+    month,
     route,
   };
 }).sort((a, b) => {
