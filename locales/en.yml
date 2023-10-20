@@ -1,19 +1,13 @@
-locale: English
 button:
   about: About
   back: Back
-  go: GO
   home: Home
   toggle_dark: Toggle to dark mode
-  toggle_light: Toggle to light mode
   toggle_langs: Change languages
+  toggle_light: Toggle to light mode
 home:
   diaries: Diaries
 intro:
   blogs: Blogs
-  dynamic-route: Demo of dynamic route
-  hi: Hi, {name}!
-  whats-your-name: What's your name?
-  whos-blog: '{name}''s Blog'
   whos-site: '{name}''s Site'
-not-found: Not found
+locale: English

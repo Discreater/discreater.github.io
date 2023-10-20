@@ -1,17 +1,13 @@
 button:
   about: これは？
   back: 戻る
-  go: 進む
   home: ホーム
   toggle_dark: ダークモード切り替え
   toggle_langs: 言語切り替え
   toggle_light: ライトモード切り替え
+home:
+  diaries: 日記
 intro:
   blogs: ブログ
-  dynamic-route: 動的ルートのデモ
-  hi: こんにちは、{name}!
-  whats-your-name: 君の名は。
-  whos-blog: '{name} のブログ'
   whos-site: '{name} のホームページ'
 locale: 日本語
-not-found: 見つかりませんでした

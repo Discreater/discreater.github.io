@@ -1,19 +1,13 @@
-locale: 简体中文
 button:
   about: 关于
   back: 返回
-  go: 确定
   home: 首页
   toggle_dark: 切换到深色模式
-  toggle_light: 切换到亮色模式
   toggle_langs: 切换语言（并不能切换文章语言
+  toggle_light: 切换到亮色模式
 home:
   diaries: 日记
 intro:
   blogs: 博客
-  dynamic-route: 动态路由演示
-  hi: 你好，{name}
-  whats-your-name: 输入你的名字
-  whos-blog: '{name} 的博客'
   whos-site: '{name} 的主页'
-not-found: 未找到页面
+locale: 简体中文
