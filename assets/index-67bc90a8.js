@@ -1,0 +1,1 @@
+import{f as o,o as t,c,e as n,_ as s,g as e}from"./index-4249147f.js";const a={flex:"","flex-col":"",items:"center",space:"y-2"},_=o({__name:"index",setup(f){return(r,i)=>(t(),c("div",a,[n(s,{"w-60":"","h-60":""})]))}});typeof e=="function"&&e(_);export{_ as default};
