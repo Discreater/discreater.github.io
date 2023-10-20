@@ -4,7 +4,6 @@ import Vue from '@vitejs/plugin-vue';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
 import Markdown from 'unplugin-vue-markdown/vite';
-import { VitePWA } from 'vite-plugin-pwa';
 import VueI18n from '@intlify/unplugin-vue-i18n/vite';
 import Inspect from 'vite-plugin-inspect';
 import Anchor from 'markdown-it-anchor';
@@ -115,35 +114,6 @@ export default defineConfig({
           })
           .use(MarkdownItFootNote)
           .use(Anchor);
-      },
-    }),
-
-    // https://github.com/antfu/vite-plugin-pwa
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.png', 'robots.txt'],
-      manifest: {
-        name: 'Discreater\'s Blog',
-        short_name: 'Discreater',
-        theme_color: '#ffffff',
-        icons: [
-          {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
       },
     }),
 

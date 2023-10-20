@@ -14,8 +14,7 @@
       "vite/client",
       "vite-plugin-pages/client",
       "vite-plugin-vue-layouts/client",
-      "vitest/importMeta",
-      "vite-plugin-pwa/client"
+      "vitest/importMeta"
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,

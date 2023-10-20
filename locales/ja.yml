@@ -1,4 +1,3 @@
-locale: 日本語
 button:
   about: これは？
   back: 戻る
@@ -6,12 +5,13 @@ button:
   home: ホーム
   toggle_dark: ダークモード切り替え
   toggle_langs: 言語切り替え
+  toggle_light: ライトモード切り替え
 intro:
   blogs: ブログ
-  desc: 固執された Vite スターターテンプレート
   dynamic-route: 動的ルートのデモ
   hi: こんにちは、{name}!
   whats-your-name: 君の名は。
   whos-blog: '{name} のブログ'
   whos-site: '{name} のホームページ'
+locale: 日本語
 not-found: 見つかりませんでした
