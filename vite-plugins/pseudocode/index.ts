@@ -6,6 +6,7 @@ import { Lexer } from './src/Lexer';
 import { Parser } from './src/Parser';
 import type { Options } from './src/Renderer';
 import { Renderer } from './src/Renderer';
+
 export { ParseError } from './src/ParseError';
 
 export type { Options } from './src/Renderer';

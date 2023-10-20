@@ -1,16 +1,18 @@
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
-import Markdown from 'vite-plugin-vue-markdown';
+import Markdown from 'unplugin-vue-markdown/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import VueI18n from '@intlify/unplugin-vue-i18n/vite';
 import Inspect from 'vite-plugin-inspect';
 import Anchor from 'markdown-it-anchor';
 import LinkAttributes from 'markdown-it-link-attributes';
+
 // @ts-expect-error missing types
 import TexMath from 'markdown-it-texmath';
+
 // @ts-expect-error missing types
 import MarkdownItFootNote from 'markdown-it-footnote';
 import Katex from 'katex';

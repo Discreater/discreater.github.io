@@ -273,8 +273,7 @@ class TextEnvironment {
           // @ts-expect-error It is beyond my ability
           this._textStyle.updateByCommand(text);
           this._html.beginSpan(null, this._textStyle.toCSS());
-          const textEnvForDclr = new TextEnvironment(this._nodes,
-            this._textStyle);
+          const textEnvForDclr = new TextEnvironment(this._nodes, this._textStyle);
           this._html.putHTML(textEnvForDclr.renderToHTML(backend));
           this._html.endSpan();
           break;
@@ -288,8 +287,7 @@ class TextEnvironment {
           // @ts-expect-error It is beyond my ability
           innerTextStyle.updateByCommand(text);
           this._html.beginSpan(null, innerTextStyle.toCSS());
-          const textEnvForCmd = new TextEnvironment(textNode.children,
-            innerTextStyle);
+          const textEnvForCmd = new TextEnvironment(textNode.children, innerTextStyle);
           this._html.putHTML(textEnvForCmd.renderToHTML(backend));
           this._html.endSpan();
           break;
@@ -904,8 +902,7 @@ export class Renderer {
       }
       // ------------------- Text -------------------
       case 'open-text': {
-        const openTextEnv = new TextEnvironment(node.children,
-          this._globalTextStyle);
+        const openTextEnv = new TextEnvironment(node.children, this._globalTextStyle);
         this._html?.putHTML(openTextEnv.renderToHTML(this.backend));
         break;
       }

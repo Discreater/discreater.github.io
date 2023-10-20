@@ -3,6 +3,7 @@ import { NDropdown } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
 
 import { toggleDark } from '~/logic';
+
 const { t, availableLocales, locale } = useI18n();
 
 const localeDropdownMenuOptions = availableLocales.map((al) => {

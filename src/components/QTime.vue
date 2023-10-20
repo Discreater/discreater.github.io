@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { NTime } from 'naive-ui';
 import { computed, onMounted, ref } from 'vue';
+
 const props = defineProps<{
   time: string | Date | number
 }>();

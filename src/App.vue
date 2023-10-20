@@ -2,9 +2,24 @@
 import { computed } from 'vue';
 import { useHead } from '@vueuse/head';
 import {
-  NConfigProvider, darkTheme,
-  dateDeDE, dateEnUS, dateEsAR, dateFrFR, dateItIT, dateJaJP, dateRuRU, dateZhCN,
-  deDE, enUS, esAR, frFR, itIT, jaJP, ruRU, zhCN,
+  NConfigProvider,
+  darkTheme,
+  dateDeDE,
+  dateEnUS,
+  dateEsAR,
+  dateFrFR,
+  dateItIT,
+  dateJaJP,
+  dateRuRU,
+  dateZhCN,
+  deDE,
+  enUS,
+  esAR,
+  frFR,
+  itIT,
+  jaJP,
+  ruRU,
+  zhCN,
 } from 'naive-ui';
 
 import { useI18n } from 'vue-i18n';

@@ -38,8 +38,7 @@ const mathPattern = {
           continue;
         }
 
-        const res = [str.slice(0, endPos + pos + endDel.length),
-          str.slice(startDel.length, endPos + pos)];
+        const res = [str.slice(0, endPos + pos + endDel.length), str.slice(startDel.length, endPos + pos)];
         return res;
       }
     }

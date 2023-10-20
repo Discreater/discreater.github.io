@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync } from 'node:fs';
 import MarkdownIt from 'markdown-it';
 import { expect, it } from 'vitest';
 import { markdownItTaOqi } from '../vite-plugins/md_plugins';

@@ -1,5 +1,5 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
@@ -22,8 +22,8 @@ function extractBodyIt(body: string) {
         slug,
         children: [],
       };
-      const level = parseInt(_token.tag.substring(1));
-      if (!isNaN(level))
+      const level = Number.parseInt(_token.tag.substring(1));
+      if (!Number.isNaN(level))
         insertHeader(headers, header, level);
     },
   });

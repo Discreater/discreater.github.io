@@ -11,15 +11,15 @@ import type { BlogInfo } from '~/types/blog_info';
 const router = useRouter();
 const { t } = useI18n();
 
-const tags = (blog: BlogInfo) => {
+function tags(blog: BlogInfo) {
   return blog.fm.tags.split(',').map(tag => tag.trim());
-};
+}
 
 const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP') || import.meta.env.DEV);
 
-const handleBlogTitleClick = (key: unknown) => {
+function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
-};
+}
 </script>
 
 <template>
