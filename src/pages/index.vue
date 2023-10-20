@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
+import { RouterLink, useRouter } from 'vue-router';
+import type { MenuOption } from 'naive-ui';
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NMenu, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
 
+import generatedRoutes from 'virtual:generated-pages';
+import { h } from 'vue';
+import { useStorage } from '@vueuse/core';
 import MxlIcon from '~/assets/icons/mxl.png';
 import meta from '~/meta';
 import QClock from '~/components/QClock.vue';
@@ -20,6 +24,43 @@ const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP') || import.me
 function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
 }
+
+const diaries = generatedRoutes.filter((route) => {
+  // route: /diary/2022/11
+  const splitted = route.path.split('/');
+  return splitted[1] === 'diaries' && splitted.length >= 4;
+}).map((route) => {
+  const splitted = route.path.split('/');
+  return {
+    year: splitted[2],
+    month: splitted[3],
+    route,
+  };
+}).sort((a, b) => {
+  if (a.year === b.year)
+    return Number(b.month) - Number(a.month);
+  return Number(b.year) - Number(a.year);
+}).map(({ year, month, route }) => {
+  return {
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          path: route.path,
+        },
+      },
+      { default: () => `${year}.${month}` },
+    ),
+    key: `${year}/${month}`,
+    route,
+  } as MenuOption;
+});
+
+const tabValue = useStorage('homeTabValue', 'blogs');
+
+function handleTabChange(value: string) {
+  tabValue.value = value;
+}
 </script>
 
 <template>
@@ -32,13 +73,13 @@ function handleBlogTitleClick(key: unknown) {
       <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
       <p>Discreater</p>
     </NA>
-    <NTabs type="line" justify-content="space-evenly" default-value="blogs">
-      <NTabPane name="blogs" :tab="t('intro.blogs')" class="text-left">
-        <NList>
+    <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
+      <NTabPane name="blogs" :tab="t('intro.blogs')">
+        <NList class="px-2">
           <NListItem v-for="blog in blogs" :key="blog.path">
             <NThing>
               <template #avatar>
-                <button primary-clickable i-carbon-blog class="text-4xl" text @click="() => handleBlogTitleClick(blog.path)" />
+                <button class="text-4xl primary-clickable i-carbon-blog text" @click="() => handleBlogTitleClick(blog.path)" />
               </template>
               <template #header>
                 <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
@@ -59,13 +100,14 @@ function handleBlogTitleClick(key: unknown) {
           </NListItem>
         </NList>
       </NTabPane>
+      <NTabPane name="diaries" :tab="t('home.diaries')">
+        <NMenu :options="diaries" />
+      </NTabPane>
     </NTabs>
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>
 
 <route lang="yaml">
 meta:

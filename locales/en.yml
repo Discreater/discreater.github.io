@@ -6,9 +6,10 @@ button:
   toggle_dark: Toggle to dark mode
   toggle_light: Toggle to light mode
   toggle_langs: Change languages
+home:
+  diaries: Diaries
 intro:
   blogs: Blogs
-  desc: Opinionated Vite Starter Template
   dynamic-route: Demo of dynamic route
   hi: Hi, {name}!
   whats-your-name: What's your name?

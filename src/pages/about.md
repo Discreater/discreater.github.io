@@ -7,3 +7,5 @@ title: About
 </div>
 
 My website. Blogs and others. Use vitesse template and naive ui.
+
+Source code: https://github.com/Discreater/discreater.github.io

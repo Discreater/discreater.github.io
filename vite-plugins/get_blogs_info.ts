@@ -42,7 +42,7 @@ function extractBodyIt(body: string) {
 // }
 
 export function get_all_blogs(project_path: string): string {
-  const base_path = path.resolve(project_path, 'src/pages/blog');
+  const base_path = path.resolve(project_path, 'src/pages/blogs');
   const blogs = fs.readdirSync(base_path);
   const blogs_path = blogs.map(blog => ({ path: path.join(base_path, blog, 'index.md'), name: blog }));
   const blog_attributes = blogs_path.flatMap((blog) => {
@@ -55,7 +55,7 @@ export function get_all_blogs(project_path: string): string {
         {
           fm: fmResult.attributes as FrontMatter,
           headers,
-          path: `blog/${blog.name}`,
+          path: `blogs/${blog.name}`,
         } as BlogInfo,
       ];
     } catch (_) {

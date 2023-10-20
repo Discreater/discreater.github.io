@@ -45,7 +45,7 @@ onMounted(() => {
 
 <template>
   <NLayout scroll-smooth position="absolute" class="text-gray-700 dark:text-gray-200" :native-scrollbar="false">
-    <NLayoutHeader bordered min-h="13">
+    <NLayoutHeader bordered>
       <MyHeader />
     </NLayoutHeader>
     <section p="y-6 x-6">

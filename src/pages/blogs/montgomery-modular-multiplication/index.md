@@ -5,8 +5,9 @@ tags: "crypto,WIP"
 date: "2022-10-17 19:15"
 ---
 
-
 # Montgomery Modular Multiplication  [WIP]
+
+> 该页面主要用于测试数学公式，以及 latex 风格伪代码的显示效果。
 
 - 模乘： $\hat{Z} = \hat{X}\hat{Y}\mod M$， $M$ 是 $N$-bit 的正奇数 （$N = 1024, 2048, 3072$...）。
 

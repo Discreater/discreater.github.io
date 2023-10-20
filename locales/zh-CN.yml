@@ -6,9 +6,10 @@ button:
   toggle_dark: 切换到深色模式
   toggle_light: 切换到亮色模式
   toggle_langs: 切换语言（并不能切换文章语言
+home:
+  diaries: 日记
 intro:
   blogs: 博客
-  desc: 固执己见的 Vite 项目模板
   dynamic-route: 动态路由演示
   hi: 你好，{name}
   whats-your-name: 输入你的名字
