@@ -92,7 +92,7 @@ onMounted(() => {
   position: absolute;
   top: 14%;
   transform-origin: 50% 80%;
-  width: 1%;
+  width: 2%;
   z-index: 8;
 }
 
