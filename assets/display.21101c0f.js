@@ -1,1 +1,0 @@
-import{d as o,o as r,c as s,e,l as a,S as n,r as c}from"./index.fcd881fb.js";const _={"h-100vh":"","w-100vw":"",flex:"","flex-col":"","text-gray-700":"","dark:text-gray-200":"",justify:"center",items:"center"},d=o({__name:"display",setup(i){return(p,l)=>{const t=c("router-view");return r(),s("div",_,[e(t),e(a),e(n)])}}});export{d as default};
