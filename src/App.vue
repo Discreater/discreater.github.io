@@ -4,27 +4,12 @@ import { useHead } from '@vueuse/head';
 import {
   NConfigProvider,
   darkTheme,
-  dateDeDE,
-  dateEnUS,
-  dateEsAR,
-  dateFrFR,
-  dateItIT,
-  dateJaJP,
-  dateRuRU,
-  dateZhCN,
-  deDE,
-  enUS,
-  esAR,
-  frFR,
-  itIT,
-  jaJP,
-  ruRU,
-  zhCN,
 } from 'naive-ui';
 
 import { useI18n } from 'vue-i18n';
 import { RouterView } from 'vue-router';
 import meta from './meta';
+import { getLocale } from './logic/locale';
 import { isDark } from '~/logic';
 
 const theme = computed(() => {
@@ -43,23 +28,7 @@ const themePrint = computed(() => {
 
 const { locale } = useI18n();
 
-const localeMap: Record<string, [any, any]> = {
-  'en': [enUS, dateEnUS],
-  'zh-CN': [zhCN, dateZhCN],
-  'ja': [jaJP, dateJaJP],
-  'de': [deDE, dateDeDE],
-  'es': [esAR, dateEsAR],
-  'fr': [frFR, dateFrFR],
-  'it': [itIT, dateItIT],
-  'ru': [ruRU, dateRuRU],
-};
-
-function getLocale(locale: string) {
-  if (locale in localeMap)
-    return localeMap[locale];
-
-  return localeMap.en;
-}
+const [nLocale, nDateLocale] = getLocale(locale.value);
 
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
@@ -73,10 +42,7 @@ useHead({
 </script>
 
 <template>
-  <NConfigProvider
-    :locale="getLocale(locale)[0]" :date-locale="getLocale(locale)[1]" :theme="theme"
-    :theme-overrides="themePrint"
-  >
+  <NConfigProvider :locale="nLocale" :date-locale="nDateLocale" :theme="theme" :theme-overrides="themePrint">
     <RouterView />
   </NConfigProvider>
 </template>

@@ -1,21 +1,16 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { NDropdown } from 'naive-ui';
+import { getLocaleDropdownMenuOptions } from '~/logic/locale';
 
 import { isDark, toggleDark } from '~/logic';
 
-const { t, availableLocales, locale } = useI18n();
-
-const localeDropdownMenuOptions = availableLocales.map((al) => {
-  return {
-    label: al,
-    key: al,
-  };
-});
+const { t, locale } = useI18n();
 
 function handleLocaleSelect(key: unknown) {
   locale.value = key as string;
 }
+const localeDropdownMenuOptions = getLocaleDropdownMenuOptions();
 </script>
 
 <template>
