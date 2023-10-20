@@ -1,5 +1,3 @@
-/* eslint-disable import/no-duplicates */
-
 import type { BlogInfo } from './types/blog_info';
 
 declare interface Window {

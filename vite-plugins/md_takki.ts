@@ -2,7 +2,7 @@ import type MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import { addLineNumber } from './line_number';
 
-export function markdownItTaOqi(md: MarkdownIt): void {
+export function markdownItTakki(md: MarkdownIt): void {
   md.options.highlight = (code, lang, _attrs) => {
     const hres = lang === '' ? hljs.highlightAuto(code) : hljs.highlight(code, { language: lang });
     return addLineNumber(hres.value);
