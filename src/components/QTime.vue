@@ -18,5 +18,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <NTime :time="date" :type="date_type" :title="time"/>
+  <NTime :time="date" :type="date_type" :title="time" />
 </template>

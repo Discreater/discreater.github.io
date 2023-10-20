@@ -1,11 +1,11 @@
 import { writeFileSync } from 'node:fs';
 import MarkdownIt from 'markdown-it';
 import { expect, it } from 'vitest';
-import { markdownItTaOqi } from '../vite-plugins/md_plugins';
+import { markdownItTakki } from '../vite-plugins/md_takki';
 import { getLines } from '../vite-plugins/line_number';
 
 it('should work', () => {
-  const md = MarkdownIt().use(markdownItTaOqi);
+  const md = MarkdownIt().use(markdownItTakki);
 
   const _rendered = md.render('```cmd\n'
     + 'G:\\Scripts\\multiWindow.xlaunch\n'

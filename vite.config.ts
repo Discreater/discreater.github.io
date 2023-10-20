@@ -21,7 +21,7 @@ import { presetAttributify, presetIcons, presetUno } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
 import { replaceCodePlugin } from './vite-plugins/replace';
 import { get_all_blogs } from './vite-plugins/get_blogs_info';
-import { markdownItTaOqi } from './vite-plugins/md_plugins';
+import { markdownItTakki } from './vite-plugins/md_takki';
 import { markdownItPseudocode } from './vite-plugins/pseudocode_md.js';
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left';
@@ -97,7 +97,7 @@ export default defineConfig({
       headEnabled: true,
       markdownItSetup(md) {
         md
-          .use(markdownItTaOqi)
+          .use(markdownItTakki)
           .use(LinkAttributes, {
             pattern: /^https?:\/\//,
             attrs: {
