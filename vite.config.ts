@@ -19,10 +19,10 @@ import Katex from 'katex';
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetIcons, presetUno } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
-import { replaceCodePlugin } from './vite-plugins/replace';
-import { get_all_blogs } from './vite-plugins/get_blogs_info';
-import { markdownItTakki } from './vite-plugins/md_takki';
-import { markdownItPseudocode } from './vite-plugins/pseudocode_md.js';
+import { replaceCodePlugin } from './plugins/vite/replace';
+import { get_all_blogs } from './plugins/vite/get_blogs_info';
+import { markdownItTakki } from './plugins/md/md_takki';
+import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left';
 

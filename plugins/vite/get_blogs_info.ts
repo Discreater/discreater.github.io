@@ -4,7 +4,7 @@ import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
 
-import type { BlogHeader, BlogInfo, FrontMatter } from '../src/types/blog_info';
+import type { BlogHeader, BlogInfo, FrontMatter } from '../../src/types/blog_info';
 
 function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
   if (level === 1 || headers.length === 0)

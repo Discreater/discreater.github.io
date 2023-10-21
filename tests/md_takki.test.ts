@@ -1,8 +1,8 @@
 import { writeFileSync } from 'node:fs';
 import MarkdownIt from 'markdown-it';
 import { expect, it } from 'vitest';
-import { markdownItTakki } from '../vite-plugins/md_takki';
-import { getLines } from '../vite-plugins/line_number';
+import { markdownItTakki } from '../plugins/md/md_takki';
+import { getLines } from '../plugins/md/line_number';
 
 it('should work', () => {
   const md = MarkdownIt().use(markdownItTakki);
