@@ -1,9 +1,9 @@
 import path, { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
-import Pages from 'vite-plugin-pages';
 import Layouts from 'vite-plugin-vue-layouts';
 import Markdown from 'unplugin-vue-markdown/vite';
+import VueRouter from 'unplugin-vue-router/vite';
 import VueI18n from '@intlify/unplugin-vue-i18n/vite';
 import Inspect from 'vite-plugin-inspect';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -33,6 +33,11 @@ export default defineConfig({
     },
   },
   plugins: [
+    VueRouter({
+      extensions: ['.vue', '.md'],
+      importMode: 'async',
+    }),
+    // Vue must be placed after VueRouter()
     Vue({
       include: [/\.vue$/, /\.md$/],
       template: {
@@ -50,11 +55,6 @@ export default defineConfig({
           to: () => get_all_blogs(path.resolve(__dirname)),
         },
       ],
-    }),
-
-    // https://github.com/hannoeru/vite-plugin-pages
-    Pages({
-      extensions: ['vue', 'md'],
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts

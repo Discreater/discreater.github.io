@@ -4,7 +4,7 @@ import type { MenuOption } from 'naive-ui';
 import { NA, NAvatar, NButton, NH1, NList, NListItem, NMenu, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
 
-import generatedRoutes from 'virtual:generated-pages';
+import { routes } from 'vue-router/auto/routes';
 import { h } from 'vue';
 import { useStorage } from '@vueuse/core';
 import MxlIcon from '~/assets/icons/mxl.png';
@@ -25,36 +25,35 @@ function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
 }
 
-const diaries = generatedRoutes.filter((route) => {
-  // route: /diaries/2022/11
-  const splitted = route.path.split('/');
-  return splitted[1] === 'diaries' && splitted.length >= 4;
-}).map((route) => {
-  const [_0, _1, year, month] = route.path.split('/');
-  return {
-    year,
-    month,
-    route,
-  };
-}).sort((a, b) => {
-  if (a.year === b.year)
-    return Number(b.month) - Number(a.month);
-  return Number(b.year) - Number(a.year);
-}).map(({ year, month, route }) => {
-  return {
-    label: () => h(
-      RouterLink,
-      {
-        to: {
-          path: route.path,
-        },
-      },
-      { default: () => `${year}.${month}` },
-    ),
-    key: `${year}/${month}`,
-    route,
-  } as MenuOption;
-});
+const diaries = routes
+  .find(route => route.path === '/diaries' && route.children)!
+  .children!
+  .sort((a, b) => {
+    return Number(b.path) - Number(a.path);
+  }).map((yearRoute) => {
+    const year = yearRoute.path;
+    return {
+      label: year,
+      key: year,
+      children: yearRoute.children!.sort((a, b) => {
+        return Number(b.path) - Number(a.path);
+      }).map((monthRoute) => {
+        const month = monthRoute.path;
+        return {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                path: monthRoute.name as string,
+              },
+            },
+            { default: () => `${year}.${month}` },
+          ),
+          key: `${year}.${month}`
+        }
+      })
+    } as MenuOption;
+  });
 
 const tabValue = useStorage('homeTabValue', 'blogs');
 
@@ -79,7 +78,9 @@ function handleTabChange(value: string) {
           <NListItem v-for="blog in blogs" :key="blog.path">
             <NThing>
               <template #avatar>
-                <button class="text-4xl primary-clickable i-carbon-blog text" @click="() => handleBlogTitleClick(blog.path)" />
+                <button
+                  class="text-4xl primary-clickable i-carbon-blog text"
+                  @click="() => handleBlogTitleClick(blog.path)" />
               </template>
               <template #header>
                 <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">

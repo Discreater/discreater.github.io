@@ -2,17 +2,21 @@
   "compilerOptions": {
     "incremental": false,
     "target": "es2016",
-    "lib": ["DOM", "ESNext"],
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
     "jsx": "preserve",
     "module": "ESNext",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ]
     },
     "types": [
       "vite/client",
-      "vite-plugin-pages/client",
       "vite-plugin-vue-layouts/client",
       "vitest/importMeta",
       "vite-plugin-pwa/client"
@@ -25,5 +29,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
