@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path, { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Pages from 'vite-plugin-pages';
@@ -165,6 +165,15 @@ export default defineConfig({
   ssgOptions: {
     script: 'async',
     formatting: 'minify',
+  },
+
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        404: resolve(__dirname, '404.html'),
+      }
+    }
   },
 
   optimizeDeps: {
