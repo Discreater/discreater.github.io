@@ -1,0 +1,1 @@
+import{d as a,aF as o,au as r,av as n,aw as e,aH as s,aI as c}from"./main-1d46fe55.js";const m={class:"px-4 py-10 text-center max-w-42rem ml-auto mr-auto text-gray-700 dark:text-gray-200"},l=a({__name:"home",setup(_){return(p,i)=>{const t=o("router-view");return r(),n("main",m,[e(t),e(s),e(c)])}}});export{l as default};

@@ -1,1 +1,0 @@
-import{f as o,r,o as s,c as a,e,l as n,S as c}from"./main-e399f722.js";const _={"h-100vh":"","w-100vw":"",flex:"","flex-col":"","text-gray-700":"","dark:text-gray-200":"",justify:"center",items:"center"},f=o({__name:"display",setup(i){return(p,l)=>{const t=r("router-view");return s(),a("div",_,[e(t),e(n),e(c)])}}});export{f as default};

@@ -1,0 +1,1 @@
+import{_ as o,b as e}from"./route-block-f76cfb3b.js";import{d as t,au as a,av as c,aw as n}from"./main-1d46fe55.js";const s={flex:"","flex-col":"",items:"center",space:"y-2"},r=t({__name:"index",setup(_){return(f,i)=>(a(),c("div",s,[n(o,{"w-60":"","h-60":""})]))}});typeof e=="function"&&e(r);export{r as default};

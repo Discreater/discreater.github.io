@@ -1,0 +1,1 @@
+import{d as a,aF as o,au as r,av as s,aw as e,aH as n,aI as c}from"./main-1d46fe55.js";const _={"h-100vh":"","w-100vw":"",flex:"","flex-col":"","text-gray-700":"","dark:text-gray-200":"",justify:"center",items:"center"},d=a({__name:"display",setup(i){return(p,m)=>{const t=o("router-view");return r(),s("div",_,[e(t),e(n),e(c)])}}});export{d as default};
