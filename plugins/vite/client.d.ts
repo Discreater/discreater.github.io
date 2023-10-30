@@ -5,17 +5,18 @@ declare module 'virtual:blogs' {
     tags: string
     date: string
   }
-
+  
   export interface BlogHeader {
     slug: string
     title: string
     children: BlogHeader[]
   }
-
+  
   export interface BlogInfo {
     fm: FrontMatter
     headers: BlogHeader[]
     path: string
   }
-  const blogs: BlogInfo[];
+  
+  export const blogs: BlogInfo[];
 }

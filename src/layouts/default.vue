@@ -4,11 +4,11 @@ import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
 import { useRoute } from 'vue-router';
 
 import { blogs } from 'virtual:blogs';
+import type { BlogInfo, FrontMatter } from 'virtual:blogs';
 import MyHeader from '~/components/MyHeader.vue';
 import MyFooter from '~/components/MyFooter.vue';
 import BlogAnchor from '~/components/BlogAnchor';
 import QTime from '~/components/QTime.vue';
-import type { BlogInfo, FrontMatter } from '~/types/blog_info';
 import SpotLight from '~/components/SpotLight.vue';
 
 const current = ref();

@@ -5,7 +5,7 @@ import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
 
 import type { Plugin } from 'vite';
-import type { BlogHeader, BlogInfo, FrontMatter } from '../../src/types/blog_info';
+import type { BlogHeader, BlogInfo, FrontMatter } from 'virtual:blogs';
 
 function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
   if (level === 1 || headers.length === 0)

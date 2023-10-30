@@ -1,7 +1,7 @@
 import { NAnchor, NAnchorLink } from 'naive-ui';
 import type { PropType, VNode } from 'vue';
 import { defineComponent, h } from 'vue';
-import type { BlogHeader } from '~/types/blog_info';
+import type { BlogHeader } from 'virtual:blogs';
 
 function _renderAnchor(headers: BlogHeader[]): VNode[] {
   return headers.map((header) => {
