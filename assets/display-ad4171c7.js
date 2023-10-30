@@ -1,1 +1,0 @@
-import{d as a,aI as o,au as s,av as n,aw as e,aJ as r,aK as c}from"./main-93e0abe8.js";const _={"h-100vh":"","w-100vw":"",flex:"","flex-col":"","text-gray-700":"","dark:text-gray-200":"",justify:"center",items:"center"},d=a({__name:"display",setup(i){return(p,m)=>{const t=o("RouterView");return s(),n("div",_,[e(t),e(r),e(c)])}}});export{d as default};
