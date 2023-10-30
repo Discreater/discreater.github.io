@@ -4,6 +4,7 @@ import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
 
+import type { Plugin } from 'vite';
 import type { BlogHeader, BlogInfo, FrontMatter } from '../../src/types/blog_info';
 
 function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
@@ -41,7 +42,7 @@ function extractBodyIt(body: string) {
 //   return headers
 // }
 
-export function get_all_blogs(project_path: string): string {
+function getAllBlogs(project_path: string): string {
   const base_path = path.resolve(project_path, 'src/pages/blogs');
   const blogs = fs.readdirSync(base_path);
   const blogs_path = blogs.map(blog => ({ path: path.join(base_path, blog, 'index.md'), name: blog }));
@@ -81,5 +82,27 @@ export function get_all_blogs(project_path: string): string {
       return dateRes;
     return a.path > b.path ? -1 : 1;
   });
-  return JSON.stringify(blog_attributes);
+  return JSON.stringify(blog_attributes, null, 2);
+}
+
+interface BlogsPluginOptions {
+  path: string
+}
+
+export function blogsPlugin(config: BlogsPluginOptions): Plugin {
+  const virtualModuleId = 'virtual:blogs';
+  const resolvedVirtualModuleId = `\0${virtualModuleId}`;
+  const blogs = getAllBlogs(config.path);
+
+  return {
+    name: 'blogs-plugin',
+    resolveId(id) {
+      if (id === virtualModuleId)
+        return resolvedVirtualModuleId;
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId)
+        return `export const blogs = ${blogs};`;
+    },
+  };
 }

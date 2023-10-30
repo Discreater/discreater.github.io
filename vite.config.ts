@@ -19,8 +19,7 @@ import Katex from 'katex';
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetIcons, presetUno } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
-import { replaceCodePlugin } from './plugins/vite/replace';
-import { get_all_blogs } from './plugins/vite/get_blogs_info';
+import { blogsPlugin  } from './plugins/vite/get_blogs_info';
 import { markdownItTakki } from './plugins/md/md_takki';
 import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
 
@@ -43,18 +42,12 @@ export default defineConfig({
       template: {
         compilerOptions: {
           // TODO: remove vite plugin md
-          isCustomElement: tag => ['msubsup', 'mtext', 'mspace', 'msub', 'eq', 'math', 'semantics', 'annotation', 'mrow', 'msup', 'mn', 'mo', 'mi'].includes(tag),
+          isCustomElement: tag => ['msubsup', 'mtext', 'mspace', 'msub', 'eq', 'math', 'semantics', 'annotation', 'mrow', 'msup', 'mn', 'mo', 'mi', 'mover', 'eqn', 'munderover', 'mfrac'].includes(tag),
         },
       },
     }),
-
-    replaceCodePlugin ({
-      replacements: [
-        {
-          from: '__BLOGS__',
-          to: () => get_all_blogs(path.resolve(__dirname)),
-        },
-      ],
+    blogsPlugin({
+      path: path.resolve(__dirname)
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts

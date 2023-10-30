@@ -1,4 +1,4 @@
 export default {
   name: 'Discreater',
-  blogs: __BLOGS__,
+  homeUrl: 'https://github.com/Discreater'
 };

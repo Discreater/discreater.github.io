@@ -3,10 +3,10 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
 import { useRoute } from 'vue-router';
 
+import { blogs } from 'virtual:blogs';
 import MyHeader from '~/components/MyHeader.vue';
 import MyFooter from '~/components/MyFooter.vue';
 import BlogAnchor from '~/components/BlogAnchor';
-import meta from '~/meta';
 import QTime from '~/components/QTime.vue';
 import type { BlogInfo, FrontMatter } from '~/types/blog_info';
 import SpotLight from '~/components/SpotLight.vue';
@@ -15,9 +15,9 @@ const current = ref();
 const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined);
 
 const route = useRoute();
-const currentBlog = ref<BlogInfo | undefined>(meta.blogs.find(blog => blog.path === route.path.substring(1)));
+const currentBlog = ref<BlogInfo | undefined>(blogs.find(blog => blog.path === route.path.substring(1)));
 watch(() => route.path, async (path) => {
-  currentBlog.value = meta.blogs.find(blog => blog.path === path.substring(1));
+  currentBlog.value = blogs.find(blog => blog.path === path.substring(1));
 });
 
 onMounted(() => {

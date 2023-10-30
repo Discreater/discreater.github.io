@@ -7,10 +7,11 @@ import { useI18n } from 'vue-i18n';
 import { routes } from 'vue-router/auto/routes';
 import { h } from 'vue';
 import { useStorage } from '@vueuse/core';
+import type { BlogInfo } from 'virtual:blogs';
+import { blogs as allBlogs } from 'virtual:blogs';
 import MxlIcon from '~/assets/icons/mxl.png';
-import meta from '~/meta';
 import QClock from '~/components/QClock.vue';
-import type { BlogInfo } from '~/types/blog_info';
+import meta from '~/meta';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -19,7 +20,8 @@ function tags(blog: BlogInfo) {
   return blog.fm.tags.split(',').map(tag => tag.trim());
 }
 
-const blogs = meta.blogs.filter(blog => !tags(blog).includes('WIP') || import.meta.env.DEV);
+// show dev blogs only in dev mode
+const blogs = allBlogs.filter(blog => !tags(blog).includes('WIP') || import.meta.env.DEV);
 
 function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
@@ -49,9 +51,9 @@ const diaries = routes
             },
             { default: () => `${year}.${month}` },
           ),
-          key: `${year}.${month}`
-        }
-      })
+          key: `${year}.${month}`,
+        };
+      }),
     } as MenuOption;
   });
 
@@ -67,10 +69,10 @@ function handleTabChange(value: string) {
     <QClock class="fixed" />
   </NA>
   <div flex flex-col items-center>
-    <NH1>{{ t('intro.whos-site', { name: "Discreater" }) }}</NH1>
-    <NA rel="noreferrer" href="https://github.com/discreater" target="_blank">
+    <NH1>{{ t('intro.whos-site', { name: meta.name }) }}</NH1>
+    <NA rel="noreferrer" :href="meta.homeUrl" target="_blank">
       <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
-      <p>Discreater</p>
+      <p>{{ meta.name }}</p>
     </NA>
     <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
       <NTabPane name="blogs" :tab="t('intro.blogs')">
@@ -80,7 +82,8 @@ function handleTabChange(value: string) {
               <template #avatar>
                 <button
                   class="text-4xl primary-clickable i-carbon-blog text"
-                  @click="() => handleBlogTitleClick(blog.path)" />
+                  @click="() => handleBlogTitleClick(blog.path)"
+                />
               </template>
               <template #header>
                 <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">

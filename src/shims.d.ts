@@ -1,5 +1,3 @@
-import type { BlogInfo } from './types/blog_info';
-
 declare interface Window {
   // extend the window
 }
@@ -11,4 +9,3 @@ declare module '*.md' {
   const component: ComponentOptions;
   export default component;
 }
-declare global { const __BLOGS__: BlogInfo[]; }
