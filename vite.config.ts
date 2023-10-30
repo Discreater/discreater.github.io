@@ -33,7 +33,8 @@ export default defineConfig({
   plugins: [
     VueRouter({
       extensions: ['.vue', '.md'],
-      importMode: 'async',
+      // Should be sync, otherwise `vite-plugin-vue-layouts` won't work.
+      importMode: 'sync',
     }),
     // Vue must be placed after VueRouter()
     Vue({
