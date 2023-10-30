@@ -62,6 +62,10 @@ const tabValue = useStorage('homeTabValue', 'blogs');
 function handleTabChange(value: string) {
   tabValue.value = value;
 }
+
+function handleAddBlog() {
+  router.push('/editor');
+}
 </script>
 
 <template>
@@ -77,6 +81,9 @@ function handleTabChange(value: string) {
     <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
       <NTabPane name="blogs" :tab="t('intro.blogs')">
         <NList class="px-2">
+          <NListItem>
+            <button class="text-4xl primary-clickable i-carbon-add text" @click="handleAddBlog" />
+          </NListItem>
           <NListItem v-for="blog in blogs" :key="blog.path">
             <NThing>
               <template #avatar>

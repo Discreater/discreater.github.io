@@ -20,7 +20,6 @@
       "vite/client",
       "vite-plugin-vue-layouts/client",
       "vitest/importMeta",
-      "vite-plugin-pwa/client",
       "./plugins/vite/client"
     ],
     "strict": true,
