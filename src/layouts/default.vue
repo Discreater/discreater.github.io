@@ -55,9 +55,9 @@ onMounted(() => {
           <NGradientText v-if="frontmatter && frontmatter.date" class="block m-auto">
             <QTime :time="frontmatter.date" />
           </NGradientText>
-          <router-view v-slot="{ Component }">
+          <RouterView v-slot="{ Component }">
             <component :is="Component" ref="current" />
-          </router-view>
+          </RouterView>
           <div>
             <MyFooter />
           </div>

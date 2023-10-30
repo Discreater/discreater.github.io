@@ -15,7 +15,7 @@ const localeDropdownMenuOptions = getLocaleDropdownMenuOptions();
 
 <template>
   <nav text="xl" m="t-6" flex justify-center items-center space="x-2">
-    <router-link primary-clickable i-mdi-home inline-block to="/" :title="t('button.home')" />
+    <RouterLink primary-clickable i-mdi-home inline-block to="/" :title="t('button.home')" />
 
     <button primary-clickable i-ri-moon-fill dark:i-ri-sun-fill :title="isDark ? t('button.toggle_light') : t('button.toggle_dark')" @click="() => toggleDark()" />
 
@@ -23,7 +23,7 @@ const localeDropdownMenuOptions = getLocaleDropdownMenuOptions();
       <button i-ooui-language primary-clickable :title="t('button.toggle_langs')" />
     </NDropdown>
 
-    <router-link primary-clickable i-ri-information-fill to="/about" :title="t('button.about')" />
+    <RouterLink primary-clickable i-ri-information-fill to="/about" :title="t('button.about')" />
 
     <a primary-clickable i-mdi-github rel="noreferrer" href="https://github.com/Discreater" target="_blank" title="GitHub" />
   </nav>
