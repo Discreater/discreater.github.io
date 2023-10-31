@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+const props = defineProps<{
+  size?: string | number
+}>();
+
+const size = computed(() => {
+  let size = props.size ?? '6rem';
+  if (typeof size === 'number')
+    size = `${size}rem`;
+  return size;
+});
 
 const clockRef = ref<HTMLElement | null>(null);
 const hourHand = ref<HTMLDivElement | null>(null);
@@ -23,7 +32,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="clock-container">
+  <article
+    class="clock-container" :style="{
+      height: size,
+      width: size,
+    }"
+  >
     <div ref="clockRef" class="clock" />
     <div class="hours-container">
       <div ref="hourHand" class="hours" />
@@ -43,8 +57,6 @@ onMounted(() => {
   padding: 0.25rem;
   background: linear-gradient(to top,#b65eba,#2e8de1);
   border-image-slice: 10;
-  height: 6rem;
-  width: 6rem;
   position: relative;
   animation: reverse rotate 60s infinite linear;
 }
