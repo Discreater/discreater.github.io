@@ -1,0 +1,110 @@
+
+.md-container {
+  font-size: 1.1rem;
+}
+
+.md-container h1,h2,h3,h4,h5 {
+  @apply font-bold;
+}
+
+/* .md-container h2,h3,h4 {
+  scroll-margin: 1rem;
+} */
+
+.md-container h1 {
+  @apply text-4xl mt-[10px] mb-6;
+}
+
+.md-container h2 {
+  @apply text-3xl mt-4 mb-2;
+}
+
+.md-container h2,h3 {
+  @apply border-b border-gray-100/40  pb-0.5;
+}
+
+.md-container h3 {
+  @apply text-2xl mt-4 mb-2;
+}
+
+.md-container h4 {
+  @apply text-xl mt-5 mb-2;
+}
+
+.md-container a {
+  @apply text-sky-500 hover:text-green-500 hover:underline primary-clickable break-words;
+}
+
+.md-container p {
+  @apply mb-4;
+}
+
+.md-container p>code {
+  @apply px-1 py-1 bg-gray-100/20 dark:bg-gray-100/40;
+  font-size: 85%;
+  border-radius: 6px;
+}
+
+.md-container ol {
+  @apply list-decimal list-outside ml-8 my-4;
+}
+
+.md-container ul {
+  @apply list-disc list-outside ml-8 my-4;
+}
+
+.md-container li {
+  @apply mt-4;
+}
+
+/* .md-container img {
+  @apply;
+} */
+
+.md-container blockquote {
+  @apply px-6 py-5 bg-gray-100/20 dark:bg-gray-100/40 mb-4;
+  border-left: 5px solid #dbdbdb;
+}
+
+.md-container strong {
+  @apply text-strong-light dark:text-strong-dark;
+  font-weight: 700;
+}
+
+html:not(.dark) .md-container > table {
+  --md-container-table-header-bg-color: #eaf4fc;
+  --md-container-table-even-bg-color: #f9f9f9;
+  --md-container-table-shadow-color: #00000026;
+  --md-container-table-border-color: #dddddd;
+}
+
+html.dark .md-container > table {
+  --md-container-table-header-bg-color: #222a32;
+  --md-container-table-even-bg-color: #232323;
+  --md-container-table-shadow-color: #ffffff14;
+  --md-container-table-border-color: #555555;
+}
+
+.md-container > table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px var(--md-container-table-shadow-color);
+}
+
+.md-container > table thead tr {
+  background-color: var(--md-container-table-header-bg-color);
+}
+
+.md-container > table tbody tr {
+  border-bottom: thin solid var(--md-container-table-border-color);
+}
+
+.md-container > table th, table td {
+  padding: 12px 15px;
+}
+
+.md-container > table tbody tr:nth-of-type(even) {
+  background-color: var(--md-container-table-even-bg-color);
+}
+
