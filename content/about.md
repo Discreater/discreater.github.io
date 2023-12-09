@@ -6,6 +6,6 @@ title: About
   <h2>About</h2>
 </div>
 
-My website. Blogs and others. Use vitesse template and naive ui.
+My website. Blogs and others. Use Nuxt.
 
 Source code: https://github.com/Discreater/discreater.github.io
