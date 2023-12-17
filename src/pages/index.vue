@@ -12,6 +12,7 @@ import { blogs as allBlogs } from 'virtual:blogs';
 import MxlIcon from '~/assets/icons/mxl.png';
 import QClock from '~/components/QClock.vue';
 import meta from '~/meta';
+import { enabelEditor } from '~/logic';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -27,9 +28,22 @@ function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
 }
 
+function lastChild (route: typeof routes[0]) {
+  if (route.children) {
+    if(route.children.length === 1) {
+      return lastChild(route.children[0]);
+    } else {
+      console.error('route.children.length != 1')
+      return route;
+    }
+  } else {
+    return route;
+  }
+}
+
 const diaries = routes
-  .find(route => route.path === '/diaries' && route.children)!
-  .children!
+  .find(route => route.path === '/diaries' && route.children)
+  ?.children!
   .sort((a, b) => {
     return Number(b.path) - Number(a.path);
   }).map((yearRoute) => {
@@ -41,17 +55,18 @@ const diaries = routes
         return Number(b.path) - Number(a.path);
       }).map((monthRoute) => {
         const month = monthRoute.path;
+        const date = `${year}.${month}`;
         return {
           label: () => h(
             RouterLink,
             {
               to: {
-                path: monthRoute.name as string,
+                path: lastChild(monthRoute).name as string,
               },
             },
-            { default: () => `${year}.${month}` },
+            { default: () => date },
           ),
-          key: `${year}.${month}`,
+          key: date,
         };
       }),
     } as MenuOption;
@@ -81,7 +96,7 @@ function handleAddBlog() {
     <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
       <NTabPane name="blogs" :tab="t('intro.blogs')">
         <NList class="px-2">
-          <NListItem>
+          <NListItem v-if="enabelEditor">
             <button class="text-4xl primary-clickable i-carbon-add text" @click="handleAddBlog" />
           </NListItem>
           <NListItem v-for="blog in blogs" :key="blog.path">

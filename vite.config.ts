@@ -87,7 +87,7 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-md
     Markdown({
       wrapperClasses: markdownWrapperClasses,
-      headEnabled: "unhead",
+      headEnabled: true,
       markdownItSetup(md) {
         md
           .use(markdownItTakki)
