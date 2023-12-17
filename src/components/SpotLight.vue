@@ -1,6 +1,6 @@
 <template>
   <div class="spotlight-wrapper">
-    <div class="fixed z-10 left-0 right-0 spotlight" />
+    <div class="fixed left-0 right-0 spotlight" />
   </div>
 </template>
 
