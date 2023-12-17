@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import type { RouteRecordRaw } from 'vue-router/auto';
 import { createRouter, createWebHistory } from 'vue-router/auto';
 import { setupLayouts } from 'virtual:generated-layouts';
 import App from './App.vue';
@@ -9,18 +8,9 @@ import 'uno.css';
 import './styles/main.css';
 import type { UserModule } from './types';
 
-function setupLayoutsRec(rs: RouteRecordRaw[]) {
-  rs.forEach((r) => {
-    if (r.children && r.children.length > 0)
-      r.children = setupLayoutsRec(r.children);
-  });
-  
-  return setupLayouts(rs);
-}
-
 const router = createRouter({
   history: createWebHistory(),
-  extendRoutes: setupLayoutsRec,
+  extendRoutes: routes => setupLayouts(routes),
 });
 
 const app = createApp(App);

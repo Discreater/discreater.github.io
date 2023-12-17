@@ -84,9 +84,9 @@ function handleAddBlog() {
 </script>
 
 <template>
-  <NA href="/meaningless">
+  <RouterLink to="/meaningless">
     <QClock class="fixed" />
-  </NA>
+  </RouterLink>
   <div flex flex-col items-center>
     <NH1>{{ t('intro.whos-site', { name: meta.name }) }}</NH1>
     <NA rel="noreferrer" :href="meta.homeUrl" target="_blank">
