@@ -48,7 +48,7 @@ export default defineConfig({
     }),
     articlePlugin({
       path: path.resolve(__dirname, 'src/pages/blogs'),
-      route: 'blogs'
+      route: 'blogs',
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts

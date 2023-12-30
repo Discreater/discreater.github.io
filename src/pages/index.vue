@@ -27,12 +27,12 @@ function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
 }
 
-function lastChild (route: typeof routes[0]) {
+function lastChild(route: typeof routes[0]) {
   if (route.children) {
-    if(route.children.length === 1) {
+    if (route.children.length === 1) {
       return lastChild(route.children[0]);
     } else {
-      console.error('route.children.length != 1')
+      console.error('route.children.length != 1');
       return route;
     }
   } else {
@@ -76,7 +76,6 @@ const tabValue = useStorage('homeTabValue', 'blogs');
 function handleTabChange(value: string) {
   tabValue.value = value;
 }
-
 </script>
 
 <template>

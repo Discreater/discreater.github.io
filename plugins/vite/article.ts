@@ -165,7 +165,7 @@ function resolveOptions(config: ArticlePluginOptions): InternalArticlePluginOpti
 export async function articlePlugin(config: ArticlePluginOptions): Promise<Plugin<any>> {
   const virtualModuleId = 'virtual:article';
   const resolvedVirtualModuleId = `\0${virtualModuleId}`;
-  const internalConfig = resolveOptions(config)
+  const internalConfig = resolveOptions(config);
   const articles = await getAllArticlesInfo(internalConfig);
 
   return {

@@ -6,18 +6,18 @@ declare module 'virtual:article' {
     createdAt?: string
     changedAt?: string
   }
-  
+
   export interface ArticleHeader {
     slug: string
     title: string
     children: ArticleHeader[]
   }
-  
+
   export interface ArticleInfo {
     attributes: ArticleAttributes
     headers: ArticleHeader[]
     path: string
   }
-  
+
   export const articles: ArticleInfo[];
 }
