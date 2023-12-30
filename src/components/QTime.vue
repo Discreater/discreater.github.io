@@ -1,22 +1,23 @@
 <script lang="ts" setup>
 import { NTime } from 'naive-ui';
-import { computed, onMounted, ref } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
   time: string | Date | number
 }>();
 
-const date_type = ref<'relative' | 'date' | undefined>(undefined);
-
 const date = computed(() => new Date(props.time));
-onMounted(() => {
-  const now = new Date();
+const now = new Date();
+
+const dateType = computed(() => {
   const years = now.getFullYear() - date.value.getFullYear();
-  const months = years - now.getMonth() + date.value.getMonth();
-  date_type.value = (months <= 0 || months > 2) ? 'relative' : 'date';
-});
+  const months = years * 12 + now.getMonth() - date.value.getMonth();
+  console.warn("years:" ,years)
+  console.warn("months:", months)
+  return (months > 0 && months < 4) ? 'relative' : 'date';
+})
 </script>
 
 <template>
-  <NTime :time="date" :type="date_type" :title="time" />
+  <NTime :time="date" :type="dateType" :title="time" />
 </template>
