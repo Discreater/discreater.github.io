@@ -1,4 +1,4 @@
-declare module 'virtual:blogs' {
+declare module 'virtual:article' {
   export interface FrontMatter {
     title: string
     lang?: string
@@ -6,17 +6,17 @@ declare module 'virtual:blogs' {
     date: string
   }
   
-  export interface BlogHeader {
+  export interface ArticleHeader {
     slug: string
     title: string
-    children: BlogHeader[]
+    children: ArticleHeader[]
   }
   
-  export interface BlogInfo {
+  export interface ArticleInfo {
     fm: FrontMatter
-    headers: BlogHeader[]
+    headers: ArticleHeader[]
     path: string
   }
   
-  export const blogs: BlogInfo[];
+  export const blogs: ArticleInfo[];
 }

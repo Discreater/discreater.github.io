@@ -5,9 +5,9 @@ import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
 
 import type { Plugin } from 'vite';
-import type { BlogHeader, BlogInfo, FrontMatter } from 'virtual:blogs';
+import type { ArticleHeader, ArticleInfo, FrontMatter } from 'virtual:article';
 
-function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) {
+function insertHeader(headers: ArticleHeader[], header: ArticleHeader, level: number) {
   if (level === 1 || headers.length === 0)
     headers.push(header);
   else
@@ -15,7 +15,7 @@ function insertHeader(headers: BlogHeader[], header: BlogHeader, level: number) 
 }
 
 function extractBodyIt(body: string) {
-  const headers: BlogHeader[] = [];
+  const headers: ArticleHeader[] = [];
   const md = MarkdownIt().use(Anchor, {
     callback: (_token, { slug, title }) => {
       const header = {
@@ -57,7 +57,7 @@ function getAllBlogs(project_path: string): string {
           fm: fmResult.attributes as FrontMatter,
           headers,
           path: `blogs/${blog.name}`,
-        } as BlogInfo,
+        } as ArticleInfo,
       ];
     } catch (_) {
       return [];
@@ -90,7 +90,7 @@ interface BlogsPluginOptions {
 }
 
 export function blogsPlugin(config: BlogsPluginOptions): Plugin {
-  const virtualModuleId = 'virtual:blogs';
+  const virtualModuleId = 'virtual:article';
   const resolvedVirtualModuleId = `\0${virtualModuleId}`;
   const blogs = getAllBlogs(config.path);
 

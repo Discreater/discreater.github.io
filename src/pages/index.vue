@@ -7,17 +7,16 @@ import { useI18n } from 'vue-i18n';
 import { routes } from 'vue-router/auto/routes';
 import { h } from 'vue';
 import { useStorage } from '@vueuse/core';
-import type { BlogInfo } from 'virtual:blogs';
-import { blogs as allBlogs } from 'virtual:blogs';
+import type { ArticleInfo } from 'virtual:article';
+import { blogs as allBlogs } from 'virtual:article';
 import MxlIcon from '~/assets/icons/mxl.png';
 import QClock from '~/components/QClock.vue';
 import meta from '~/meta';
-import { enabelEditor } from '~/logic';
 
 const router = useRouter();
 const { t } = useI18n();
 
-function tags(blog: BlogInfo) {
+function tags(blog: ArticleInfo) {
   return blog.fm.tags.split(',').map(tag => tag.trim());
 }
 
@@ -78,9 +77,6 @@ function handleTabChange(value: string) {
   tabValue.value = value;
 }
 
-function handleAddBlog() {
-  router.push('/editor');
-}
 </script>
 
 <template>
@@ -96,9 +92,6 @@ function handleAddBlog() {
     <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
       <NTabPane name="blogs" :tab="t('intro.blogs')">
         <NList class="px-2">
-          <NListItem v-if="enabelEditor">
-            <button class="text-4xl primary-clickable i-carbon-add text" @click="handleAddBlog" />
-          </NListItem>
           <NListItem v-for="blog in blogs" :key="blog.path">
             <NThing>
               <template #avatar>
