@@ -18,17 +18,31 @@ import Katex from 'katex';
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetIcons, presetUno } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
+import { simpleGit } from 'simple-git';
 import { articlePlugin } from './plugins/vite/article';
 import { markdownItTakki } from './plugins/md/md_takki';
 import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left';
 
+async function getLastCommitHash() {
+  const git = simpleGit({
+    baseDir: __dirname,
+  });
+  const logR = await git.log();
+  const lastCommitHash = logR.latest?.hash;
+  return lastCommitHash;
+}
+
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
+  },
+  define: {
+    'import.meta.env.VITE_BUILD_DATE': JSON.stringify(new Date().toISOString()),
+    'import.meta.env.VITE_BUILD_COMMIT_HASH': JSON.stringify(await getLastCommitHash()),
   },
   plugins: [
     VueRouter({
