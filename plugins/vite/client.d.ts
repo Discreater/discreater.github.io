@@ -1,9 +1,10 @@
 declare module 'virtual:article' {
-  export interface FrontMatter {
+  export interface ArticleAttributes {
     title: string
     lang?: string
     tags: string
-    date: string
+    createdAt?: string
+    changedAt?: string
   }
   
   export interface ArticleHeader {
@@ -13,10 +14,10 @@ declare module 'virtual:article' {
   }
   
   export interface ArticleInfo {
-    fm: FrontMatter
+    attributes: ArticleAttributes
     headers: ArticleHeader[]
     path: string
   }
   
-  export const blogs: ArticleInfo[];
+  export const articles: ArticleInfo[];
 }

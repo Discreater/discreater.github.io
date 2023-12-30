@@ -8,7 +8,7 @@ import { routes } from 'vue-router/auto/routes';
 import { h } from 'vue';
 import { useStorage } from '@vueuse/core';
 import type { ArticleInfo } from 'virtual:article';
-import { blogs as allBlogs } from 'virtual:article';
+import { articles as allBlogs } from 'virtual:article';
 import MxlIcon from '~/assets/icons/mxl.png';
 import QClock from '~/components/QClock.vue';
 import meta from '~/meta';
@@ -17,7 +17,7 @@ const router = useRouter();
 const { t } = useI18n();
 
 function tags(blog: ArticleInfo) {
-  return blog.fm.tags.split(',').map(tag => tag.trim());
+  return blog.attributes.tags.split(',').map(tag => tag.trim());
 }
 
 // show dev blogs only in dev mode
@@ -102,11 +102,11 @@ function handleTabChange(value: string) {
               </template>
               <template #header>
                 <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
-                  {{ blog.fm.title }}
+                  {{ blog.attributes.title }}
                 </NButton>
               </template>
               <template #header-extra>
-                {{ blog.fm.date }}
+                {{ blog.attributes.createdAt }}
               </template>
               <template #description>
                 <NSpace>

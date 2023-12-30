@@ -28,7 +28,7 @@ const themePrint = computed(() => {
 
 const { locale } = useI18n();
 
-const [nLocale, nDateLocale] = getLocale(locale.value);
+const naiveLocale = computed(() => getLocale(locale.value));
 
 useHead({
   title: `${meta.name}'s Site`,
@@ -39,7 +39,10 @@ useHead({
 </script>
 
 <template>
-  <NConfigProvider :locale="nLocale" :date-locale="nDateLocale" :theme="theme" :theme-overrides="themePrint">
+  <NConfigProvider
+    :locale="naiveLocale.locale" :date-locale="naiveLocale.dateLocale" :theme="theme"
+    :theme-overrides="themePrint"
+  >
     <RouterView />
   </NConfigProvider>
 </template>

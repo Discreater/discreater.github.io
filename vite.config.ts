@@ -18,7 +18,7 @@ import Katex from 'katex';
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetIcons, presetUno } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
-import { blogsPlugin } from './plugins/vite/article';
+import { articlePlugin } from './plugins/vite/article';
 import { markdownItTakki } from './plugins/md/md_takki';
 import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
 
@@ -46,8 +46,9 @@ export default defineConfig({
         },
       },
     }),
-    blogsPlugin({
-      path: path.resolve(__dirname),
+    articlePlugin({
+      path: path.resolve(__dirname, 'src/pages/blogs'),
+      route: 'blogs'
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts

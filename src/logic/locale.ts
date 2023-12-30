@@ -38,15 +38,15 @@ export function getLocaleDropdownMenuOptions() {
   });
 }
 
-const localeMap: Record<string, [typeof enUS, typeof dateEnUS]> = {
-  'en': [enUS, dateEnUS],
-  'zh-CN': [zhCN, dateZhCN],
-  'ja': [jaJP, dateJaJP],
-  'de': [deDE, dateDeDE],
-  'es': [esAR, dateEsAR],
-  'fr': [frFR, dateFrFR],
-  'it': [itIT, dateItIT],
-  'ru': [ruRU, dateRuRU],
+const localeMap: Record<string, {locale: typeof enUS, dateLocale: typeof dateEnUS}> = {
+  'en': { locale:enUS, dateLocale: dateEnUS},
+  'zh-CN': { locale:zhCN, dateLocale: dateZhCN},
+  'ja': { locale:jaJP, dateLocale: dateJaJP},
+  'de': { locale:deDE, dateLocale: dateDeDE},
+  'es': { locale:esAR, dateLocale: dateEsAR},
+  'fr': { locale:frFR, dateLocale: dateFrFR},
+  'it': { locale:itIT, dateLocale: dateItIT},
+  'ru': { locale:ruRU, dateLocale: dateRuRU},
 };
 
 /**

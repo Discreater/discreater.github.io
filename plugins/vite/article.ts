@@ -3,9 +3,11 @@ import fs from 'node:fs';
 import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
+import type { SimpleGit } from 'simple-git';
+import { simpleGit } from 'simple-git';
 
 import type { Plugin } from 'vite';
-import type { ArticleHeader, ArticleInfo, FrontMatter } from 'virtual:article';
+import type { ArticleAttributes, ArticleHeader, ArticleInfo } from 'virtual:article';
 
 function insertHeader(headers: ArticleHeader[], header: ArticleHeader, level: number) {
   if (level === 1 || headers.length === 0)
@@ -42,57 +44,129 @@ function extractBodyIt(body: string) {
 //   return headers
 // }
 
-function getAllBlogs(project_path: string): string {
-  const base_path = path.resolve(project_path, 'src/pages/blogs');
-  const blogs = fs.readdirSync(base_path);
-  const blogs_path = blogs.map(blog => ({ path: path.join(base_path, blog, 'index.md'), name: blog }));
-  const blog_attributes = blogs_path.flatMap((blog) => {
-    let data;
-    try {
-      data = fs.readFileSync(blog.path, 'utf-8');
-      const fmResult = fm(data);
-      const headers = extractBodyIt(fmResult.body);
-      return [
-        {
-          fm: fmResult.attributes as FrontMatter,
-          headers,
-          path: `blogs/${blog.name}`,
-        } as ArticleInfo,
-      ];
-    } catch (_) {
+interface Article {
+  path: string
+  name: string
+}
+
+type ISO8601Date = string;
+
+interface GitFileStatus {
+  /** ISO 8601 */
+  created_at: ISO8601Date
+  /** ISO 8601 */
+  changed_at?: ISO8601Date
+}
+
+async function parseArticleGitInfo(article: Article, git: SimpleGit): Promise<GitFileStatus> {
+  const logResp = await git.log({
+    file: article.path,
+  });
+  const dates = logResp.all.map(t => t.date);
+  if (dates.length === 0)
+    dates.push(new Date().toISOString());
+
+  const created_at = dates[dates.length - 1];
+  const changed_at = dates.length === 1 ? undefined : dates[0];
+  return {
+    created_at,
+    changed_at,
+  };
+}
+
+async function getArticleInfo(article: Article, git: SimpleGit, route: (name: string) => string): Promise<ArticleInfo> {
+  const data = fs.readFileSync(article.path, 'utf-8');
+  const fmResult = fm<any>(data);
+  const headers = extractBodyIt(fmResult.body);
+
+  const created_at = fmResult.attributes.date;
+  const articleGitInfo = await parseArticleGitInfo(article, git);
+
+  const attributes: ArticleAttributes = {
+    title: fmResult.attributes.title,
+    tags: fmResult.attributes.tags,
+    createdAt: created_at ?? articleGitInfo.created_at,
+    changedAt: articleGitInfo.changed_at,
+  };
+  const path = route(article.name);
+  return {
+    attributes,
+    headers,
+    path,
+  };
+}
+
+async function getAllArticlesInfo(config: InternalArticlePluginOptions): Promise<string> {
+  const base_path = config.path;
+
+  const articles = fs.readdirSync(base_path);
+  const git = simpleGit(base_path);
+  const articlePaths = articles
+    .map(article => ({ path: path.join(base_path, article, 'index.md'), name: article }))
+    .filter(article => (fs.existsSync(article.path)));
+  const articleAttributesPromise = articlePaths.map(article => getArticleInfo(article, git, config.route));
+  const articleAttributes = (await Promise.allSettled(articleAttributesPromise)).flatMap((value) => {
+    if (value.status === 'rejected') {
+      console.error(`Error: parsing info of article: ${value.reason}`);
       return [];
     }
+    return [value.value];
   });
-  blog_attributes.sort((a, b) => {
+  articleAttributes.sort((a, b) => {
     let aDate: Date | undefined;
     let bDate: Date | undefined;
-    try {
-      aDate = new Date(a.fm.date);
-      bDate = new Date(b.fm.date);
-    } catch (_) {
-    }
     let dateRes: number;
-    if (aDate === undefined && bDate === undefined)
+
+    if (a.attributes.createdAt === undefined && b.attributes.createdAt === undefined) {
       dateRes = 0;
-    else if (aDate === undefined || bDate === undefined)
-      return aDate === undefined ? -1 : 1;
-    else
-      dateRes = bDate.getTime() - aDate.getTime();
+    } else if (a.attributes.createdAt === undefined || b.attributes.createdAt === undefined) {
+      return a.attributes.createdAt === undefined ? -1 : 1;
+    } else {
+      try {
+        aDate = new Date(a.attributes.createdAt);
+        bDate = new Date(b.attributes.createdAt);
+      } catch (_) {
+      }
+      if (aDate === undefined && bDate === undefined)
+        dateRes = 0;
+      else if (aDate === undefined || bDate === undefined)
+        return aDate === undefined ? -1 : 1;
+      else
+        dateRes = bDate.getTime() - aDate.getTime();
+    }
     if (dateRes !== 0)
       return dateRes;
     return a.path > b.path ? -1 : 1;
   });
-  return JSON.stringify(blog_attributes, null, 2);
+  return JSON.stringify(articleAttributes, null, 2);
 }
 
-interface BlogsPluginOptions {
+interface InternalArticlePluginOptions {
   path: string
+  route: (name: string) => string
 }
 
-export function blogsPlugin(config: BlogsPluginOptions): Plugin {
+export interface ArticlePluginOptions {
+  path: string
+  /** base route path or the map function */
+  route: string | ((name: string) => string)
+}
+
+function resolveOptions(config: ArticlePluginOptions): InternalArticlePluginOptions {
+  let route = config.route;
+  if (typeof route === 'string')
+    route = (name: string) => `${config.route}/${name}`;
+  return {
+    path: config.path,
+    route,
+  };
+}
+
+export async function articlePlugin(config: ArticlePluginOptions): Promise<Plugin<any>> {
   const virtualModuleId = 'virtual:article';
   const resolvedVirtualModuleId = `\0${virtualModuleId}`;
-  const blogs = getAllBlogs(config.path);
+  const internalConfig = resolveOptions(config)
+  const articles = await getAllArticlesInfo(internalConfig);
 
   return {
     name: 'blogs-plugin',
@@ -102,7 +176,7 @@ export function blogsPlugin(config: BlogsPluginOptions): Plugin {
     },
     load(id) {
       if (id === resolvedVirtualModuleId)
-        return `export const blogs = ${blogs};`;
+        return `export const articles = ${articles};`;
     },
   };
 }

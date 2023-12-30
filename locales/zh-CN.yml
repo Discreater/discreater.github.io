@@ -11,3 +11,6 @@ intro:
   blogs: 博客
   whos-site: '{name} 的主页'
 locale: 简体中文
+article:
+  created_at: 创建于
+  changed_at: 最后修改于

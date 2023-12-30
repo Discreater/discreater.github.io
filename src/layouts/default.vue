@@ -3,22 +3,23 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
 import { useRoute } from 'vue-router';
 
-import { blogs } from 'virtual:blogs';
-import type { BlogInfo, FrontMatter } from 'virtual:blogs';
+import { articles } from 'virtual:article';
+import type { ArticleAttributes, ArticleInfo } from 'virtual:article';
+import { useI18n } from 'vue-i18n';
 import MyHeader from '~/components/MyHeader.vue';
 import MyFooter from '~/components/MyFooter.vue';
 import BlogAnchor from '~/components/BlogAnchor';
 import QTime from '~/components/QTime.vue';
 import SpotLight from '~/components/SpotLight.vue';
 
-const current = ref();
-const frontmatter = computed(() => current.value?.frontmatter as FrontMatter | undefined);
+const { t } = useI18n();
 
 const route = useRoute();
-const currentBlog = ref<BlogInfo | undefined>(blogs.find(blog => blog.path === route.path.substring(1)));
+const currentBlog = ref<ArticleInfo | undefined>(articles.find(article => article.path === route.path.substring(1)));
 watch(() => route.path, async (path) => {
-  currentBlog.value = blogs.find(blog => blog.path === path.substring(1));
+  currentBlog.value = articles.find(article => article.path === path.substring(1));
 });
+const frontmatter = computed(() => currentBlog.value?.attributes as ArticleAttributes | undefined);
 
 onMounted(() => {
   // Add copy function to code blocks
@@ -52,11 +53,18 @@ onMounted(() => {
       <div container max-w="320" m="auto" flex space="x-2">
         <!-- z-15 to render above the spotlight (which is z-10) -->
         <NCard embedded flex-grow z-15>
-          <NGradientText v-if="frontmatter && frontmatter.date" class="block m-auto">
-            <QTime :time="frontmatter.date" />
-          </NGradientText>
+          <div class="flex gap-2">
+            <NGradientText v-if="frontmatter && frontmatter.createdAt" class="block">
+              {{ t("article.created_at") }}
+              <QTime :time="frontmatter.createdAt" />
+            </NGradientText>
+            <NGradientText v-if="frontmatter && frontmatter.changedAt" class="block">
+              {{ t("article.changed_at") }}
+              <QTime :time="frontmatter.changedAt" />
+            </NGradientText>
+          </div>
           <RouterView v-slot="{ Component }">
-            <component :is="Component" ref="current" />
+            <component :is="Component" />
           </RouterView>
           <div>
             <MyFooter />
