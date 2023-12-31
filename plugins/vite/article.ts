@@ -62,9 +62,6 @@ async function parseArticleGitInfo(article: Article, git: SimpleGit): Promise<Gi
   const logResp = await git.log({
     file: article.path,
   });
-  console.warn('====');
-  console.warn(article.path);
-  console.warn(logResp);
 
   const dates = logResp.all.map(t => t.date);
   if (dates.length === 0)
@@ -72,8 +69,6 @@ async function parseArticleGitInfo(article: Article, git: SimpleGit): Promise<Gi
 
   const created_at = dates[dates.length - 1];
   const changed_at = dates.length === 1 ? undefined : dates[0];
-  console.warn(`created at: ${created_at}`);
-  console.warn(`changed at: ${changed_at}`);
   return {
     created_at,
     changed_at,
