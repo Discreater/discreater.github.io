@@ -1,21 +1,11 @@
 import { h } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
-  dateDeDE,
   dateEnUS,
-  dateEsAR,
-  dateFrFR,
-  dateItIT,
   dateJaJP,
-  dateRuRU,
   dateZhCN,
-  deDE,
   enUS,
-  esAR,
-  frFR,
-  itIT,
   jaJP,
-  ruRU,
   zhCN,
 } from 'naive-ui';
 
@@ -42,11 +32,6 @@ const localeMap: Record<string, { locale: typeof enUS; dateLocale: typeof dateEn
   'en': { locale: enUS, dateLocale: dateEnUS },
   'zh-CN': { locale: zhCN, dateLocale: dateZhCN },
   'ja': { locale: jaJP, dateLocale: dateJaJP },
-  'de': { locale: deDE, dateLocale: dateDeDE },
-  'es': { locale: esAR, dateLocale: dateEsAR },
-  'fr': { locale: frFR, dateLocale: dateFrFR },
-  'it': { locale: itIT, dateLocale: dateItIT },
-  'ru': { locale: ruRU, dateLocale: dateRuRU },
 };
 
 /**

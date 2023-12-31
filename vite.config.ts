@@ -48,7 +48,11 @@ export default defineConfig({
     VueRouter({
       extensions: ['.vue', '.md'],
       // Should be sync, otherwise `vite-plugin-vue-layouts` won't work.
-      importMode: 'sync',
+      importMode: (filepath) => {
+        if (filepath.includes('.md'))
+          return 'async';
+        return 'sync';
+      },
     }),
     // Vue must be placed after VueRouter()
     Vue({
