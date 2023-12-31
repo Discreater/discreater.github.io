@@ -38,14 +38,14 @@ function execSrcReplacements(src: string, replacements: ViteReplacement[]) {
   replacements.forEach((replacement) => {
     if (
       (typeof replacement.from === 'string'
-        || replacement.from instanceof RegExp) === false
+      || replacement.from instanceof RegExp) === false
     ) {
       throw new TypeError(
         '[vite-plugin-replace]: The replacement option \'from\' is not of type \'string\' or \'RegExp\'.',
       );
     } else if (
       (typeof replacement.to === 'string'
-        || replacement.to instanceof Function) === false
+      || replacement.to instanceof Function) === false
     ) {
       throw new TypeError(
         '[vite-plugin-replace]: The replacement option \'to\' is not of type \'string\' or \'Function\'',

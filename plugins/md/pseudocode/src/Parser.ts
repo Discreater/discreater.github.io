@@ -182,7 +182,7 @@ const COMMANDS = ['break', 'continue'] as const;
 
 // type Suit<T extends (readonly string[])> = T[number]
 
-interface Token { tokenType: string; tokenValues?: string[] }
+interface Token { tokenType: string, tokenValues?: string[] }
 
 const typedValue = <R>(value: R) => value as Record<keyof R, Token>;
 

@@ -28,7 +28,7 @@ export function getLocaleDropdownMenuOptions() {
   });
 }
 
-const localeMap: Record<string, { locale: typeof enUS; dateLocale: typeof dateEnUS }> = {
+const localeMap: Record<string, { locale: typeof enUS, dateLocale: typeof dateEnUS }> = {
   'en': { locale: enUS, dateLocale: dateEnUS },
   'zh-CN': { locale: zhCN, dateLocale: dateZhCN },
   'ja': { locale: jaJP, dateLocale: dateJaJP },
