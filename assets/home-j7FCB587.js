@@ -1,1 +1,0 @@
-import{S as o,a}from"./SpotLight-ykS-XZi_.js";import{d as r,r as n,o as s,c as m,e}from"./main-59iP4kbx.js";const c={class:"px-4 py-10 text-center max-w-42rem ml-auto mr-auto text-gray-700 dark:text-gray-200"},x=r({__name:"home",setup(_){return(p,i)=>{const t=n("RouterView");return s(),m("main",c,[e(o),e(t),e(a)])}}});export{x as default};
