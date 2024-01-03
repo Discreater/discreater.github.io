@@ -91,16 +91,16 @@ function handleTabChange(value: string) {
     <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
       <NTabPane name="blogs" :tab="t('intro.blogs')">
         <NList class="px-2">
-          <NListItem v-for="blog in blogs" :key="blog.path">
+          <NListItem v-for="blog in blogs" :key="blog.routePath">
             <NThing>
               <template #avatar>
                 <button
                   class="text-4xl primary-clickable i-carbon-blog text"
-                  @click="() => handleBlogTitleClick(blog.path)"
+                  @click="() => handleBlogTitleClick(blog.routePath)"
                 />
               </template>
               <template #header>
-                <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.path)">
+                <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.routePath)">
                   {{ blog.attributes.title }}
                 </NButton>
               </template>

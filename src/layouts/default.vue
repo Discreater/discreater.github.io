@@ -11,16 +11,17 @@ import MyFooter from '~/components/MyFooter.vue';
 import BlogAnchor from '~/components/BlogAnchor';
 import QTime from '~/components/QTime.vue';
 import SpotLight from '~/components/SpotLight.vue';
+import meta from '~/meta';
 
 const { t } = useI18n();
 
 const route = useRoute();
-const currentBlog = ref<ArticleInfo | undefined>(articles.find(article => article.path === route.path.substring(1)));
+const currentBlog = ref<ArticleInfo | undefined>(articles.find(article => article.routePath === route.path.substring(1)));
 watch(() => route.path, async (path) => {
-  currentBlog.value = articles.find(article => article.path === path.substring(1));
+  currentBlog.value = articles.find(article => article.routePath === path.substring(1));
 });
 const frontmatter = computed(() => currentBlog.value?.attributes as ArticleAttributes | undefined);
-
+const blogHistory = `${meta.repoUrl}/commits/${meta.repoBranch}/${currentBlog.value?.repoPath}`;
 onMounted(() => {
   // Add copy function to code blocks
   const copies = document.querySelectorAll('figure.code-block button.copy');
@@ -58,10 +59,10 @@ onMounted(() => {
               {{ t("article.created_at") }}
               <QTime :time="frontmatter.createdAt" />
             </NGradientText>
-            <NGradientText v-if="frontmatter && frontmatter.changedAt" class="block">
+            <a v-if="frontmatter && frontmatter.changedAt" class="text-sky-500 hover:text-green-500 hover:underline primary-clickable cursor-pointer" :href="blogHistory" target="_blank">
               {{ t("article.changed_at") }}
               <QTime :time="frontmatter.changedAt" />
-            </NGradientText>
+            </a>
           </div>
           <RouterView v-slot="{ Component }">
             <component :is="Component" />

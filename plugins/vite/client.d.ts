@@ -16,7 +16,8 @@ declare module 'virtual:article' {
   export interface ArticleInfo {
     attributes: ArticleAttributes
     headers: ArticleHeader[]
-    path: string
+    routePath: string
+    repoPath: string
   }
 
   export const articles: ArticleInfo[];

@@ -1,11 +1,12 @@
 import path from 'node:path';
 import fs from 'node:fs';
+import process from 'node:process';
 import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
 import type { SimpleGit } from 'simple-git';
 import { simpleGit } from 'simple-git';
-
+import { normalizePath } from 'vite';
 import type { Plugin } from 'vite';
 import type { ArticleAttributes, ArticleHeader, ArticleInfo } from 'virtual:article';
 
@@ -89,11 +90,13 @@ async function getArticleInfo(article: Article, git: SimpleGit, route: (name: st
     createdAt: created_at ?? articleGitInfo.created_at,
     changedAt: articleGitInfo.changed_at,
   };
-  const path = route(article.name);
+  const routePath = route(article.name);
+  const repoPath = path.relative(process.cwd(), article.path);
   return {
     attributes,
     headers,
-    path,
+    routePath,
+    repoPath: normalizePath(repoPath),
   };
 }
 
@@ -137,7 +140,7 @@ async function getAllArticlesInfo(config: InternalArticlePluginOptions): Promise
     }
     if (dateRes !== 0)
       return dateRes;
-    return a.path > b.path ? -1 : 1;
+    return a.routePath > b.routePath ? -1 : 1;
   });
   return JSON.stringify(articleAttributes, null, 2);
 }
