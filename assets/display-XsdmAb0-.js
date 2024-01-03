@@ -1,1 +1,0 @@
-import{S as o,a}from"./SpotLight-RJ0wWN6n.js";import{d as r,r as n,o as s,c,e}from"./main-gcya5LAj.js";const _={"h-100vh":"","w-100vw":"",flex:"","flex-col":"","text-gray-700":"","dark:text-gray-200":"",justify:"center",items:"center"},d=r({__name:"display",setup(i){return(m,p)=>{const t=n("RouterView");return s(),c("main",_,[e(o),e(t),e(a)])}}});export{d as default};
