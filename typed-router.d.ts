@@ -50,6 +50,7 @@ declare module 'vue-router/auto/routes' {
     '/diaries/2022/11': RouteRecordInfo<'/diaries/2022/11', '/diaries/2022/11', Record<never, never>, Record<never, never>>,
     '/diaries/2023/10': RouteRecordInfo<'/diaries/2023/10', '/diaries/2023/10', Record<never, never>, Record<never, never>>,
     '/diaries/2023/12': RouteRecordInfo<'/diaries/2023/12', '/diaries/2023/12', Record<never, never>, Record<never, never>>,
+    '/diaries/2024/01': RouteRecordInfo<'/diaries/2024/01', '/diaries/2024/01', Record<never, never>, Record<never, never>>,
     '/meaningless': RouteRecordInfo<'/meaningless', '/meaningless', Record<never, never>, Record<never, never>>,
   }
 }
