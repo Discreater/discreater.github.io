@@ -1,10 +1,10 @@
 ---
 title: Git Submodules 总结
-tags: "git,WIP"
+tags: "git"
 date: "2021-08-6"
 ---
 
-# Git Submodules 总结 [WIP]
+# Git Submodules 总结
 
 ref: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 
@@ -83,7 +83,7 @@ git pull --recurse-submodules
 ```
 
 > 注意：若 `.gitmodules` 中的 URL 变化，则 `git pull --recurse-submodules` 会失败。
-此时需要执行 
+此时需要执行
 ```bash
 git submodule sync --recursive
 git submodule update --init --recursive
@@ -94,7 +94,7 @@ git submodule update --init --recursive
 拉取远程主项目的更改
 ```bash
 git submodule update --remote --rebase
-# or 
+# or
 git submodule update --remote --merge
 ```
 
@@ -109,9 +109,5 @@ git commit
 
 发布子模块的修改
 ```bash
-
+???
 ```
-
-
-
-

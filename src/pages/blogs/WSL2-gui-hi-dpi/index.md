@@ -6,6 +6,8 @@ date: "2020-03-22"
 
 # 在WSL2中启用GUI
 
+> 本文内容已过时，不再适用于最新的WSL2版本，仅供参考
+
 ## 参考
 
 [WSL github issue #4106](https://github.com/microsoft/WSL/issues/4106)
@@ -35,7 +37,7 @@ export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0.0
 
 ## 启动
 
-安装完成后点击Xlaunch启动，如图所示 
+安装完成后点击Xlaunch启动，如图所示
 ![xlaunch-1](./xlaunch1.png)
 
 4个模式的效果很容易看出来，看不出来也可以自己一个个试，选择自己习惯的就行。点击下一步
@@ -53,7 +55,7 @@ export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0.0
 
 实际上这样子还不能启动gui，试图启动的时候会被Windows的防火墙阻止。可以直接关掉防火墙，或者用在管理员模式的powershell里输入下面的命令：
 ```powershell
-Set-NetFirewallProfile -Name public -DisabledInterfaceAliases "vEthernet (WSL)" 
+Set-NetFirewallProfile -Name public -DisabledInterfaceAliases "vEthernet (WSL)"
 ```
 这个命令指挥关掉WSL的虚拟局域网的防火墙。
 
@@ -89,4 +91,3 @@ G:\Scripts\multiWindow.xlaunch
 ## 由于代理出现的异常
 
 说个和GUI无关的事。有时候会因为代理的原因导致WSL无法启动，出现`参考的对象类型不支持尝试的操作。`，这时候用管理员模式运行`netsh winsock reset`即可（会提示重启，但是实际上不需要重启），参考 [WSL github issue #4194](https://github.com/microsoft/WSL/issues/4194)
-
