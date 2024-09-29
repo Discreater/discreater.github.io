@@ -1,7 +1,7 @@
-import { NAnchor, NAnchorLink } from 'naive-ui';
-import type { PropType, VNode } from 'vue';
-import { defineComponent, h } from 'vue';
 import type { ArticleHeader } from 'virtual:article';
+import type { PropType, VNode } from 'vue';
+import { NAnchor, NAnchorLink } from 'naive-ui';
+import { defineComponent, h } from 'vue';
 
 function _renderAnchor(headers: ArticleHeader[]): VNode[] {
   return headers.map((header) => {

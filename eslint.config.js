@@ -3,8 +3,7 @@ import antfu from '@antfu/eslint-config';
 
 export default antfu({ vue: true, typescript: true }, {
   rules: {
-    'style/brace-style': 'off',
-    'ts/brace-style': [
+    'style/brace-style': [
       'error',
       '1tbs',
       {
@@ -15,13 +14,20 @@ export default antfu({ vue: true, typescript: true }, {
       'error',
       'always',
     ],
-    'ts/semi': [
+    'unused-imports/no-unused-vars': [
       'error',
-      'always',
+      {
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
     ],
     'ts/no-unused-vars': [
       'error',
       {
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
       },

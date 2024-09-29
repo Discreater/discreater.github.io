@@ -1,14 +1,14 @@
-import path from 'node:path';
+import type { SimpleGit } from 'simple-git';
+import type { ArticleAttributes, ArticleHeader, ArticleInfo } from 'virtual:article';
+import type { Plugin } from 'vite';
 import fs from 'node:fs';
+import path from 'node:path';
 import process from 'node:process';
 import fm from 'front-matter';
 import MarkdownIt from 'markdown-it';
 import Anchor from 'markdown-it-anchor';
-import type { SimpleGit } from 'simple-git';
 import { simpleGit } from 'simple-git';
 import { normalizePath } from 'vite';
-import type { Plugin } from 'vite';
-import type { ArticleAttributes, ArticleHeader, ArticleInfo } from 'virtual:article';
 
 function insertHeader(headers: ArticleHeader[], header: ArticleHeader, level: number) {
   if (level === 1 || headers.length === 0)

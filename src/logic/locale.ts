@@ -1,5 +1,3 @@
-import { h } from 'vue';
-import { useI18n } from 'vue-i18n';
 import {
   dateEnUS,
   dateJaJP,
@@ -8,6 +6,8 @@ import {
   jaJP,
   zhCN,
 } from 'naive-ui';
+import { h } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export function getLocaleDropdownMenuOptions() {
   const { t, availableLocales } = useI18n();

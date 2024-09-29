@@ -1,7 +1,7 @@
+import type { ParseNode, Parser } from './Parser';
 /*
 * */
 import katex from 'katex';
-import type { ParseNode, Parser } from './Parser';
 import * as utils from './utils';
 
 /*

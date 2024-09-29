@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import {
-  NConfigProvider,
   darkTheme,
+  NConfigProvider,
 } from 'naive-ui';
+import { computed } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 import { RouterView } from 'vue-router';
-import meta from './meta';
-import { getLocale } from './logic/locale';
 import { isDark } from '~/logic';
+import { getLocale } from './logic/locale';
+import meta from './meta';
 
 const theme = computed(() => {
   return isDark.value ? darkTheme : null;

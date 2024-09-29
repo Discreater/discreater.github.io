@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
-import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
-import { useRoute } from 'vue-router';
-
-import { articles } from 'virtual:article';
 import type { ArticleAttributes, ArticleInfo } from 'virtual:article';
+import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
+import { articles } from 'virtual:article';
+
+import { computed, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import MyHeader from '~/components/MyHeader.vue';
-import MyFooter from '~/components/MyFooter.vue';
+import { useRoute } from 'vue-router';
 import BlogAnchor from '~/components/BlogAnchor';
+import MyFooter from '~/components/MyFooter.vue';
+import MyHeader from '~/components/MyHeader.vue';
 import QTime from '~/components/QTime.vue';
 import SpotLight from '~/components/SpotLight.vue';
 import meta from '~/meta';

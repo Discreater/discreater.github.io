@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, useRouter } from 'vue-router';
 import type { MenuOption } from 'naive-ui';
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NMenu, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
-import { useI18n } from 'vue-i18n';
-
-import { routes } from 'vue-router/auto/routes';
-import { h } from 'vue';
-import { useStorage } from '@vueuse/core';
 import type { ArticleInfo } from 'virtual:article';
+import { useStorage } from '@vueuse/core';
+import { NA, NAvatar, NButton, NH1, NList, NListItem, NMenu, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
+
 import { articles as allBlogs } from 'virtual:article';
+import { h } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { RouterLink, useRouter } from 'vue-router';
+import { routes } from 'vue-router/auto-routes';
 import MxlIcon from '~/assets/icons/mxl.png';
 import QClock from '~/components/QClock.vue';
 import meta from '~/meta';
@@ -45,7 +45,8 @@ const diaries = routes
   ?.children!
   .sort((a, b) => {
     return Number(b.path) - Number(a.path);
-  }).map((yearRoute) => {
+  })
+  .map((yearRoute) => {
     const year = yearRoute.path;
     return {
       label: year,

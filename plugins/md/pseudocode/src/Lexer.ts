@@ -1,9 +1,9 @@
+import { ParseError } from './ParseError';
 /**
  * The Lexer class tokenizes the input sequentially, looking ahead only one
  * token.
  */
 import * as utils from './utils';
-import { ParseError } from './ParseError';
 
 /* Math pattern
     Math environtment like $ $ or \( \) cannot be matched using regular
@@ -53,12 +53,12 @@ const atomRegex: {
   }
 } = {
   // TODO: which is correct? func: /^\\(?:[a-zA-Z]+|.)/,
-  special: /^(\\\\|\\{|\\}|\\\$|\\&|\\#|\\%|\\_)/,
+  special: /^(\\\\|\\\{|\\\}|\\\$|\\&|\\#|\\%|\\_)/,
   math: mathPattern, /// ^\$.*\$/
-  func: /^\\([a-zA-Z]+)/,
+  func: /^\\([a-z]+)/i,
   open: /^\{/,
   close: /^\}/,
-  quote: /^(`|``|'|'')/,
+  quote: /^(`|')/,
   ordinary: /^[^\\{}$&#%_\s]+/,
 };
 const commentRegex = /^%.*/;

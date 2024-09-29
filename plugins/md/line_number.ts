@@ -1,5 +1,6 @@
-import type { CheerioAPI, Element } from 'cheerio';
-import cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import type { Element } from 'domhandler';
+import * as cheerio from 'cheerio';
 
 const TABLE_NAME = 'hljs-ln';
 const LINE_NAME = 'hljs-ln-line';
@@ -49,7 +50,7 @@ function addLineNumbersBlockFor($: CheerioAPI, options: LnOptions) {
         + '</tr>';
     }
 
-    return `<table class="${TABLE_NAME}">${html}</table>`;
+    return `<table class="${TABLE_NAME}"><tbody>${html}</tbody></table>`;
   }
 
   return `<span class="single-line-code">${inputHtml}</span>`;
@@ -104,7 +105,7 @@ function skipCloseTag(text: string, start: number): number {
 export function getLines(text: string) {
   if (text.length === 0)
     return [];
-  const lines = [];
+  const lines: string[] = [];
   let lastIndex = 0;
   let i = 0;
   for (i = 0; i < text.length;) {

@@ -1,27 +1,23 @@
 import path, { resolve } from 'node:path';
-import { defineConfig } from 'vite';
-import Vue from '@vitejs/plugin-vue';
-import Layouts from 'vite-plugin-vue-layouts';
-import Markdown from 'unplugin-vue-markdown/vite';
-import VueRouter from 'unplugin-vue-router/vite';
 import VueI18n from '@intlify/unplugin-vue-i18n/vite';
-import Inspect from 'vite-plugin-inspect';
+import transformerDirective from '@unocss/transformer-directives';
+import Vue from '@vitejs/plugin-vue';
 import Anchor from 'markdown-it-anchor';
 import LinkAttributes from 'markdown-it-link-attributes';
-
-// @ts-expect-error missing types
-import TexMath from 'markdown-it-texmath';
-
-// @ts-expect-error missing types
+import Markdown from 'unplugin-vue-markdown/vite';
+import VueRouter from 'unplugin-vue-router/vite';
+import { defineConfig } from 'vite';
+import Inspect from 'vite-plugin-inspect';
+import Layouts from 'vite-plugin-vue-layouts';
+import { markdownItTexMath } from './plugins/md/texmath';
+// @ts-expect-error no-type
 import MarkdownItFootNote from 'markdown-it-footnote';
-import Katex from 'katex';
-import Unocss from 'unocss/vite';
-import { presetAttributify, presetIcons, presetUno } from 'unocss';
-import transformerDirective from '@unocss/transformer-directives';
 import { simpleGit } from 'simple-git';
-import { articlePlugin } from './plugins/vite/article';
+import { presetAttributify, presetIcons, presetUno } from 'unocss';
+import Unocss from 'unocss/vite';
 import { markdownItTakki } from './plugins/md/md_takki';
 import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
+import { articlePlugin } from './plugins/vite/article';
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left';
 
@@ -117,8 +113,7 @@ export default defineConfig({
               rel: 'noopener',
             },
           })
-          .use(TexMath, {
-            engine: Katex,
+          .use(markdownItTexMath, {
             delimiters: 'dollars',
           })
           .use(markdownItPseudocode, {

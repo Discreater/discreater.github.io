@@ -1,5 +1,5 @@
 ---
-title: Montgomery Modular Multiplication 
+title: Montgomery Modular Multiplication
 lang: zh-CN
 tags: "crypto,WIP"
 date: "2022-10-17 19:15"
@@ -78,7 +78,6 @@ $$Z^{(i-1)} + g^{(i)}M \equiv_{r^2} 0$$
 
 证明：--->
 
-
 算法中第三到第五行不能并行， 都依赖于前一行的计算结果。
 
 关键路径包括 **2次加法** 和 **3 次乘法**.
@@ -112,7 +111,7 @@ $q$ and $Z$ are independent of each other and thus can be computed in parallel.
 
 The three multiplications in Algorithm 2 can be done in parallel. So the critical path contains only **1 multiplications** and **2 additions**. (Multiplying by $r^2$ can be replaced by shifting.)
 
-It can be approved that $Z^{(d-1)} \in [0, 2M)$, when $d = \lceil N/m \rceil + 2$. 
+It can be approved that $Z^{(d-1)} \in [0, 2M)$, when $d = \lceil N/m \rceil + 2$.
 
 ## Advanced Optimized Algorithm
 
@@ -164,7 +163,7 @@ This algorithm replaces all multiplications and additions in each iteration with
 
 <img src="./imgs/compress1.png" alt="compress1" width="400" height="400" />
 
-$\tilde{Z}_L*M''$ has $m$ partial products, and each partial products has a tail bit. Why there exists a tail bit? Because when encoded group of  $\tilde{Z}_L$ is negative, the $M''$ need to be complemented. To remove the add operation, we split the `+1` operation from the complement procedure. 
+$\tilde{Z}_L*M''$ has $m$ partial products, and each partial products has a tail bit. Why there exists a tail bit? Because when encoded group of  $\tilde{Z}_L$ is negative, the $M''$ need to be complemented. To remove the add operation, we split the `+1` operation from the complement procedure.
 
 ### Compress2
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { NDropdown } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
-import { getLocaleDropdownMenuOptions } from '~/logic/locale';
 import { toggleDark } from '~/logic';
+import { getLocaleDropdownMenuOptions } from '~/logic/locale';
 import DButton from '~/ui/DButton.vue';
 
 const { t, locale } = useI18n();

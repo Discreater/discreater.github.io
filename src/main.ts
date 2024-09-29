@@ -1,16 +1,17 @@
-import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router/auto';
+import type { UserModule } from './types';
 import { setupLayouts } from 'virtual:generated-layouts';
-import App from './App.vue';
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import { routes } from 'vue-router/auto-routes';
 
+import App from './App.vue';
 import '@unocss/reset/tailwind.css';
 import 'uno.css';
 import './styles/main.css';
-import type { UserModule } from './types';
 
 const router = createRouter({
   history: createWebHistory(),
-  extendRoutes: routes => setupLayouts(routes),
+  routes: setupLayouts(routes),
 });
 
 const app = createApp(App);

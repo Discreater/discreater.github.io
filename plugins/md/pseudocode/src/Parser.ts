@@ -1,3 +1,6 @@
+import type { Lexer } from './Lexer';
+import type { Entries } from './utils';
+import { ParseError } from './ParseError';
 /**
  * The Parser class parses the token stream from Lexer into an abstract syntax
  * tree, represented by ParseNode.
@@ -85,30 +88,27 @@
  *
  */
 import * as utils from './utils';
-import { ParseError } from './ParseError';
-import type { Lexer } from './Lexer';
-import type { Entries } from './utils';
 
 interface TypedBaseNode {
-  root: undefined
-  algorithm: undefined
-  algorithmic: undefined
-  caption: undefined
-  block: undefined
-  function: {
+  'root': undefined
+  'algorithm': undefined
+  'algorithmic': undefined
+  'caption': undefined
+  'block': undefined
+  'function': {
     type: string
     name: string
   }
-  if: undefined | {
+  'if': undefined | {
     numElif: number
     hasElse: boolean
   }
-  loop: string
-  repeat: string
-  statement: string
-  command: string
-  comment: undefined
-  call: undefined | string
+  'loop': string
+  'repeat': string
+  'statement': string
+  'command': string
+  'comment': undefined
+  'call': undefined | string
   'open-text': undefined
   'close-text': undefined
 }

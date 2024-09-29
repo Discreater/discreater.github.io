@@ -28,12 +28,12 @@ SOFTWARE.
 'use strict';
 
 import type MarkdownIt from 'markdown-it';
-import type ParserBlock from 'markdown-it/lib/parser_block.js';
-import type { RenderRule } from 'markdown-it/lib/renderer';
+import type { RuleBlock } from 'markdown-it/lib/parser_block.mjs';
+import type { RenderRule } from 'markdown-it/lib/renderer.mjs';
 import type { Options } from './pseudocode';
 import * as pseudocode from './pseudocode';
 
-const pseudocode_block: ParserBlock.RuleBlock = (state, start, end, silent) => {
+const pseudocode_block: RuleBlock = (state, start, end, silent) => {
   let lastLine;
   let pos = state.bMarks[start] + state.tShift[start];
   let max = state.eMarks[start];
@@ -88,11 +88,11 @@ const pseudocode_block: ParserBlock.RuleBlock = (state, start, end, silent) => {
   return true;
 };
 
-export const markdownItPseudocode: MarkdownIt.PluginWithOptions<Options> = (md, options) => {
+export function markdownItPseudocode(md: MarkdownIt, options: Options) {
   const pseudocodeBlock = (code: string) => {
     const html = pseudocode.renderToString(code, options);
     try {
-      return `<p>${html}</p>`;
+      return `<div>${html}</div>`;
     } catch (error) {
       console.error(error);
       return code;
