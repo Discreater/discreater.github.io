@@ -1,3 +1,4 @@
 # Unlucky
 
-Keep `unplugin-vue-i18n` in version 4 (https://github.com/intlify/bundle-tools/issues/392)
+Lock the `vue-i18n` version to `10.0.3`.
+v10 should be the "latest" version, but the v9 is recogized as the "latest" version.
