@@ -35,16 +35,6 @@ function extractBodyIt(body: string) {
   return headers;
 }
 
-// function extractBody(body: string) {
-//   const tokens = marked.lexer(body)
-//   const headers = tokens.filter(token => token.type === 'heading' && token.depth === 2).map((token) => {
-//     const tokenList = [token];
-//     (tokenList as TokensList).links = {}
-//     return { html: marked.parser(tokenList as TokensList), token: token as Tokens.Heading }
-//   })
-//   return headers
-// }
-
 interface Article {
   path: string
   name: string
