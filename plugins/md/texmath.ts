@@ -294,27 +294,33 @@ function dollar(state, silent) {
 const _texmathInlineRuleNames = ['math_inline', 'math_inline_double'];
 const _texmathBlockRuleNames = ['math_block', 'math_block_eqno'];
 
+const C_SPACE = 0x20; // ' '
+const C_COMMA = 0x2C; // ','
+const C_DOT = 0x2E; // '.'
+const C_0 = 0x30; // '0'
+const C_9 = 0x39; // '9'
+const C_SEMICOLON = 0x3B; // ';'
+const C_BACKSLASH = 0x5C; // '\'
+
 function texmathPre(str: string, outerSpace: boolean, beg: number) {
   const prv = beg > 0 ? str[beg - 1].charCodeAt(0) : false;
-  return outerSpace ? !prv || prv === 0x20 // space  (avoiding regex's for performance reasons)
-    : !prv || prv !== 0x5C // no backslash,
-    && (prv < 0x30 || prv > 0x39); // no decimal digit .. before opening '$'
+  return !prv || (outerSpace
+    ? prv === C_SPACE // avoiding regex's for performance reasons
+    : prv !== C_BACKSLASH && (prv < C_0 || prv > C_9)); // no backslash, and no decimal digit .. before opening '$'
 };
 function texmathPost(str: string, outerSpace: boolean, end: number) {
   const nxt = str[end + 1] && str[end + 1].charCodeAt(0);
-  return outerSpace ? !nxt || nxt === 0x20 // space  (avoiding regex's for performance reasons)
-    || nxt === 0x2E // '.'
-    || nxt === 0x2C // ','
-    || nxt === 0x3B // ';'
-    : !nxt || nxt < 0x30 || nxt > 0x39; // no decimal digit .. after closing '$'
+  return !nxt || (outerSpace
+    ? (nxt === C_SPACE || nxt === C_DOT || nxt === C_COMMA || nxt === C_SEMICOLON) // avoiding regex's for performance reasons
+    : (nxt < C_0 || nxt > C_9)); // no decimal digit .. after closing '$'
 };
 
 export function markdownItTexMath(md: markdownIt, options: any): void {
   const delimiters = mergeDelimiters(options && options.delimiters);
-  const outerSpace = options && options.outerSpace || false; // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
-  const katexOptions = options && options.katexOptions || {};
+  const outerSpace = (options && options.outerSpace) || false; // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
+  const katexOptions = (options && options.katexOptions) || {};
   katexOptions.throwOnError = katexOptions.throwOnError || false;
-  katexOptions.macros = katexOptions.macros || options && options.macros; // ensure backwards compatibility
+  katexOptions.macros = katexOptions.macros || (options && options.macros); // ensure backwards compatibility
 
   // inject inline rules to markdown-it
   for (const rule of delimiters.inline) {

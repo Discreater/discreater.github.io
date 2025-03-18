@@ -43,11 +43,11 @@ function addLineNumbersBlockFor($: CheerioAPI, options: LnOptions) {
       const content = lines[i].length > 0 ? lines[i] : ' ';
       html
         += '<tr>'
-        + `<td class="${LINE_NAME} ${NUMBERS_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">`
-        + `<div class="${NUMBER_LINE_NAME}" ${DATA_ATTR_NAME}="${ln}" />`
-        + '</td>'
-        + `<td class="${LINE_NAME} ${CODE_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">${content}\n</td>`
-        + '</tr>';
+          + `<td class="${LINE_NAME} ${NUMBERS_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">`
+          + `<div class="${NUMBER_LINE_NAME}" ${DATA_ATTR_NAME}="${ln}" />`
+          + '</td>'
+          + `<td class="${LINE_NAME} ${CODE_BLOCK_NAME}" ${DATA_ATTR_NAME}="${ln}">${content}\n</td>`
+          + '</tr>';
     }
 
     return `<table class="${TABLE_NAME}"><tbody>${html}</tbody></table>`;

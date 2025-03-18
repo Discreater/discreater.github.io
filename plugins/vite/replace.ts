@@ -45,7 +45,7 @@ function execSrcReplacements(src: string, replacements: ViteReplacement[]) {
       );
     } else if (
       (typeof replacement.to === 'string'
-        || replacement.to instanceof Function) === false
+        || typeof replacement.to === 'function') === false
     ) {
       throw new TypeError(
         '[vite-plugin-replace]: The replacement option \'to\' is not of type \'string\' or \'Function\'',

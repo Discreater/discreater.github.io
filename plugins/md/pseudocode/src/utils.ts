@@ -1,9 +1,9 @@
 export function isString(str: any): str is string {
-  return (typeof str === 'string') || (str instanceof String);
+  return typeof str === 'string';
 }
 
 export function isObject(obj: any): obj is Record<string, any> {
-  return (typeof obj === 'object' && (obj instanceof Object));
+  return (typeof obj === 'object' && (Object.prototype.toString.call(obj) === '[object Object]'));
 }
 
 export function toString(obj: any): string {

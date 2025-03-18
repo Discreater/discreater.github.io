@@ -81,8 +81,8 @@ const pseudocode_block: RuleBlock = (state, start, end, silent) => {
   const token = state.push('pseudocode_block', 'pseudocode', 0);
   token.block = true;
   token.content = (firstLine && firstLine.trim() ? `${firstLine}\n` : '')
-  + state.getLines(start + 1, next, state.tShift[start], true)
-  + (lastLine && lastLine.trim() ? lastLine : '');
+    + state.getLines(start + 1, next, state.tShift[start], true)
+    + (lastLine && lastLine.trim() ? lastLine : '');
   token.map = [start, state.line];
   token.markup = '::: pseudocode';
   return true;
