@@ -21,7 +21,7 @@
     },
     "types": [
       "vite/client",
-      "vite-plugin-vue-layouts/client",
+      "vite-plugin-vue-layouts-next/client",
       "vitest/importMeta",
       "unplugin-vue-router/client",
       "./plugins/vite/client"

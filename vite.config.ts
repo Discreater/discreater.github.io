@@ -13,7 +13,7 @@ import Markdown from 'unplugin-vue-markdown/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
-import Layouts from 'vite-plugin-vue-layouts';
+import Layouts from 'vite-plugin-vue-layouts-next';
 import { markdownItTakki } from './plugins/md/md_takki';
 import { markdownItPseudocode } from './plugins/md/pseudocode_md.js';
 import { markdownItTexMath } from './plugins/md/texmath';
