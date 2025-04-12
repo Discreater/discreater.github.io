@@ -1,1 +1,0 @@
-import{aj as s,c as o,o as r,a as t}from"./main-C3GYrh12.js";const n={class:"prose prose-sm m-auto text-left"},_=[],u={__name:"10",setup(m,{expose:a}){return a({frontmatter:{meta:[]}}),s({meta:[]}),(d,e)=>(r(),o("div",n,e[0]||(e[0]=[t("h2",{id:"10.20",tabindex:"-1"},"10.20",-1),t("p",null,"今天给博客添加了显示日记功能，能写多久写多久。",-1)])))}};export{u as default,_ as meta};
