@@ -6,7 +6,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "preview-https": "serve dist",
-    "lint": "eslint \"**/*.{vue,ts,js}\"",
+    "lint": "oxlint",
     "test": "vitest"
   },
   "dependencies": {
@@ -23,7 +23,6 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "4.12.0",
     "@iconify/json": "^2.2.326",
     "@types/katex": "^0.16.7",
     "@types/markdown-it": "^14.1.2",
@@ -32,7 +31,6 @@
     "@vitejs/plugin-vue": "^5.2.3",
     "cheerio": "1.0.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.24.0",
     "fp-ts": "^2.16.9",
     "highlight.js": "^11.11.1",
     "https-localhost": "^4.7.1",
@@ -40,6 +38,7 @@
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-link-attributes": "^4.0.1",
+    "oxlint": "^0.16.5",
     "shiki": "^3.2.2",
     "simple-git": "^3.27.0",
     "typescript": "^5.8.3",

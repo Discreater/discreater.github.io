@@ -291,8 +291,8 @@ function dollar(state, silent) {
 */
 
 // used for enable/disable math rendering by `markdown-it`
-const _texmathInlineRuleNames = ['math_inline', 'math_inline_double'];
-const _texmathBlockRuleNames = ['math_block', 'math_block_eqno'];
+// const _texmathInlineRuleNames = ['math_inline', 'math_inline_double'];
+// const _texmathBlockRuleNames = ['math_block', 'math_block_eqno'];
 
 const C_SPACE = 0x20; // ' '
 const C_COMMA = 0x2C; // ','
