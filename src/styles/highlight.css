@@ -103,11 +103,11 @@ html.dark .prose {
 }
 
 .prose .code-block figcaption .copy {
-    @apply cursor-pointer i-mdi-sticker-outline primary-clickable;
+    @apply cursor-pointer i-carbon-document-blank primary-clickable;
 }
 
 .prose .code-block figcaption .copied {
-    @apply cursor-pointer i-mdi-sticker-check text-green-300;
+    @apply cursor-pointer i-carbon-document-tasks text-green-300;
 }
 
 .prose .code-block input[type='checkbox']{

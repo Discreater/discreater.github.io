@@ -15,13 +15,11 @@ function handleLocaleSelect(key: unknown) {
 
 <template>
   <div flex="~" justify="center" items="center" space="x-2" h="12">
-    <DButton to="/" :title="t('button.home')" icon="i-mdi-home" class="text-3xl" />
-    <DButton
-      text="3xl" icon="i-ri-moon-fill dark:i-ri-sun-fill" :title="t('button.toggle_dark')"
-      @click="() => toggleDark()"
-    />
+    <DButton to="/" :title="t('button.home')" icon="i-carbon-home" class="text-3xl" />
+    <DButton text="3xl" icon="i-carbon-moon dark:i-carbon-sun" :title="t('button.toggle_dark')"
+      @click="() => toggleDark()" />
     <NDropdown trigger="click" :options="localeDropdownMenuOptions" @select="handleLocaleSelect">
-      <DButton icon="i-ooui-language" class="text-3xl" :title="t('button.toggle_langs')" />
+      <DButton icon="i-carbon-ibm-watson-language-translator" class="text-3xl" :title="t('button.toggle_langs')" />
     </NDropdown>
   </div>
 </template>

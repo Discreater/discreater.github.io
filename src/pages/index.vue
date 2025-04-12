@@ -95,10 +95,8 @@ function handleTabChange(value: string) {
           <NListItem v-for="blog in blogs" :key="blog.routePath">
             <NThing>
               <template #avatar>
-                <button
-                  class="text-4xl primary-clickable i-carbon-blog text"
-                  @click="() => handleBlogTitleClick(blog.routePath)"
-                />
+                <button class="text-4xl primary-clickable i-carbon-text-indent text m-auto h-full"
+                  @click="() => handleBlogTitleClick(blog.routePath)" />
               </template>
               <template #header>
                 <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.routePath)">
