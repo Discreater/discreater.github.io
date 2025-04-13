@@ -7,7 +7,7 @@ import Anchor from 'markdown-it-anchor';
 import MarkdownItFootNote from 'markdown-it-footnote';
 import LinkAttributes from 'markdown-it-link-attributes';
 import { simpleGit } from 'simple-git';
-import { presetAttributify, presetIcons, presetUno } from 'unocss';
+import { presetAttributify, presetIcons, presetWind3 } from 'unocss';
 import Unocss from 'unocss/vite';
 import Markdown from 'unplugin-vue-markdown/vite';
 import VueRouter from 'unplugin-vue-router/vite';
@@ -71,7 +71,7 @@ export default defineConfig({
     Unocss({
       presets: [
         presetAttributify({}),
-        presetUno({}),
+        presetWind3({}),
         presetIcons({}),
       ],
       transformers: [
@@ -87,6 +87,8 @@ export default defineConfig({
             light: '#363636',
             dark: '#f3f3f3',
           },
+          foreground: 'rgba(99, 226, 183, 0.15)',
+          'link-hover': '#7fe7c4',
         },
         breakpoints: {
           xs: '320px',

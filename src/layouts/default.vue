@@ -12,6 +12,7 @@ import MyHeader from '~/components/MyHeader.vue';
 import QTime from '~/components/QTime.vue';
 import SpotLight from '~/components/SpotLight.vue';
 import meta from '~/meta';
+import DAnchor from '~/components/DAnchor.vue';
 
 const { t } = useI18n();
 
@@ -71,9 +72,12 @@ onMounted(() => {
             <MyFooter />
           </div>
         </NCard>
-        <aside sticky top="4" self-start class="hidden xl:block" max-w="70">
+        <aside class="sticky top-4 self-start hidden xl:block max-w-70">
           <NCard embedded hoverable content-style="padding-left: 0.5rem;">
-            <BlogAnchor v-if="currentBlog" text="left" :headers="currentBlog.headers" />
+            <BlogAnchor v-if="currentBlog" class="text-left" :headers="currentBlog.headers" />
+          </NCard>
+          <NCard embedded hoverable content-style="padding-left: 0.5rem;">
+            <DAnchor v-if="currentBlog" class="text-left" :headers="currentBlog.headers" />
           </NCard>
         </aside>
       </div>
