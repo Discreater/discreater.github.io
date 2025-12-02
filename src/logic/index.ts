@@ -1,4 +1,4 @@
-export * from './dark';
+export * from "./dark";
 
 export const isDev = import.meta.env.DEV;
 
