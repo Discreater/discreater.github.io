@@ -27,9 +27,8 @@ SOFTWARE.
 
 'use strict';
 
-import type MarkdownIt from 'markdown-it';
-import type { RuleBlock } from 'markdown-it/lib/parser_block.mjs';
-import type { RenderRule } from 'markdown-it/lib/renderer.mjs';
+import type MarkdownIt from 'markdown-exit';
+import type { RuleBlock, RenderRule } from 'markdown-exit';
 import type { Options } from './pseudocode';
 import * as pseudocode from './pseudocode';
 
