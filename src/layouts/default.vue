@@ -73,10 +73,7 @@ onMounted(() => {
           </div>
         </NCard>
         <aside class="sticky top-4 self-start hidden xl:block max-w-70">
-          <NCard embedded hoverable content-style="padding-left: 0.5rem;">
-            <BlogAnchor v-if="currentBlog" class="text-left" :headers="currentBlog.headers" />
-          </NCard>
-          <NCard embedded hoverable content-style="padding-left: 0.5rem;">
+          <NCard embedded hoverable content-style="padding-left: 0.5rem;padding-right: 0.5rem;">
             <DAnchor v-if="currentBlog" class="text-left" :headers="currentBlog.headers" />
           </NCard>
         </aside>
