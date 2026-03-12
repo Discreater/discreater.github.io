@@ -5,7 +5,7 @@ tags: "crypto,WIP"
 date: "2022-10-17 19:15"
 ---
 
-# Montgomery Modular Multiplication  [WIP]
+# Montgomery Modular Multiplication [WIP]
 
 > 该页面主要用于测试数学公式，以及 latex 风格伪代码的显示效果。
 
@@ -63,13 +63,13 @@ $$Z^{(i-1)} + g^{(i)}M \equiv_{r^2} 0$$
 \OUTPUT $Z \in [0, M)$
 \STATE $Z^{(-1)} = 0$
 \FOR{$i = 0$ \TO $d - 1$}
-    \STATE $Z^{(i)} = Z^{(i-1)} + XY_i$
-    \STATE $q^{(i)} = (Z^{(i)} \mod r)M' \mod r$
-    \STATE $Z^{(i)} = (Z^{(i)} + q^{(i)}M)/r$
+\STATE $Z^{(i)} = Z^{(i-1)} + XY_i$
+\STATE $q^{(i)} = (Z^{(i)} \mod r)M' \mod r$
+\STATE $Z^{(i)} = (Z^{(i)} + q^{(i)}M)/r$
 \ENDFOR
 \STATE $Z = Z^{(d-1)}$
 \IF{$Z \geq M$}
-    \STATE $Z = Z - M$
+\STATE $Z = Z - M$
 \ENDIF
 \RETURN $Z$
 \end{algorithmic}
@@ -94,13 +94,13 @@ To reduce the length of critical path, we can parallelize the calculation of $q^
 \OUTPUT $Z \in [0, M)$
 \STATE $Z^{(-1)} = 0, q^{(-1)}=0$
 \FOR{$i = 0$ \TO $d - 1$}
-    \STATE $g^{(i)} = (Z^{(i-1)} \mod r^2) M'' \mod r^2$
-    \STATE $q^{(i)} = (g^{(i)} - q^{(i-1)})/r$
-    \STATE $Z^{(i)} = (Z^{(i-1)} + XY_ir^2 + q^{(i-1)}M)/r$
+\STATE $g^{(i)} = (Z^{(i-1)} \mod r^2) M'' \mod r^2$
+\STATE $q^{(i)} = (g^{(i)} - q^{(i-1)})/r$
+\STATE $Z^{(i)} = (Z^{(i-1)} + XY_ir^2 + q^{(i-1)}M)/r$
 \ENDFOR
 \STATE $Z = Z^{(d-1)}$
 \IF{$Z \geq M$}
-    \STATE $Z = Z - M$
+\STATE $Z = Z - M$
 \ENDIF
 \RETURN $Z$
 \end{algorithmic}
@@ -125,34 +125,34 @@ This algorithm replaces all multiplications and additions in each iteration with
 \OUTPUT $Z \in [0, M)$
 \STATE $Z^{(-1)}_S = Z^{(-1)}_C = Z^{(-1)}_{carry} = q^{(-1)}_S = q^{(-1)}_C = q^{(-1)}_{carry} = 0$
 \FOR{$i = 0$ \TO $d - 1$}
-    \STATE \COMMENT{Form $Z^{(i-1)}, Z^{(i-1)}_L$, and $q^{(i-1)}$ as triplets}
-    \STATE $Z^{(i-1)} = (Z^{(i-1)}_S, Z^{(i-1)}_C, Z^{(i-1)}_{carry}$
-    \STATE $Z^{(i-1)}_L = (Z^{(i-1)}_S[2m-1:0], Z^{(i-1)}_C[2m-1:0], Z^{(i-1)}_{carry})$
-    \STATE $q^{(i-1)} = (q^{(i-1)}_S, q^{(i-1)}_C, q^{(i-1)}_{carry})$
-    \STATE \COMMENT{Encode $Z^{(i-1)}_L$ and $q^{(i-1)}$}
-    \STATE $\tilde{Z}^{(i-1)}_L =$ Encode$(Z^{(i-1)}_L)$
-    \STATE $\tilde{q}^{(i-1)} =$ Encode$(q^{(i-1)})$
-    \STATE $\hat{q}^{(i-1)} =$ EncodeSN$(q^{(i-1)})$
-    \STATE \COMMENT{Compress for $\tilde{Z}^{(i-1)}_LM'' - \hat{q}^{(i-1)}$}
-    \STATE $(q^{(i)}_S, q^{(i)}_C) =$ Compress1$(\tilde{Z}^{(i-1)}_LM'' - \hat{q}^{(i-1)})$
-    \STATE \COMMENT{Perform division over $r$ by right shifting}
-    \STATE $q^{(i)}_{carry} = q^{(i)}_S[m-1]$ OR $q^{(i)}_C[m-1]$
-    \STATE $q^{(i)}_S = q^{(i)}_S >> m, q^{(i)}_C = q^{(i)}_C >> m$
-    \STATE \COMMENT{Compress for $Z^{(i-1)} + X\tilde{Y}_ir^2 + \tilde{q}^{(i-1)}M$}
-    \STATE $\tilde{Y}_i = Y_i - Y_i[m-1]r + Y_{i-1}[m-1]$
-    \STATE $(Z^{(i)}_S, Z^{(i)}_C) =$ Compress2$(Z^{(i-1)} + X\tilde{Y}_ir^2 + \tilde{q}^{(i-1)}M)$
-    \STATE \COMMENT{Prevent overflow from signed compression}
-    \STATE $Z^{(i)}_S[N+3m] = Z^{(i)}_S[N+3m]$ XNOR $Z^{(i)}_C[N+3m]$
-    \STATE $Z^{(i)}_C[N+3m] = 0$
-    \STATE \COMMENT{Perform division over $r$ by right shifting}
-    \STATE $Z^{(i)}_{carry} = Z^{(i)}_S[m-1]$ OR $Z^{(i)}_C[m-1]$
-    \STATE $Z^{(i)}_S = Z^{(i)}_S >> m, Z^{(i)}_C = Z^{(i)}_C >> m$
+\STATE \COMMENT{Form $Z^{(i-1)}, Z^{(i-1)}_L$, and $q^{(i-1)}$ as triplets}
+\STATE $Z^{(i-1)} = (Z^{(i-1)}_S, Z^{(i-1)}_C, Z^{(i-1)}_{carry}$
+\STATE $Z^{(i-1)}_L = (Z^{(i-1)}_S[2m-1:0], Z^{(i-1)}_C[2m-1:0], Z^{(i-1)}_{carry})$
+\STATE $q^{(i-1)} = (q^{(i-1)}_S, q^{(i-1)}_C, q^{(i-1)}_{carry})$
+\STATE \COMMENT{Encode $Z^{(i-1)}_L$ and $q^{(i-1)}$}
+\STATE $\tilde{Z}^{(i-1)}_L =$ Encode$(Z^{(i-1)}_L)$
+\STATE $\tilde{q}^{(i-1)} =$ Encode$(q^{(i-1)})$
+\STATE $\hat{q}^{(i-1)} =$ EncodeSN$(q^{(i-1)})$
+\STATE \COMMENT{Compress for $\tilde{Z}^{(i-1)}_LM'' - \hat{q}^{(i-1)}$}
+\STATE $(q^{(i)}_S, q^{(i)}_C) =$ Compress1$(\tilde{Z}^{(i-1)}_LM'' - \hat{q}^{(i-1)})$
+\STATE \COMMENT{Perform division over $r$ by right shifting}
+\STATE $q^{(i)}_{carry} = q^{(i)}_S[m-1]$ OR $q^{(i)}_C[m-1]$
+\STATE $q^{(i)}_S = q^{(i)}_S >> m, q^{(i)}_C = q^{(i)}_C >> m$
+\STATE \COMMENT{Compress for $Z^{(i-1)} + X\tilde{Y}_ir^2 + \tilde{q}^{(i-1)}M$}
+\STATE $\tilde{Y}_i = Y_i - Y_i[m-1]r + Y_{i-1}[m-1]$
+\STATE $(Z^{(i)}_S, Z^{(i)}_C) =$ Compress2$(Z^{(i-1)} + X\tilde{Y}_ir^2 + \tilde{q}^{(i-1)}M)$
+\STATE \COMMENT{Prevent overflow from signed compression}
+\STATE $Z^{(i)}_S[N+3m] = Z^{(i)}_S[N+3m]$ XNOR $Z^{(i)}_C[N+3m]$
+\STATE $Z^{(i)}_C[N+3m] = 0$
+\STATE \COMMENT{Perform division over $r$ by right shifting}
+\STATE $Z^{(i)}_{carry} = Z^{(i)}_S[m-1]$ OR $Z^{(i)}_C[m-1]$
+\STATE $Z^{(i)}_S = Z^{(i)}_S >> m, Z^{(i)}_C = Z^{(i)}_C >> m$
 \ENDFOR
 \STATE $Z = Z^{(d-1)}_S + Z^{(d-1)}_C + Z^{(d-1)}_{carry}$
 \IF{$Z \geq M$}
-    \STATE $Z = Z - M$
+\STATE $Z = Z - M$
 \ELSEIF{$Z < 0$}
-    \STATE $Z = Z + M$
+\STATE $Z = Z + M$
 \ENDIF
 \RETURN $Z$
 \end{algorithmic}
@@ -163,7 +163,7 @@ This algorithm replaces all multiplications and additions in each iteration with
 
 <img src="./imgs/compress1.png" alt="compress1" width="400" height="400" />
 
-$\tilde{Z}_L*M''$ has $m$ partial products, and each partial products has a tail bit. Why there exists a tail bit? Because when encoded group of  $\tilde{Z}_L$ is negative, the $M''$ need to be complemented. To remove the add operation, we split the `+1` operation from the complement procedure.
+$\tilde{Z}_L*M''$ has $m$ partial products, and each partial products has a tail bit. Why there exists a tail bit? Because when encoded group of $\tilde{Z}_L$ is negative, the $M''$ need to be complemented. To remove the add operation, we split the `+1` operation from the complement procedure.
 
 ### Compress2
 

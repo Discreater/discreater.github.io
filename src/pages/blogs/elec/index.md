@@ -4,7 +4,6 @@ tags: "WIP"
 date: "2023-01-06"
 ---
 
-
 # Computer Arithmetic
 
 [Credits](#Credits)
@@ -29,7 +28,6 @@ $$(x_{k-1}x_{k-2}\cdots x_1x_0.x_{-1}x_{-2}\cdots x_{-l})_r = \sum_{i=-l}^{k-1} 
 
 > EXAMPLE 1.2 负radix: radix $-r$，数字集 $[0, r-1]$
 > $$(\cdots x_5x) $$
-
 
 ## Credits
 

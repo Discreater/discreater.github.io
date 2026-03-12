@@ -13,6 +13,7 @@ date: "2020-03-22"
 [WSL github issue #4106](https://github.com/microsoft/WSL/issues/4106)
 
 ## 准备
+
 > 本篇文章只适用于WSL2。WSL1的解决方案比较简单，网上的教程也很多，所以不再多讲。
 
 首先在cmd或powershell中确认WSL的版本号为2
@@ -54,19 +55,24 @@ export DISPLAY=`cat /etc/resolv.conf | grep nameserver | awk '{print $2}'`:0.0
 ## 防火墙配置
 
 实际上这样子还不能启动gui，试图启动的时候会被Windows的防火墙阻止。可以直接关掉防火墙，或者用在管理员模式的powershell里输入下面的命令：
+
 ```powershell
 Set-NetFirewallProfile -Name public -DisabledInterfaceAliases "vEthernet (WSL)"
 ```
+
 这个命令指挥关掉WSL的虚拟局域网的防火墙。
 
 ## 保存为脚本
 
 为方便使用，可以把这行命令保存成脚本，后缀为.ps1，例如`G:\\Scripts\\disableWSLFirewall.ps1`，但是powershell的管理员权限脚本会限制直接运行，可以再套一个cmd脚本，内容是提升权限运行powershell脚本
+
 ```cmd
 Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1
 ```
+
 里面的路径需要换成你的ps1脚本路径。另外，如果你也保存了VcXsrv的脚本的话，也可以直接在这个cmd脚本中添加VcXsrv脚本的路径。
 所以我的cmd脚本`wslGui.bat`内容如下
+
 ```cmd
 Powershell.exe -executionpolicy remotesigned -File G:\Scripts\disableWSLFirewall.ps1
 G:\Scripts\multiWindow.xlaunch
@@ -79,6 +85,7 @@ G:\Scripts\multiWindow.xlaunch
 ## HiDPI的设置
 
 在高分屏下(Win10 显示设置中的缩放比率大于100%），VcXsrv的显示会模糊，这不只是WSL的原因，我目前的解决办法是让VcXsrv使用100%的缩放。
+
 - 首先找到VcXsrv.exe的位置，右键开始菜单中的Xlaunch图标，`更多`->`打开文件位置`，找到Xlaunch的快捷方式的位置
 - 然后右键这个快捷方式，点击`打开文件所在的位置`
 - 在打开的目录里找到`vcxsrv.exe`这个文件，右键->`属性`
@@ -86,7 +93,7 @@ G:\Scripts\multiWindow.xlaunch
 - 在弹出的窗口中修改下面的选项![vcxsrv](./vcxsrv.png)
 - 确定，搞定
 
-15.7寸笔记本100%分辨率对于对我来说还能勉强看，至于选择清晰的字体还是大的字体，这取决于你自己了。
+  15.7寸笔记本100%分辨率对于对我来说还能勉强看，至于选择清晰的字体还是大的字体，这取决于你自己了。
 
 ## 由于代理出现的异常
 

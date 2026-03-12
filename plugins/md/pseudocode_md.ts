@@ -25,30 +25,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-'use strict';
+"use strict";
 
-import type MarkdownIt from 'markdown-exit';
-import type { RuleBlock, RenderRule } from 'markdown-exit';
-import type { Options } from './pseudocode';
-import * as pseudocode from './pseudocode';
+import type MarkdownIt from "markdown-exit";
+import type { RuleBlock, RenderRule } from "markdown-exit";
+import type { Options } from "./pseudocode";
+import * as pseudocode from "./pseudocode";
 
 const pseudocode_block: RuleBlock = (state, start, end, silent) => {
   let lastLine;
   let pos = state.bMarks[start] + state.tShift[start];
   let max = state.eMarks[start];
 
-  if (pos + 14 > max)
-    return false;
-  if (state.src.slice(pos, pos + 14) !== '::: pseudocode')
-    return false;
+  if (pos + 14 > max) return false;
+  if (state.src.slice(pos, pos + 14) !== "::: pseudocode") return false;
 
   pos += 14;
   let firstLine = state.src.slice(pos, max);
 
-  if (silent)
-    return true;
+  if (silent) return true;
   let found = false;
-  if (firstLine.trim().slice(-3) === ':::') {
+  if (firstLine.trim().slice(-3) === ":::") {
     // Single line expression
     firstLine = firstLine.trim().slice(0, -3);
     found = true;
@@ -57,8 +54,7 @@ const pseudocode_block: RuleBlock = (state, start, end, silent) => {
   while (!found) {
     next++;
 
-    if (next >= end)
-      break;
+    if (next >= end) break;
 
     pos = state.bMarks[next] + state.tShift[next];
     max = state.eMarks[next];
@@ -68,8 +64,8 @@ const pseudocode_block: RuleBlock = (state, start, end, silent) => {
       break;
     }
 
-    if (state.src.slice(pos, max).trim().slice(-3) === ':::') {
-      const lastPos = state.src.slice(0, max).lastIndexOf(':::');
+    if (state.src.slice(pos, max).trim().slice(-3) === ":::") {
+      const lastPos = state.src.slice(0, max).lastIndexOf(":::");
       lastLine = state.src.slice(pos, lastPos);
       found = true;
     }
@@ -77,13 +73,14 @@ const pseudocode_block: RuleBlock = (state, start, end, silent) => {
 
   state.line = next + 1;
 
-  const token = state.push('pseudocode_block', 'pseudocode', 0);
+  const token = state.push("pseudocode_block", "pseudocode", 0);
   token.block = true;
-  token.content = (firstLine && firstLine.trim() ? `${firstLine}\n` : '')
-    + state.getLines(start + 1, next, state.tShift[start], true)
-    + (lastLine && lastLine.trim() ? lastLine : '');
+  token.content =
+    (firstLine && firstLine.trim() ? `${firstLine}\n` : "") +
+    state.getLines(start + 1, next, state.tShift[start], true) +
+    (lastLine && lastLine.trim() ? lastLine : "");
   token.map = [start, state.line];
-  token.markup = '::: pseudocode';
+  token.markup = "::: pseudocode";
   return true;
 };
 
@@ -102,8 +99,8 @@ export function markdownItPseudocode(md: MarkdownIt, options: Options) {
     return `${pseudocodeBlock(tokens[idx].content)}\n`;
   };
 
-  md.block.ruler.after('blockquote', 'pseudocode_block', pseudocode_block, {
-    alt: ['paragraph', 'reference', 'blockquote', 'list'],
+  md.block.ruler.after("blockquote", "pseudocode_block", pseudocode_block, {
+    alt: ["paragraph", "reference", "blockquote", "list"],
   });
   md.renderer.rules.pseudocode_block = blockRenderer;
-};
+}

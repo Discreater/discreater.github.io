@@ -23,11 +23,13 @@ git submodule add [<options>] [--] <repository> [<path>]
 ### clone
 
 1. clone 时拉取所有子模块
+
    ```bash
    git clone --recurse-submodules <repository>
    ```
 
 2. clone 后拉取子模块
+
    ```bash
    git submodule update --init --recursive
    ```
@@ -39,19 +41,20 @@ git submodule add [<options>] [--] <repository> [<path>]
 ### 移除
 
 - 只移除本地的子模块文件, 不改变 git 记录，`init` 命令的反命令。若对文件有更改，则需要 `-f` 选项。
+
   ```bash
   git submodule deinit [-f] -- [<path>]
   ```
 
 - 完全移除
-    ```bash
-    git submodule deinit -f -- [<path>]
-    git rm -f <path>
-    # sh
-    rm -rf .git/modules/<path>
-    # powershell
-    rm -Force .git\modules\<path>
-    ```
+  ```bash
+  git submodule deinit -f -- [<path>]
+  git rm -f <path>
+  # sh
+  rm -rf .git/modules/<path>
+  # powershell
+  rm -Force .git\modules\<path>
+  ```
 
 ## 使用场景
 
@@ -60,6 +63,7 @@ git submodule add [<options>] [--] <repository> [<path>]
 #### 若子模块仓库上游有更新
 
 - 在子模块目录中
+
   ```bash
   git fetch
   git merge <branch>
@@ -73,17 +77,21 @@ git submodule add [<options>] [--] <repository> [<path>]
 此时会在主目录留下子模块更新的记录。
 
 #### 若主仓库中更新了子模块
+
 ```bash
 git pull
 git submodule update --init --recursive
 ```
+
 或（Git 2.14后）
+
 ```bash
 git pull --recurse-submodules
 ```
 
 > 注意：若 `.gitmodules` 中的 URL 变化，则 `git pull --recurse-submodules` 会失败。
-此时需要执行
+> 此时需要执行
+
 ```bash
 git submodule sync --recursive
 git submodule update --init --recursive
@@ -92,6 +100,7 @@ git submodule update --init --recursive
 ### 2.在主项目中修改子模块
 
 拉取远程主项目的更改
+
 ```bash
 git submodule update --remote --rebase
 # or
@@ -99,6 +108,7 @@ git submodule update --remote --merge
 ```
 
 本地修改
+
 ```bash
 cd <submodule>
 vim somefile # 修改 submodule
@@ -108,6 +118,7 @@ git commit
 > TODO...
 
 发布子模块的修改
+
 ```bash
 ???
 ```

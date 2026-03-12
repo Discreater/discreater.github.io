@@ -1,6 +1,6 @@
 # Site
 
-Blogs and others. 
+Blogs and others.
 
 ## Tech stack
 

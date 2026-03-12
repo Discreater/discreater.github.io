@@ -1,12 +1,13 @@
 {
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "preview-https": "serve dist",
     "lint": "oxlint",
+    "fmt": "oxfmt --write",
     "test": "vitest"
   },
   "dependencies": {

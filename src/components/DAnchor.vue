@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ArticleHeader } from 'virtual:article';
-import { computed, nextTick, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { ArticleHeader } from "virtual:article";
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
 const props = defineProps<{
-  headers: ArticleHeader[]
-}>()
+  headers: ArticleHeader[];
+}>();
 
 interface FlattenedHeader {
-  level: number
-  slug: string
-  title: string
+  level: number;
+  slug: string;
+  title: string;
 }
 
 function flattenHeaders(headers: ArticleHeader[], level = 0): FlattenedHeader[] {
@@ -43,20 +43,20 @@ const highlightedRange = computed(() => {
 const highlightLayerStyle = computed(() => ({
   transform: `translateY(${highlightBox.top}px)`,
   height: `${highlightBox.height}px`,
-  opacity: highlightBox.visible ? '1' : '0',
+  opacity: highlightBox.visible ? "1" : "0",
 }));
 
 function setAnchorRef(slug: string, element: Element | { $el: Element } | null) {
-  const resolvedElement = element instanceof Element
-    ? element
-    : element && '$el' in element && element.$el instanceof Element
-      ? element.$el
-      : null;
+  const resolvedElement =
+    element instanceof Element
+      ? element
+      : element && "$el" in element && element.$el instanceof Element
+        ? element.$el
+        : null;
 
   if (resolvedElement instanceof HTMLElement) {
     anchorElementMap.set(slug, resolvedElement);
-  }
-  else {
+  } else {
     anchorElementMap.delete(slug);
   }
 }
@@ -126,7 +126,7 @@ function updateHighlightedHeaders() {
   }
 
   highlightedHeaders.clear();
-  nextHighlightedHeaders.forEach(slug => highlightedHeaders.add(slug));
+  nextHighlightedHeaders.forEach((slug) => highlightedHeaders.add(slug));
   updateHighlightBox();
 }
 
@@ -149,8 +149,8 @@ function isHighlighted(slug: string) {
 function scrollToHeader(slug: string) {
   const target = document.getElementById(slug);
   if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    history.pushState(null, '', `#${slug}`); // 更新 URL 的 hash
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.pushState(null, "", `#${slug}`); // 更新 URL 的 hash
     scheduleUpdateHighlightedHeaders();
   }
 }
@@ -159,27 +159,40 @@ onMounted(() => {
   nextTick(() => {
     updateHighlightedHeaders();
   });
-  document.addEventListener('scroll', scheduleUpdateHighlightedHeaders, { capture: true, passive: true });
-  window.addEventListener('resize', scheduleUpdateHighlightedHeaders);
+  document.addEventListener("scroll", scheduleUpdateHighlightedHeaders, {
+    capture: true,
+    passive: true,
+  });
+  window.addEventListener("resize", scheduleUpdateHighlightedHeaders);
 });
 
 onUnmounted(() => {
-  document.removeEventListener('scroll', scheduleUpdateHighlightedHeaders, true);
-  window.removeEventListener('resize', scheduleUpdateHighlightedHeaders);
+  document.removeEventListener("scroll", scheduleUpdateHighlightedHeaders, true);
+  window.removeEventListener("resize", scheduleUpdateHighlightedHeaders);
   anchorElementMap.clear();
 });
 </script>
 
 <template>
   <div ref="anchorContainerRef" class="anchor-container">
-    <span :class="['anchor-highlight-layer', highlightBox.visible ? 'bg-foreground' : '']" :style="highlightLayerStyle" />
-    <div v-for="header of flattenedHeaders" :key="header.slug" @click.prevent="scrollToHeader(header.slug)"
-      :class="[
-        isHighlighted(header.slug) ? 'color-link-hover' : '',
-      ]"
+    <span
+      :class="['anchor-highlight-layer', highlightBox.visible ? 'bg-foreground' : '']"
+      :style="highlightLayerStyle"
+    />
+    <div
+      v-for="header of flattenedHeaders"
+      :key="header.slug"
+      @click.prevent="scrollToHeader(header.slug)"
+      :class="[isHighlighted(header.slug) ? 'color-link-hover' : '']"
       :ref="(element) => setAnchorRef(header.slug, element)"
-      class="anchor-item transition-colors ease-out ease-in duration-300 mt-2 pr-2" :style="{ paddingLeft: `${header.level * 1.5 + 0.5}rem` }">
-      <a :href="`#${header.slug}`" class="relative z-1 block whitespace-nowrap overflow-hidden text-ellipsis text-sm">{{ header.title }}</a>
+      class="anchor-item transition-colors ease-out ease-in duration-300 mt-2 pr-2"
+      :style="{ paddingLeft: `${header.level * 1.5 + 0.5}rem` }"
+    >
+      <a
+        :href="`#${header.slug}`"
+        class="relative z-1 block whitespace-nowrap overflow-hidden text-ellipsis text-sm"
+        >{{ header.title }}</a
+      >
     </div>
   </div>
 </template>
@@ -201,6 +214,9 @@ onUnmounted(() => {
   z-index: 0;
   pointer-events: none;
   border-radius: 0.375rem;
-  transition: transform 320ms ease-out, height 320ms ease-out, opacity 220ms ease-out;
+  transition:
+    transform 320ms ease-out,
+    height 320ms ease-out,
+    opacity 220ms ease-out;
 }
 </style>

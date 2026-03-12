@@ -6,7 +6,6 @@ html.dark .katex {
   --katex-border-color: white;
 }
 
-
 eq span.katex {
   /* border-bottom: dotted var(--katex-border-color); */
 }

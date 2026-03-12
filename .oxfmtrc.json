@@ -1,6 +1,4 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": [
-    "route-map.d.ts"
-  ]
+  "ignorePatterns": ["route-map.d.ts"]
 }

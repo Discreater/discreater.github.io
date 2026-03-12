@@ -1,9 +1,9 @@
-import { ParseError } from './ParseError';
+import { ParseError } from "./ParseError";
 /**
  * The Lexer class tokenizes the input sequentially, looking ahead only one
  * token.
  */
-import * as utils from './utils';
+import * as utils from "./utils";
 
 /* Math pattern
     Math environtment like $ $ or \( \) cannot be matched using regular
@@ -12,33 +12,34 @@ import * as utils from './utils';
 const mathPattern = {
   exec(str: string) {
     const delimiters = [
-      { start: '$', end: '$' },
-      { start: '\\(', end: '\\)' },
+      { start: "$", end: "$" },
+      { start: "\\(", end: "\\)" },
     ];
     const totalLen = str.length;
 
     for (let di = 0; di < delimiters.length; di++) {
       const startDel = delimiters[di].start;
-      if (str.indexOf(startDel) !== 0)
-        continue;
+      if (str.indexOf(startDel) !== 0) continue;
 
       const endDel = delimiters[di].end;
       let endPos = startDel.length;
       let remain = str.slice(endPos);
       while (endPos < totalLen) {
         const pos = remain.indexOf(endDel);
-        if (pos < 0)
-          throw new Error('Math environment is not closed');
+        if (pos < 0) throw new Error("Math environment is not closed");
 
         // false positive, it's escaped, not a match
-        if (pos > 0 && remain[pos - 1] === '\\') {
+        if (pos > 0 && remain[pos - 1] === "\\") {
           const skipLen = pos + endDel.length;
           remain = remain.slice(skipLen);
           endPos += skipLen;
           continue;
         }
 
-        const res = [str.slice(0, endPos + pos + endDel.length), str.slice(startDel.length, endPos + pos)];
+        const res = [
+          str.slice(0, endPos + pos + endDel.length),
+          str.slice(startDel.length, endPos + pos),
+        ];
         return res;
       }
     }
@@ -49,8 +50,8 @@ const mathPattern = {
 
 const atomRegex: {
   [key: string]: {
-    exec: (str: string) => string[] | null
-  }
+    exec: (str: string) => string[] | null;
+  };
 } = {
   // TODO: which is correct? func: /^\\(?:[a-zA-Z]+|.)/,
   special: /^(\\\\|\\\{|\\\}|\\\$|\\&|\\#|\\%|\\_)/,
@@ -65,9 +66,9 @@ const commentRegex = /^%.*/;
 const whitespaceRegex = /^\s+/;
 
 interface Atom {
-  type: string
-  text: string | null
-  whitespace: boolean
+  type: string;
+  text: string | null;
+  whitespace: boolean;
 }
 
 export class Lexer {
@@ -98,11 +99,19 @@ export class Lexer {
     const nextAtom = this._nextAtom;
     // The next atom is NOT of the right type
     if (nextAtom.type !== type)
-      throw new ParseError(`Expect an atom of ${type} but received ${nextAtom.type}`, this._pos, this._input);
+      throw new ParseError(
+        `Expect an atom of ${type} but received ${nextAtom.type}`,
+        this._pos,
+        this._input,
+      );
 
     // Check whether the text is exactly the same
     if (!this._matchText(text))
-      throw new ParseError(`Expect \`${text}\` but received \`${nextAtom.text}\``, this._pos, this._input);
+      throw new ParseError(
+        `Expect \`${text}\` but received \`${nextAtom.text}\``,
+        this._pos,
+        this._input,
+      );
 
     this._next();
     // Not EOF
@@ -132,8 +141,7 @@ export class Lexer {
 
       // Skip comment
       const commentMatch = commentRegex.exec(this._remain);
-      if (!commentMatch)
-        break;
+      if (!commentMatch) break;
       const commentLen = commentMatch[0].length;
       this._skip(commentLen);
     }
@@ -142,9 +150,9 @@ export class Lexer {
     this._currentAtom = this._nextAtom;
 
     // Reach the end of string
-    if (this._remain === '') {
+    if (this._remain === "") {
       this._nextAtom = {
-        type: 'EOF',
+        type: "EOF",
         text: null,
         whitespace: false,
       };
@@ -159,13 +167,11 @@ export class Lexer {
       try {
         match = regex.exec(this._remain);
       } catch (e) {
-        if (e instanceof Error && e.message === 'Math environment is not closed')
-          throw new ParseError('Math environment is not closed', this._pos, this._input);
-        else
-          throw e;
+        if (e instanceof Error && e.message === "Math environment is not closed")
+          throw new ParseError("Math environment is not closed", this._pos, this._input);
+        else throw e;
       }
-      if (!match)
-        continue; // not matched
+      if (!match) continue; // not matched
 
       // match[1] is the useful part, e.g. '123' of '$123$', 'it' of '\\it'
       const matchText = match[0];
@@ -174,7 +180,7 @@ export class Lexer {
       this._nextAtom = {
         type,
         text: usefulText,
-        whitespace: anyWhitespace, /* any whitespace before the atom */
+        whitespace: anyWhitespace /* any whitespace before the atom */,
       };
 
       this._pos += matchText.length;
@@ -183,22 +189,22 @@ export class Lexer {
       return true;
     }
 
-    throw new ParseError('Unrecoganizable atom', this._pos, this._input);
+    throw new ParseError("Unrecoganizable atom", this._pos, this._input);
   }
 
   /* Check whether the text of the next atom matches */
   _matchText(text?: string | readonly string[]) {
     // don't need to match
-    if (text === null || text === undefined)
-      return true;
+    if (text === null || text === undefined) return true;
 
-    if (this._nextAtom.text === null)
-      return false;
+    if (this._nextAtom.text === null) return false;
 
     // string comparisons are case-insensitive
-    if (utils.isString(text)) { // is a string, exactly the same?
+    if (utils.isString(text)) {
+      // is a string, exactly the same?
       return text.toLowerCase() === this._nextAtom.text.toLowerCase();
-    } else { // is a list, match any of them?
+    } else {
+      // is a list, match any of them?
       text = text.map((str) => {
         return str.toLowerCase();
       });

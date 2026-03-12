@@ -12,5 +12,5 @@ home:
   diaries: Diaries
 intro:
   blogs: Blogs
-  whos-site: '{name}''s Site'
+  whos-site: "{name}'s Site"
 locale: English

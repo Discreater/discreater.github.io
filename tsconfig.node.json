@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2023"
-    ],
+    "lib": ["ES2023"],
     "moduleDetection": "force",
     "module": "ESNext",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "types": [
-      "vite/client",
-      "vitest/importMeta",
-      "./plugins/vite/client"
-    ],
+    "types": ["vite/client", "vitest/importMeta", "./plugins/vite/client"],
     "allowImportingTsExtensions": true,
 
     /* Linting */
@@ -27,10 +21,6 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": [
-    "vite.config.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["vite.config.ts"],
+  "exclude": ["node_modules"]
 }

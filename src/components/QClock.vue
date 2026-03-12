@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
 const clockRef = ref<HTMLElement | null>(null);
 const hourHand = ref<HTMLDivElement | null>(null);
@@ -14,7 +14,7 @@ onMounted(() => {
 
   const secondAngle = seconds * 6;
   const minuteAngle = minutes * 6;
-  const hourAngle = (hours * 30) + (minutes / 2);
+  const hourAngle = hours * 30 + minutes / 2;
 
   hourHand.value!.style.transform = `rotateZ(${hourAngle - secondAngle}deg)`;
   minuteHand.value!.style.transform = `rotateZ(${minuteAngle - secondAngle}deg)`;
@@ -41,7 +41,7 @@ onMounted(() => {
 .clock-container {
   border-radius: 50%;
   padding: 0.25rem;
-  background: linear-gradient(to top,#b65eba,#2e8de1);
+  background: linear-gradient(to top, #b65eba, #2e8de1);
   border-image-slice: 10;
   height: 6rem;
   width: 6rem;
@@ -57,7 +57,9 @@ onMounted(() => {
   height: 100%;
 }
 
-.minutes-container, .hours-container, .seconds-container {
+.minutes-container,
+.hours-container,
+.seconds-container {
   position: absolute;
   top: 0;
   right: 0;

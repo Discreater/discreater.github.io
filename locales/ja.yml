@@ -9,5 +9,5 @@ home:
   diaries: 日記
 intro:
   blogs: ブログ
-  whos-site: '{name} のホームページ'
+  whos-site: "{name} のホームページ"
 locale: 日本語

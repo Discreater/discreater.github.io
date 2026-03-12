@@ -1,43 +1,48 @@
 <script setup lang="ts">
-import type { ArticleAttributes, ArticleInfo } from 'virtual:article';
-import { NCard, NGradientText, NLayout, NLayoutHeader } from 'naive-ui';
-import { articles } from 'virtual:article';
+import type { ArticleAttributes, ArticleInfo } from "virtual:article";
+import { NCard, NGradientText, NLayout, NLayoutHeader } from "naive-ui";
+import { articles } from "virtual:article";
 
-import { computed, onMounted, ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
-import BlogAnchor from '~/components/BlogAnchor';
-import MyFooter from '~/components/MyFooter.vue';
-import MyHeader from '~/components/MyHeader.vue';
-import QTime from '~/components/QTime.vue';
-import SpotLight from '~/components/SpotLight.vue';
-import meta from '~/meta';
-import DAnchor from '~/components/DAnchor.vue';
+import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import BlogAnchor from "~/components/BlogAnchor";
+import MyFooter from "~/components/MyFooter.vue";
+import MyHeader from "~/components/MyHeader.vue";
+import QTime from "~/components/QTime.vue";
+import SpotLight from "~/components/SpotLight.vue";
+import meta from "~/meta";
+import DAnchor from "~/components/DAnchor.vue";
 
 const { t } = useI18n();
 
 const route = useRoute();
-const currentBlog = ref<ArticleInfo | undefined>(articles.find(article => article.routePath === route.path.substring(1)));
-watch(() => route.path, async (path) => {
-  currentBlog.value = articles.find(article => article.routePath === path.substring(1));
-});
+const currentBlog = ref<ArticleInfo | undefined>(
+  articles.find((article) => article.routePath === route.path.substring(1)),
+);
+watch(
+  () => route.path,
+  async (path) => {
+    currentBlog.value = articles.find((article) => article.routePath === path.substring(1));
+  },
+);
 const frontmatter = computed(() => currentBlog.value?.attributes as ArticleAttributes | undefined);
 const blogHistory = `${meta.repoUrl}/commits/${meta.repoBranch}/${currentBlog.value?.repoPath}`;
 onMounted(() => {
   // Add copy function to code blocks
-  const copies = document.querySelectorAll('figure.code-block button.copy');
+  const copies = document.querySelectorAll("figure.code-block button.copy");
   copies.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
       if (btn.parentNode && btn.parentNode.nextSibling) {
         const pre = btn.parentNode.nextSibling;
         const content = pre.textContent;
         if (content) {
           navigator.clipboard.writeText(content);
-          btn.classList.remove('copy');
-          btn.classList.add('copied');
+          btn.classList.remove("copy");
+          btn.classList.add("copied");
           setTimeout(() => {
-            btn.classList.remove('copied');
-            btn.classList.add('copy');
+            btn.classList.remove("copied");
+            btn.classList.add("copy");
           }, 1000);
         }
       }
@@ -47,7 +52,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <NLayout scroll-smooth position="absolute" class="text-gray-700 dark:text-gray-200" :native-scrollbar="false">
+  <NLayout
+    scroll-smooth
+    position="absolute"
+    class="text-gray-700 dark:text-gray-200"
+    :native-scrollbar="false"
+  >
     <NLayoutHeader bordered>
       <MyHeader />
     </NLayoutHeader>
@@ -60,7 +70,12 @@ onMounted(() => {
               {{ t("article.created_at") }}
               <QTime :time="frontmatter.createdAt" />
             </NGradientText>
-            <a v-if="frontmatter && frontmatter.changedAt" class="text-sky-500 hover:text-green-500 hover:underline primary-clickable cursor-pointer" :href="blogHistory" target="_blank">
+            <a
+              v-if="frontmatter && frontmatter.changedAt"
+              class="text-sky-500 hover:text-green-500 hover:underline primary-clickable cursor-pointer"
+              :href="blogHistory"
+              target="_blank"
+            >
               {{ t("article.changed_at") }}
               <QTime :time="frontmatter.changedAt" />
             </a>

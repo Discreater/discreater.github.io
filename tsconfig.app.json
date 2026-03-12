@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "jsx": "preserve",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "moduleDetection": "force",
     "useDefineForClassFields": true,
     "baseUrl": ".",
@@ -15,9 +11,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "paths": {
-      "~/*": [
-        "src/*"
-      ]
+      "~/*": ["src/*"]
     },
     "types": [
       "vite/client",
@@ -38,18 +32,9 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"],
   "vueCompilerOptions": {
-    "plugins": [
-      "vue-router/volar/sfc-typed-router", 
-      "vue-router/volar/sfc-route-blocks", 
-    ],
-  },
+    "plugins": ["vue-router/volar/sfc-typed-router", "vue-router/volar/sfc-route-blocks"]
+  }
 }

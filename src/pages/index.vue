@@ -1,38 +1,51 @@
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui';
-import type { ArticleInfo } from 'virtual:article';
-import { useStorage } from '@vueuse/core';
-import { NA, NAvatar, NButton, NH1, NList, NListItem, NMenu, NSpace, NTabPane, NTabs, NTag, NThing } from 'naive-ui';
+import type { MenuOption } from "naive-ui";
+import type { ArticleInfo } from "virtual:article";
+import { useStorage } from "@vueuse/core";
+import {
+  NA,
+  NAvatar,
+  NButton,
+  NH1,
+  NList,
+  NListItem,
+  NMenu,
+  NSpace,
+  NTabPane,
+  NTabs,
+  NTag,
+  NThing,
+} from "naive-ui";
 
-import { articles as allBlogs } from 'virtual:article';
-import { h } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { RouterLink, useRouter } from 'vue-router';
-import { routes } from 'vue-router/auto-routes';
-import MxlIcon from '~/assets/icons/mxl.png';
-import QClock from '~/components/QClock.vue';
-import meta from '~/meta';
+import { articles as allBlogs } from "virtual:article";
+import { h } from "vue";
+import { useI18n } from "vue-i18n";
+import { RouterLink, useRouter } from "vue-router";
+import { routes } from "vue-router/auto-routes";
+import MxlIcon from "~/assets/icons/mxl.png";
+import QClock from "~/components/QClock.vue";
+import meta from "~/meta";
 
 const router = useRouter();
 const { t } = useI18n();
 
 function tags(blog: ArticleInfo) {
-  return blog.attributes.tags.split(',').map(tag => tag.trim());
+  return blog.attributes.tags.split(",").map((tag) => tag.trim());
 }
 
 // show dev blogs only in dev mode
-const blogs = allBlogs.filter(blog => !tags(blog).includes('WIP') || import.meta.env.DEV);
+const blogs = allBlogs.filter((blog) => !tags(blog).includes("WIP") || import.meta.env.DEV);
 
 function handleBlogTitleClick(key: unknown) {
   router.push(`/${key}`);
 }
 
-function lastChild(route: typeof routes[0]) {
+function lastChild(route: (typeof routes)[0]) {
   if (route.children) {
     if (route.children.length === 1) {
       return lastChild(route.children[0]);
     } else {
-      console.error('route.children.length != 1');
+      console.error("route.children.length != 1");
       return route;
     }
   } else {
@@ -41,9 +54,8 @@ function lastChild(route: typeof routes[0]) {
 }
 
 const diaries = routes
-  .find(route => route.path === '/diaries' && route.children)
-  ?.children!
-  .sort((a, b) => {
+  .find((route) => route.path === "/diaries" && route.children)
+  ?.children!.sort((a, b) => {
     return Number(b.path) - Number(a.path);
   })
   .map((yearRoute) => {
@@ -51,28 +63,31 @@ const diaries = routes
     return {
       label: year,
       key: year,
-      children: yearRoute.children!.sort((a, b) => {
-        return Number(b.path) - Number(a.path);
-      }).map((monthRoute) => {
-        const month = monthRoute.path;
-        const date = `${year}.${month}`;
-        return {
-          label: () => h(
-            RouterLink,
-            {
-              to: {
-                path: lastChild(monthRoute).name as string,
-              },
-            },
-            { default: () => date },
-          ),
-          key: date,
-        };
-      }),
+      children: yearRoute
+        .children!.sort((a, b) => {
+          return Number(b.path) - Number(a.path);
+        })
+        .map((monthRoute) => {
+          const month = monthRoute.path;
+          const date = `${year}.${month}`;
+          return {
+            label: () =>
+              h(
+                RouterLink,
+                {
+                  to: {
+                    path: lastChild(monthRoute).name as string,
+                  },
+                },
+                { default: () => date },
+              ),
+            key: date,
+          };
+        }),
     } as MenuOption;
   });
 
-const tabValue = useStorage('homeTabValue', 'blogs');
+const tabValue = useStorage("homeTabValue", "blogs");
 
 function handleTabChange(value: string) {
   tabValue.value = value;
@@ -84,22 +99,34 @@ function handleTabChange(value: string) {
     <QClock class="fixed" />
   </RouterLink>
   <div flex flex-col items-center>
-    <NH1>{{ t('intro.whos-site', { name: meta.name }) }}</NH1>
+    <NH1>{{ t("intro.whos-site", { name: meta.name }) }}</NH1>
     <NA rel="noreferrer" :href="meta.homeUrl" target="_blank">
       <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
       <p>{{ meta.name }}</p>
     </NA>
-    <NTabs type="line" justify-content="space-evenly" :value="tabValue" animated @update:value="handleTabChange">
+    <NTabs
+      type="line"
+      justify-content="space-evenly"
+      :value="tabValue"
+      animated
+      @update:value="handleTabChange"
+    >
       <NTabPane name="blogs" :tab="t('intro.blogs')">
         <NList class="px-2">
           <NListItem v-for="blog in blogs" :key="blog.routePath">
             <NThing>
               <template #avatar>
-                <button class="text-4xl primary-clickable i-carbon-text-indent text m-auto h-full"
-                  @click="() => handleBlogTitleClick(blog.routePath)" />
+                <button
+                  class="text-4xl primary-clickable i-carbon-text-indent text m-auto h-full"
+                  @click="() => handleBlogTitleClick(blog.routePath)"
+                />
               </template>
               <template #header>
-                <NButton class="hover:underline" text @click="() => handleBlogTitleClick(blog.routePath)">
+                <NButton
+                  class="hover:underline"
+                  text
+                  @click="() => handleBlogTitleClick(blog.routePath)"
+                >
                   {{ blog.attributes.title }}
                 </NButton>
               </template>
@@ -108,7 +135,7 @@ function handleTabChange(value: string) {
               </template>
               <template #description>
                 <NSpace>
-                  <NTag v-for="tag, idx in tags(blog)" :key="idx" type="success">
+                  <NTag v-for="(tag, idx) in tags(blog)" :key="idx" type="success">
                     {{ tag.trim() }}
                   </NTag>
                 </NSpace>

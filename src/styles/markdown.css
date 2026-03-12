@@ -1,9 +1,12 @@
-
 .prose {
   font-size: 1.1rem;
 }
 
-.prose h1,h2,h3,h4,h5 {
+.prose h1,
+h2,
+h3,
+h4,
+h5 {
   @apply font-bold;
 }
 
@@ -19,7 +22,8 @@
   @apply text-3xl mt-4 mb-2;
 }
 
-.prose h2,h3 {
+.prose h2,
+h3 {
   @apply border-b-1 border-gray/40  pb-0.8;
 }
 
@@ -39,7 +43,7 @@
   @apply mb-4;
 }
 
-.prose p>code {
+.prose p > code {
   @apply px-1.6 py-0.8 bg-gray/20 dark:bg-gray/40;
   font-size: 85%;
   border-radius: 6px;
@@ -100,11 +104,11 @@ html.dark .prose > table {
   border-bottom: thin solid var(--prose-table-border-color);
 }
 
-.prose > table th, table td {
+.prose > table th,
+table td {
   padding: 12px 15px;
 }
 
 .prose > table tbody tr:nth-of-type(even) {
   background-color: var(--prose-table-even-bg-color);
 }
-
