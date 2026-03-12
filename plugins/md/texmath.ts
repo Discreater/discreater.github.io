@@ -376,12 +376,12 @@ function dollar(state, silent) {
 // const _texmathBlockRuleNames = ['math_block', 'math_block_eqno'];
 
 const C_SPACE = 0x20; // ' '
-const C_COMMA = 0x2c; // ','
-const C_DOT = 0x2e; // '.'
+const C_COMMA = 0x2C; // ','
+const C_DOT = 0x2E; // '.'
 const C_0 = 0x30; // '0'
 const C_9 = 0x39; // '9'
-const C_SEMICOLON = 0x3b; // ';'
-const C_BACKSLASH = 0x5c; // '\'
+const C_SEMICOLON = 0x3B; // ';'
+const C_BACKSLASH = 0x5C; // '\'
 
 function texmathPre(str: string, outerSpace: boolean, beg: number) {
   const prv = beg > 0 ? str[beg - 1].charCodeAt(0) : false;
