@@ -1,0 +1,1 @@
+import{ac as s,o,c as r,a as t}from"./main-D045n6em.js";const n={class:"prose prose-sm m-auto text-left"},_=[],u={__name:"10",setup(c,{expose:a}){return a({frontmatter:{meta:[]}}),s({meta:[]}),(d,e)=>(o(),r("div",n,[...e[0]||(e[0]=[t("h2",{id:"10.20",tabindex:"-1"},"10.20",-1),t("p",null,"今天给博客添加了显示日记功能，能写多久写多久。",-1)])]))}};export{u as default,_ as meta};
