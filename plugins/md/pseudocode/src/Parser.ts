@@ -1,6 +1,6 @@
-import type { Lexer } from "./Lexer";
-import type { Entries } from "./utils";
-import { ParseError } from "./ParseError";
+import type { Lexer } from './Lexer';
+import type { Entries } from './utils';
+import { ParseError } from './ParseError';
 /**
  * The Parser class parses the token stream from Lexer into an abstract syntax
  * tree, represented by ParseNode.
@@ -87,37 +87,35 @@ import { ParseError } from "./ParseError";
  * the structure of resulting program closely mirrors that of the grammar. *
  *
  */
-import * as utils from "./utils";
+import * as utils from './utils';
 
 interface TypedBaseNode {
-  root: undefined;
-  algorithm: undefined;
-  algorithmic: undefined;
-  caption: undefined;
-  block: undefined;
-  function: {
-    type: string;
-    name: string;
-  };
-  if:
-    | undefined
-    | {
-        numElif: number;
-        hasElse: boolean;
-      };
-  loop: string;
-  repeat: string;
-  statement: string;
-  command: string;
-  comment: undefined;
-  call: undefined | string;
-  "open-text": undefined;
-  "close-text": undefined;
+  'root': undefined
+  'algorithm': undefined
+  'algorithmic': undefined
+  'caption': undefined
+  'block': undefined
+  'function': {
+    type: string
+    name: string
+  }
+  'if': undefined | {
+    numElif: number
+    hasElse: boolean
+  }
+  'loop': string
+  'repeat': string
+  'statement': string
+  'command': string
+  'comment': undefined
+  'call': undefined | string
+  'open-text': undefined
+  'close-text': undefined
 }
 
 type TypedAtomNode = Record<keyof typeof ACCEPTED_TOKEN_BY_ATOM, string>;
 
-interface TypedNode extends TypedBaseNode, TypedAtomNode {}
+interface TypedNode extends TypedBaseNode, TypedAtomNode { }
 
 type OmitUndefined<T extends readonly unknown[]> = T extends readonly [...infer Front, infer R]
   ? undefined extends R
@@ -141,14 +139,17 @@ export class ParseNode<T extends NodeType = NodeType> {
   }
 
   toString(level: number) {
-    if (!level) level = 0;
+    if (!level)
+      level = 0;
 
-    let indent = "";
-    for (let i = 0; i < level; i++) indent += "  ";
+    let indent = '';
+    for (let i = 0; i < level; i++)
+      indent += '  ';
 
     let res = `${indent}<${this.type}>`;
-    if (this.value) res += ` (${utils.toString(this.value)})`;
-    res += "\n";
+    if (this.value)
+      res += ` (${utils.toString(this.value)})`;
+    res += '\n';
 
     if (this.children) {
       for (let ci = 0; ci < this.children.length; ci++) {
@@ -161,7 +162,8 @@ export class ParseNode<T extends NodeType = NodeType> {
   }
 
   addChild(childNode: ParseNode<NodeType>) {
-    if (!childNode) throw new Error("argument cannot be null");
+    if (!childNode)
+      throw new Error('argument cannot be null');
     this.children.push(childNode);
   }
 }
@@ -174,83 +176,43 @@ class AtomNode<T extends keyof typeof ACCEPTED_TOKEN_BY_ATOM> extends ParseNode<
   }
 }
 
-const IO_STATEMENTS = ["ensure", "require", "input", "output"] as const;
-const STATEMENTS = ["state", "print", "return"] as const;
-const COMMANDS = ["break", "continue"] as const;
+const IO_STATEMENTS = ['ensure', 'require', 'input', 'output'] as const;
+const STATEMENTS = ['state', 'print', 'return'] as const;
+const COMMANDS = ['break', 'continue'] as const;
 
 // type Suit<T extends (readonly string[])> = T[number]
 
-interface Token {
-  tokenType: string;
-  tokenValues?: string[];
-}
+interface Token { tokenType: string, tokenValues?: string[] }
 
 const typedValue = <R>(value: R) => value as Record<keyof R, Token>;
 
 /* The token accepted by atom of specific type */
 const ACCEPTED_TOKEN_BY_ATOM = typedValue({
-  ordinary: { tokenType: "ordinary" },
-  math: { tokenType: "math" },
-  special: { tokenType: "special" },
-  "cond-symbol": {
-    tokenType: "func",
-    tokenValues: ["and", "or", "not", "true", "false", "to", "downto"],
+  'ordinary': { tokenType: 'ordinary' },
+  'math': { tokenType: 'math' },
+  'special': { tokenType: 'special' },
+  'cond-symbol': {
+    tokenType: 'func',
+    tokenValues: ['and', 'or', 'not', 'true', 'false', 'to', 'downto'],
   },
-  "quote-symbol": {
-    tokenType: "quote",
+  'quote-symbol': {
+    tokenType: 'quote',
   },
-  "sizing-dclr": {
-    tokenType: "func",
-    tokenValues: [
-      "tiny",
-      "scriptsize",
-      "footnotesize",
-      "small",
-      "normalsize",
-      "large",
-      "Large",
-      "LARGE",
-      "huge",
-      "Huge",
-    ],
+  'sizing-dclr': {
+    tokenType: 'func',
+    tokenValues: ['tiny', 'scriptsize', 'footnotesize', 'small', 'normalsize', 'large', 'Large', 'LARGE', 'huge', 'Huge'],
   },
-  "font-dclr": {
-    tokenType: "func",
-    tokenValues: [
-      "normalfont",
-      "rmfamily",
-      "sffamily",
-      "ttfamily",
-      "upshape",
-      "itshape",
-      "slshape",
-      "scshape",
-      "bfseries",
-      "mdseries",
-      "lfseries",
-    ],
+  'font-dclr': {
+    tokenType: 'func',
+    tokenValues: ['normalfont', 'rmfamily', 'sffamily', 'ttfamily', 'upshape', 'itshape', 'slshape', 'scshape', 'bfseries', 'mdseries', 'lfseries'],
   },
-  "font-cmd": {
-    tokenType: "func",
-    tokenValues: [
-      "textnormal",
-      "textrm",
-      "textsf",
-      "texttt",
-      "textup",
-      "textit",
-      "textsl",
-      "textsc",
-      "uppercase",
-      "lowercase",
-      "textbf",
-      "textmd",
-      "textlf",
-    ],
+  'font-cmd': {
+    tokenType: 'func',
+    tokenValues: ['textnormal', 'textrm', 'textsf', 'texttt', 'textup', 'textit', 'textsl', 'textsc', 'uppercase', 'lowercase', 'textbf', 'textmd', 'textlf'],
   },
-  "text-symbol": {
-    tokenType: "func",
-    tokenValues: ["textbackslash"],
+  'text-symbol': {
+    tokenType: 'func',
+    tokenValues: ['textbackslash'],
   },
 } as const);
 
@@ -261,50 +223,57 @@ export class Parser {
   }
 
   parse() {
-    const root = new ParseNode("root");
+    const root = new ParseNode('root');
 
     while (true) {
       const envName = this._acceptEnvironment();
-      if (envName === null) break;
+      if (envName === null)
+        break;
 
       let envNode;
-      if (envName === "algorithm") envNode = this._parseAlgorithmInner();
-      else if (envName === "algorithmic") envNode = this._parseAlgorithmicInner();
-      else throw new ParseError(`Unexpected environment ${envName}`);
+      if (envName === 'algorithm')
+        envNode = this._parseAlgorithmInner();
+      else if (envName === 'algorithmic')
+        envNode = this._parseAlgorithmicInner();
+
+      else
+        throw new ParseError(`Unexpected environment ${envName}`);
 
       this._closeEnvironment(envName);
       root.addChild(envNode);
     }
-    this._lexer.expect("EOF");
+    this._lexer.expect('EOF');
     return root;
   }
 
   _acceptEnvironment() {
     const lexer = this._lexer;
     // \begin{XXXXX}
-    if (!lexer.accept("func", "begin")) return null;
+    if (!lexer.accept('func', 'begin'))
+      return null;
 
-    lexer.expect("open");
-    const envName = lexer.expect("ordinary");
-    lexer.expect("close");
+    lexer.expect('open');
+    const envName = lexer.expect('ordinary');
+    lexer.expect('close');
     return envName;
   }
 
   _closeEnvironment(envName?: string) {
     // \close{XXXXX}
     const lexer = this._lexer;
-    lexer.expect("func", "end");
-    lexer.expect("open");
-    lexer.expect("ordinary", envName);
-    lexer.expect("close");
+    lexer.expect('func', 'end');
+    lexer.expect('open');
+    lexer.expect('ordinary', envName);
+    lexer.expect('close');
   }
 
   _parseAlgorithmInner() {
-    const algNode = new ParseNode("algorithm");
+    const algNode = new ParseNode('algorithm');
     while (true) {
       const envName = this._acceptEnvironment();
       if (envName !== null) {
-        if (envName !== "algorithmic") throw new ParseError(`Unexpected environment ${envName}`);
+        if (envName !== 'algorithmic')
+          throw new ParseError(`Unexpected environment ${envName}`);
         const algmicNode = this._parseAlgorithmicInner();
         this._closeEnvironment();
         algNode.addChild(algmicNode);
@@ -323,7 +292,7 @@ export class Parser {
   }
 
   _parseAlgorithmicInner() {
-    const algmicNode = new ParseNode("algorithmic");
+    const algmicNode = new ParseNode('algorithmic');
     let node;
     while (true) {
       node = this._parseStatement(IO_STATEMENTS);
@@ -345,18 +314,19 @@ export class Parser {
 
   _parseCaption() {
     const lexer = this._lexer;
-    if (!lexer.accept("func", "caption")) return null;
+    if (!lexer.accept('func', 'caption'))
+      return null;
 
-    const captionNode = new ParseNode("caption");
-    lexer.expect("open");
+    const captionNode = new ParseNode('caption');
+    lexer.expect('open');
     captionNode.addChild(this._parseCloseText());
-    lexer.expect("close");
+    lexer.expect('close');
 
     return captionNode;
   }
 
   _parseBlock() {
-    const blockNode = new ParseNode("block");
+    const blockNode = new ParseNode('block');
 
     while (true) {
       const controlNode = this._parseControl();
@@ -397,115 +367,123 @@ export class Parser {
 
   _parseControl() {
     const controlNodeIf = this._parseIf();
-    if (controlNodeIf) return controlNodeIf;
+    if (controlNodeIf)
+      return controlNodeIf;
     const controlNodeLoop = this._parseLoop();
-    if (controlNodeLoop) return controlNodeLoop;
+    if (controlNodeLoop)
+      return controlNodeLoop;
     const controlNodeRepeat = this._parseRepeat();
-    if (controlNodeRepeat) return controlNodeRepeat;
+    if (controlNodeRepeat)
+      return controlNodeRepeat;
   }
 
   _parseFunction() {
     const lexer = this._lexer;
-    if (!lexer.accept("func", ["function", "procedure"])) return null;
+    if (!lexer.accept('func', ['function', 'procedure']))
+      return null;
 
     // \FUNCTION{funcName}{funcArgs}
     const funcType = this._lexer.get().text!; // FUNCTION or PROCEDURE
-    lexer.expect("open");
-    const funcName = lexer.expect("ordinary");
-    lexer.expect("close");
-    lexer.expect("open");
+    lexer.expect('open');
+    const funcName = lexer.expect('ordinary');
+    lexer.expect('close');
+    lexer.expect('open');
     const argsNode = this._parseCloseText();
-    lexer.expect("close");
+    lexer.expect('close');
     // <block>
     const blockNode = this._parseBlock();
     // \ENDFUNCTION
-    lexer.expect("func", `end${funcType}`);
+    lexer.expect('func', `end${funcType}`);
 
-    const functionNode = new ParseNode("function", { type: funcType, name: funcName });
+    const functionNode = new ParseNode('function', { type: funcType, name: funcName });
     functionNode.addChild(argsNode);
     functionNode.addChild(blockNode);
     return functionNode;
   }
 
   _parseIf() {
-    if (!this._lexer.accept("func", "if")) return null;
+    if (!this._lexer.accept('func', 'if'))
+      return null;
 
-    const ifNode = new ParseNode("if");
+    const ifNode = new ParseNode('if');
 
     // { <cond> } <block>
-    this._lexer.expect("open");
+    this._lexer.expect('open');
     ifNode.addChild(this._parseCond());
-    this._lexer.expect("close");
+    this._lexer.expect('close');
     ifNode.addChild(this._parseBlock());
 
     // ( \ELIF { <cond> } <block> )[0...n]
     let numElif = 0;
-    while (this._lexer.accept("func", ["elif", "elsif", "elseif"])) {
-      this._lexer.expect("open");
+    while (this._lexer.accept('func', ['elif', 'elsif', 'elseif'])) {
+      this._lexer.expect('open');
       ifNode.addChild(this._parseCond());
-      this._lexer.expect("close");
+      this._lexer.expect('close');
       ifNode.addChild(this._parseBlock());
       numElif++;
     }
 
     // ( \ELSE <block> )[0..1]
     let hasElse = false;
-    if (this._lexer.accept("func", "else")) {
+    if (this._lexer.accept('func', 'else')) {
       hasElse = true;
       ifNode.addChild(this._parseBlock());
     }
 
     // \ENDIF
-    this._lexer.expect("func", "endif");
+    this._lexer.expect('func', 'endif');
 
     ifNode.value = { numElif, hasElse };
     return ifNode;
   }
 
   _parseLoop() {
-    if (!this._lexer.accept("func", ["FOR", "FORALL", "WHILE"])) return null;
+    if (!this._lexer.accept('func', ['FOR', 'FORALL', 'WHILE']))
+      return null;
 
     const loopName = this._lexer.get().text!.toLowerCase();
-    const loopNode = new ParseNode("loop", loopName);
+    const loopNode = new ParseNode('loop', loopName);
 
     // { <cond> } <block>
-    this._lexer.expect("open");
+    this._lexer.expect('open');
     loopNode.addChild(this._parseCond());
-    this._lexer.expect("close");
+    this._lexer.expect('close');
     loopNode.addChild(this._parseBlock());
 
     // \ENDFOR
-    const endLoop = loopName !== "forall" ? `end${loopName}` : "endfor";
-    this._lexer.expect("func", endLoop);
+    const endLoop = loopName !== 'forall' ? `end${loopName}` : 'endfor';
+    this._lexer.expect('func', endLoop);
 
     return loopNode;
   }
 
   _parseRepeat() {
-    if (!this._lexer.accept("func", ["REPEAT"])) return null;
+    if (!this._lexer.accept('func', ['REPEAT']))
+      return null;
 
     const repeatName = this._lexer.get().text!.toLowerCase();
-    const repeatNode = new ParseNode("repeat", repeatName);
+    const repeatNode = new ParseNode('repeat', repeatName);
 
     // <block>
     repeatNode.addChild(this._parseBlock());
 
     // \UNTIL
-    this._lexer.expect("func", "until");
+    this._lexer.expect('func', 'until');
 
     // {<cond>}
-    this._lexer.expect("open");
+    this._lexer.expect('open');
     repeatNode.addChild(this._parseCond());
-    this._lexer.expect("close");
+    this._lexer.expect('close');
 
     return repeatNode;
   }
 
   _parseStatement(acceptStatements: typeof STATEMENTS | typeof IO_STATEMENTS) {
-    if (!this._lexer.accept("func", acceptStatements)) return null;
+    if (!this._lexer.accept('func', acceptStatements))
+      return null;
 
     const stmtName = this._lexer.get().text!.toLowerCase();
-    const stmtNode = new ParseNode("statement", stmtName);
+    const stmtNode = new ParseNode('statement', stmtName);
 
     stmtNode.addChild(this._parseOpenText());
 
@@ -513,62 +491,65 @@ export class Parser {
   }
 
   _parseCommand(acceptCommands: typeof COMMANDS) {
-    if (!this._lexer.accept("func", acceptCommands)) return null;
+    if (!this._lexer.accept('func', acceptCommands))
+      return null;
 
     const cmdName = this._lexer.get().text!.toLowerCase();
-    const cmdNode = new ParseNode("command", cmdName);
+    const cmdNode = new ParseNode('command', cmdName);
 
     return cmdNode;
   }
 
   _parseComment() {
-    if (!this._lexer.accept("func", "comment")) return null;
+    if (!this._lexer.accept('func', 'comment'))
+      return null;
 
-    const commentNode = new ParseNode("comment");
+    const commentNode = new ParseNode('comment');
 
     // { \text }
-    this._lexer.expect("open");
+    this._lexer.expect('open');
     commentNode.addChild(this._parseCloseText());
-    this._lexer.expect("close");
+    this._lexer.expect('close');
 
     return commentNode;
   }
 
   _parseCall() {
     const lexer = this._lexer;
-    if (!lexer.accept("func", "call")) return null;
+    if (!lexer.accept('func', 'call'))
+      return null;
 
     const anyWhitespace = lexer.get().whitespace;
 
     // \CALL { <ordinary> } ({ <text> })[0..1]
-    lexer.expect("open");
-    const funcName = lexer.expect("ordinary");
-    lexer.expect("close");
+    lexer.expect('open');
+    const funcName = lexer.expect('ordinary');
+    lexer.expect('close');
 
-    const callNode = new ParseNode("call");
+    const callNode = new ParseNode('call');
     callNode.whitespace = anyWhitespace;
     callNode.value = funcName;
 
-    lexer.expect("open");
+    lexer.expect('open');
     const argsNode = this._parseCloseText();
     callNode.addChild(argsNode);
-    lexer.expect("close");
+    lexer.expect('close');
     return callNode;
   }
 
   _parseCond() {
-    return this._parseText("close");
+    return this._parseText('close');
   }
 
   _parseCloseText() {
-    return this._parseText("close");
+    return this._parseText('close');
   }
 
   _parseOpenText() {
-    return this._parseText("open");
+    return this._parseText('open');
   }
 
-  _parseText(openOrClose: "open" | "close") {
+  _parseText(openOrClose: 'open' | 'close') {
     const textNode = new ParseNode(`${openOrClose}-text`);
     // any whitespace between Atom and CloseText
     let anyWhitespace = false;
@@ -577,20 +558,21 @@ export class Parser {
       // atom or call
       subTextNode = this._parseAtom() || this._parseCall();
       if (subTextNode) {
-        if (anyWhitespace) subTextNode.whitespace = subTextNode.whitespace || anyWhitespace;
+        if (anyWhitespace)
+          subTextNode.whitespace = subTextNode.whitespace || anyWhitespace;
         textNode.addChild(subTextNode);
         continue;
       }
 
       // or close text
-      if (this._lexer.accept("open")) {
+      if (this._lexer.accept('open')) {
         subTextNode = this._parseCloseText();
 
         anyWhitespace = this._lexer.get().whitespace;
         subTextNode.whitespace = anyWhitespace;
 
         textNode.addChild(subTextNode);
-        this._lexer.expect("close");
+        this._lexer.expect('close');
         anyWhitespace = this._lexer.get().whitespace;
         continue;
       }
@@ -602,15 +584,15 @@ export class Parser {
   }
 
   _parseAtom() {
-    for (const tokens of Object.entries(ACCEPTED_TOKEN_BY_ATOM) as Entries<
-      typeof ACCEPTED_TOKEN_BY_ATOM
-    >) {
+    for (const tokens of Object.entries(ACCEPTED_TOKEN_BY_ATOM) as Entries<typeof ACCEPTED_TOKEN_BY_ATOM>) {
       const [atomType, acceptToken] = tokens;
       let tokenText = this._lexer.accept(acceptToken.tokenType, acceptToken.tokenValues);
-      if (tokenText === null) continue;
+      if (tokenText === null)
+        continue;
 
       const anyWhitespace = this._lexer.get().whitespace;
-      if (atomType !== "ordinary" && atomType !== "math") tokenText = tokenText.toLowerCase();
+      if (atomType !== 'ordinary' && atomType !== 'math')
+        tokenText = tokenText.toLowerCase();
       return new AtomNode(atomType, tokenText, anyWhitespace);
     }
     return null;

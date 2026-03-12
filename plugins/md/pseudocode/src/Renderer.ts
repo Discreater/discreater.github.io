@@ -1,8 +1,8 @@
-import type { ParseNode, Parser } from "./Parser";
+import type { ParseNode, Parser } from './Parser';
 /*
- * */
-import katex from "katex";
-import * as utils from "./utils";
+* */
+import katex from 'katex';
+import * as utils from './utils';
 
 /*
  * TextStyle - used by TextEnvironment class to handle LaTeX text-style
@@ -30,49 +30,49 @@ class TextStyle {
   readonly _fontCommandTable: Record<string, Record<string, string>> = {
     // -------------- declaration --------------
     // font-family
-    normalfont: { "font-family": "KaTeX_Main" },
-    rmfamily: { "font-family": "KaTeX_Main" },
-    sffamily: { "font-family": "KaTeX_SansSerif" },
-    ttfamily: { "font-family": "KaTeX_Typewriter" },
+    normalfont: { 'font-family': 'KaTeX_Main' },
+    rmfamily: { 'font-family': 'KaTeX_Main' },
+    sffamily: { 'font-family': 'KaTeX_SansSerif' },
+    ttfamily: { 'font-family': 'KaTeX_Typewriter' },
     // weight
-    bfseries: { "font-weight": "bold" },
-    mdseries: { "font-weight": "medium" },
-    lfseries: { "font-weight": "lighter" },
+    bfseries: { 'font-weight': 'bold' },
+    mdseries: { 'font-weight': 'medium' },
+    lfseries: { 'font-weight': 'lighter' },
     // shape
-    upshape: { "font-style": "normal", "font-variant": "normal" },
-    itshape: { "font-style": "italic", "font-variant": "normal" },
-    scshape: { "font-style": "normal", "font-variant": "small-caps" },
-    slshape: { "font-style": "oblique", "font-variant": "normal" },
+    upshape: { 'font-style': 'normal', 'font-variant': 'normal' },
+    itshape: { 'font-style': 'italic', 'font-variant': 'normal' },
+    scshape: { 'font-style': 'normal', 'font-variant': 'small-caps' },
+    slshape: { 'font-style': 'oblique', 'font-variant': 'normal' },
     // -------------- command --------------
     // font-family
-    textnormal: { "font-family": "KaTeX_Main" },
-    textrm: { "font-family": "KaTeX_Main" },
-    textsf: { "font-family": "KaTeX_SansSerif" },
-    texttt: { "font-family": "KaTeX_Typewriter" },
+    textnormal: { 'font-family': 'KaTeX_Main' },
+    textrm: { 'font-family': 'KaTeX_Main' },
+    textsf: { 'font-family': 'KaTeX_SansSerif' },
+    texttt: { 'font-family': 'KaTeX_Typewriter' },
     // weight
-    textbf: { "font-weight": "bold" },
-    textmd: { "font-weight": "medium" },
-    textlf: { "font-weight": "lighter" },
+    textbf: { 'font-weight': 'bold' },
+    textmd: { 'font-weight': 'medium' },
+    textlf: { 'font-weight': 'lighter' },
     // shape
-    textup: { "font-style": "normal", "font-variant": "normal" },
-    textit: { "font-style": "italic", "font-variant": "normal" },
-    textsc: { "font-style": "normal", "font-variant": "small-caps" },
-    textsl: { "font-style": "oblique", "font-variant": "normal" },
+    textup: { 'font-style': 'normal', 'font-variant': 'normal' },
+    textit: { 'font-style': 'italic', 'font-variant': 'normal' },
+    textsc: { 'font-style': 'normal', 'font-variant': 'small-caps' },
+    textsl: { 'font-style': 'oblique', 'font-variant': 'normal' },
     // case
-    uppercase: { "text-transform": "uppercase" },
-    lowercase: { "text-transform": "lowercase" },
+    uppercase: { 'text-transform': 'uppercase' },
+    lowercase: { 'text-transform': 'lowercase' },
   };
 
   _sizingScalesTable: Record<string, number> = {
     tiny: 0.68,
-    scriptsize: 0.8,
+    scriptsize: 0.80,
     footnotesize: 0.85,
     small: 0.92,
-    normalsize: 1.0,
+    normalsize: 1.00,
     large: 1.17,
     Large: 1.41,
     LARGE: 1.58,
-    huge: 1.9,
+    huge: 1.90,
     Huge: 2.28,
   };
 
@@ -83,17 +83,19 @@ class TextStyle {
   constructor(outerFontSize?: number) {
     this._css = {};
 
-    this._fontSize = this._outerFontSize = outerFontSize !== undefined ? outerFontSize : 1.0;
+    this._fontSize = this._outerFontSize
+      = outerFontSize !== undefined ? outerFontSize : 1.0;
   }
 
   /*
-   * Remember the font size of outer TextStyle object.
-   *
-   * As we use relative font size 'em', the outer span (has its own TextStyle
-   * object) affects the size of the span to which this TextStyle object attached.
-   * */
+         * Remember the font size of outer TextStyle object.
+         *
+         * As we use relative font size 'em', the outer span (has its own TextStyle
+         * object) affects the size of the span to which this TextStyle object attached.
+         * */
   outerFontSize(size: number) {
-    if (size !== undefined) this._outerFontSize = size;
+    if (size !== undefined)
+      this._outerFontSize = size;
     return this._outerFontSize;
   }
 
@@ -119,14 +121,15 @@ class TextStyle {
       return;
     }
 
-    throw new Error("unrecogniazed text-style command");
+    throw new Error('unrecogniazed text-style command');
   }
 
   toCSS() {
-    let cssStr = "";
+    let cssStr = '';
     for (const attr in this._css) {
       const val = this._css[attr];
-      if (val === undefined) continue;
+      if (val === undefined)
+        continue;
       cssStr += `${attr}:${val};`;
     }
     if (this._fontSize !== this._outerFontSize)
@@ -152,7 +155,8 @@ class TextEnvironment {
   _renderCloseText(node: ParseNode, backend: Backend) {
     const newTextStyle = new TextStyle(this._textStyle.fontSize());
     const closeTextEnv = new TextEnvironment(node.children, newTextStyle);
-    if (node.whitespace) this._html?.putText(" ");
+    if (node.whitespace)
+      this._html?.putText(' ');
     this._html?.putHTML(closeTextEnv.renderToHTML(backend));
   }
 
@@ -166,80 +170,84 @@ class TextEnvironment {
       const text = node.value;
 
       // Insert whitespace before the atom if necessary
-      if (node.whitespace) this._html.putText(" ");
+      if (node.whitespace)
+        this._html.putText(' ');
 
       switch (type) {
-        case "ordinary":
+        case 'ordinary':
           this._html.putText(text as string);
           break;
-        case "math":
-          if (typeof backend === "undefined")
-            throw new Error("No math backend found. Please setup KaTeX or MathJax.");
-          else if (backend.name === "katex")
+        case 'math':
+          if (typeof backend === 'undefined')
+            throw new Error('No math backend found. Please setup KaTeX or MathJax.');
+          else if (backend.name === 'katex')
             this._html.putHTML(backend.driver.renderToString(text));
-          else if (backend.name === "mathjax") this._html.putText(`$${text}$`);
-          else throw new Error(`Unknown math backend ${backend}`);
+          else if (backend.name === 'mathjax')
+            this._html.putText(`$${text}$`);
+
+          else
+            throw new Error(`Unknown math backend ${backend}`);
 
           break;
-        case "cond-symbol":
+        case 'cond-symbol':
           this._html
-            .beginSpan("ps-keyword")
+            .beginSpan('ps-keyword')
             .putText((text as string).toLowerCase())
             .endSpan();
           break;
-        case "special": {
-          if (text === "\\\\") {
-            this._html.putHTML("<br/>");
+        case 'special': {
+          if (text === '\\\\') {
+            this._html.putHTML('<br/>');
             break;
           }
           const replace = {
-            "\\{": "{",
-            "\\}": "}",
-            "\\$": "$",
-            "\\&": "&",
-            "\\#": "#",
-            "\\%": "%",
-            "\\_": "_",
+            '\\{': '{',
+            '\\}': '}',
+            '\\$': '$',
+            '\\&': '&',
+            '\\#': '#',
+            '\\%': '%',
+            '\\_': '_',
           };
           // @ts-expect-error It is beyond my ability
           const replaceStr = replace[text];
           this._html.putText(replaceStr);
           break;
         }
-        case "text-symbol": {
+        case 'text-symbol': {
           const name2Values = {
-            textbackslash: "\\",
+            textbackslash: '\\',
           };
           // @ts-expect-error It is beyond my ability
           const symbolValue = name2Values[text];
           this._html.putText(symbolValue);
           break;
         }
-        case "quote-symbol": {
+        case 'quote-symbol': {
           const quoteReplace = {
-            "`": "‘",
-            "``": "“",
-            "'": "’",
-            "''": "”",
+            '`': '‘',
+            '``': '“',
+            '\'': '’',
+            '\'\'': '”',
           };
           // @ts-expect-error It is beyond my ability
           const realQuote = quoteReplace[text];
           this._html.putText(realQuote);
           break;
         }
-        case "call": {
+        case 'call': {
           // \CALL{funcName}{funcArgs}
           // ==>
           // funcName(funcArgs)
           // @ts-expect-error It is beyond my ability
-          this._html.beginSpan("ps-funcname").putText(text).endSpan();
-          this._html.write("(");
+          this._html.beginSpan('ps-funcname').putText(text).endSpan();
+          this._html.write('(');
           const argsTextNode = node.children[0];
           this._renderCloseText(argsTextNode, backend);
-          this._html.write(")");
+          this._html.write(')');
           break;
         }
-        case "close-text":
+        case 'close-text':
           this._renderCloseText(node, backend);
           break;
         // There are two kinds of typestyle commands:
@@ -260,8 +268,8 @@ class TextEnvironment {
         //      \rmfamily   --> create a new typestyle
         //      ...         --> the new typestyle is in use
         //      }           --> restore the last typestyle
-        case "font-dclr":
-        case "sizing-dclr": {
+        case 'font-dclr':
+        case 'sizing-dclr': {
           // @ts-expect-error It is beyond my ability
           this._textStyle.updateByCommand(text);
           this._html.beginSpan(null, this._textStyle.toCSS());
@@ -270,9 +278,10 @@ class TextEnvironment {
           this._html.endSpan();
           break;
         }
-        case "font-cmd": {
+        case 'font-cmd': {
           const textNode = this._nodes[0];
-          if (textNode.type !== "close-text") continue;
+          if (textNode.type !== 'close-text')
+            continue;
 
           const innerTextStyle = new TextStyle(this._textStyle.fontSize());
           // @ts-expect-error It is beyond my ability
@@ -292,12 +301,12 @@ class TextEnvironment {
   }
 }
 const entityMap = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;",
-  "/": "&#x2F;",
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  '\'': '&#39;',
+  '/': '&#x2F;',
 };
 /* HTMLBuilder - A helper class for constructing HTML */
 class HTMLBuilder {
@@ -309,42 +318,38 @@ class HTMLBuilder {
   }
 
   beginDiv(className: string, style?: string | Record<string, string>, extraStyle?: string) {
-    this._beginTag("div", className, style, extraStyle);
-    this._body.push("\n"); // make the generated HTML more human friendly
+    this._beginTag('div', className, style, extraStyle);
+    this._body.push('\n'); // make the generated HTML more human friendly
     return this;
   }
 
   endDiv() {
-    this._endTag("div");
-    this._body.push("\n"); // make the generated HTML more human friendly
+    this._endTag('div');
+    this._body.push('\n'); // make the generated HTML more human friendly
     return this;
   }
 
   beginP(className: string, style?: string | Record<string, string>, extraStyle?: string) {
-    this._beginTag("p", className, style, extraStyle);
-    this._body.push("\n"); // make the generated HTML more human friendly
+    this._beginTag('p', className, style, extraStyle);
+    this._body.push('\n'); // make the generated HTML more human friendly
     return this;
   }
 
   endP() {
     this._flushText();
-    this._endTag("p");
-    this._body.push("\n"); // make the generated HTML more human friendly
+    this._endTag('p');
+    this._body.push('\n'); // make the generated HTML more human friendly
     return this;
   }
 
-  beginSpan(
-    className: string | null,
-    style?: string | Record<string, string>,
-    extraStyle?: string,
-  ) {
+  beginSpan(className: string | null, style?: string | Record<string, string>, extraStyle?: string) {
     this._flushText();
-    return this._beginTag("span", className, style, extraStyle);
+    return this._beginTag('span', className, style, extraStyle);
   }
 
   endSpan() {
     this._flushText();
-    return this._endTag("span");
+    return this._endTag('span');
   }
 
   putHTML(html: string) {
@@ -364,21 +369,22 @@ class HTMLBuilder {
 
   toMarkup() {
     this._flushText();
-    const html = this._body.join("");
+    const html = this._body.join('');
     return html.trim();
   }
 
   toDOM() {
     const html = this.toMarkup();
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     div.innerHTML = html;
     return div.firstChild;
   }
 
   _flushText() {
-    if (this._textBuf.length === 0) return;
+    if (this._textBuf.length === 0)
+      return;
 
-    const text = this._textBuf.join("");
+    const text = this._textBuf.join('');
     this._body.push(this._escapeHtml(text));
     // this._body.push(text);
     this._textBuf = [];
@@ -391,29 +397,26 @@ class HTMLBuilder {
               either a string, e.g., 'color:red', or an object, e.g.
               { color: 'red', margin-left: '1em'}
   */
-  _beginTag(
-    tag: string,
-    className: string | null,
-    style?: string | Record<string, string>,
-    extraStyle?: string,
-  ) {
+  _beginTag(tag: string, className: string | null, style?: string | Record<string, string>, extraStyle?: string) {
     let spanHTML = `<${tag}`;
-    if (className) spanHTML += ` class="${className}"`;
+    if (className)
+      spanHTML += ` class="${className}"`;
     if (style) {
       let styleCode;
       if (utils.isString(style)) {
         styleCode = style;
       } else {
-        styleCode = "";
+        styleCode = '';
         for (const attrName in style) {
           const attrVal = style[attrName];
           styleCode += `${attrName}:${attrVal};`;
         }
       }
-      if (extraStyle) styleCode += extraStyle;
+      if (extraStyle)
+        styleCode += extraStyle;
       spanHTML += ` style="${styleCode}"`;
     }
-    spanHTML += ">";
+    spanHTML += '>';
     this._body.push(spanHTML);
     return this;
   }
@@ -432,19 +435,19 @@ class HTMLBuilder {
 
 export interface Options {
   /** The indent size of inside a control block, e.g. if, for, etc. The unit must be in 'em'. */
-  indentSize?: string;
+  indentSize?: string
   /** The delimiters used to start and end a comment region. Note that only line comments are supported. */
-  commentDelimiter?: string;
+  commentDelimiter?: string
   /** Whether line numbering is enabled. */
-  lineNumber?: boolean;
+  lineNumber?: boolean
   /** The punctuation that follows line number. */
-  lineNumberPunc?: string;
+  lineNumberPunc?: string
   /** Whether block ending, like end if, end procedure`, etc., are showned. */
-  noEnd?: boolean;
+  noEnd?: boolean
   /** Reset the caption counter to this number. */
-  captionCount?: number;
+  captionCount?: number
   /** Title prefix */
-  titlePrefix?: string;
+  titlePrefix?: string
 }
 
 /*
@@ -474,26 +477,26 @@ class RendererOptions {
   titlePrefix: string;
   constructor(i_options?: Options) {
     const options = i_options ?? {};
-    this.indentSize = options.indentSize ? this._parseEmVal(options.indentSize) : 1.2;
-    this.commentDelimiter =
-      options.commentDelimiter !== undefined ? options.commentDelimiter : " // ";
-    this.lineNumberPunc = options.lineNumberPunc !== undefined ? options.lineNumberPunc : ":";
+    this.indentSize
+      = options.indentSize ? this._parseEmVal(options.indentSize) : 1.2;
+    this.commentDelimiter = options.commentDelimiter !== undefined ? options.commentDelimiter : ' // ';
+    this.lineNumberPunc = options.lineNumberPunc !== undefined ? options.lineNumberPunc : ':';
     this.lineNumber = options.lineNumber !== undefined ? options.lineNumber : false;
     this.noEnd = options.noEnd !== undefined ? options.noEnd : false;
     this.captionCount = options.captionCount !== undefined ? options.captionCount : 1;
-    this.titlePrefix = options.titlePrefix !== undefined ? options.titlePrefix : "Algorithm";
+    this.titlePrefix = options.titlePrefix !== undefined ? options.titlePrefix : 'Algorithm';
   }
 
   _parseEmVal(emVal: string) {
     emVal = emVal.trim();
-    if (emVal.indexOf("em") !== emVal.length - 2)
-      throw new Error("option unit error; no `em` found");
+    if (emVal.indexOf('em') !== emVal.length - 2)
+      throw new Error('option unit error; no `em` found');
     return Number(emVal.substring(0, emVal.length - 2));
   }
 }
 interface Backend {
-  name: string;
-  driver: any; // FIXME
+  name: string
+  driver: any // FIXME
 }
 /*
  * Renderer - Converts a parse tree to HTML
@@ -524,13 +527,13 @@ export class Renderer {
     this._globalTextStyle = new TextStyle();
 
     this.backend = {
-      name: "katex",
+      name: 'katex',
       driver: katex,
     };
   }
 
   toMarkup() {
-    const html = (this._html = new HTMLBuilder());
+    const html = this._html = new HTMLBuilder();
     this._buildTree(this._root);
     delete this._html;
     return html.toMarkup();
@@ -538,14 +541,14 @@ export class Renderer {
 
   toDOM() {
     const html = this.toMarkup();
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     div.innerHTML = html;
     return div.firstChild!;
   }
 
   _beginGroup(name: string, extraClass?: string | null, style?: string | Record<string, string>) {
     this._closeLineIfAny();
-    this._html?.beginDiv(`ps-${name}${extraClass ? ` ${extraClass}` : ""}`, style);
+    this._html?.beginDiv(`ps-${name}${extraClass ? ` ${extraClass}` : ''}`, style);
   }
 
   _endGroup(/** _name?: string */) {
@@ -558,8 +561,8 @@ export class Renderer {
     const extraIndentForFirstBlock = this._options.lineNumber && this._blockLevel === 0 ? 0.6 : 0;
     const blockIndent = this._options.indentSize + extraIndentForFirstBlock;
 
-    this._beginGroup("block", null, {
-      "margin-left": `${blockIndent}em`,
+    this._beginGroup('block', null, {
+      'margin-left': `${blockIndent}em`,
     });
     this._blockLevel++;
   }
@@ -583,30 +586,25 @@ export class Renderer {
     if (this._blockLevel > 0) {
       this._numLOC!++;
 
-      this._html?.beginP("ps-line ps-code", this._globalTextStyle.toCSS());
+      this._html?.beginP('ps-line ps-code', this._globalTextStyle.toCSS());
       if (this._options.lineNumber) {
-        this._html
-          ?.beginSpan("ps-linenum", {
-            left: `${-((this._blockLevel - 1) * (indentSize * 1.25))}em`,
-          })
+        this._html?.beginSpan('ps-linenum', {
+          left: `${-((this._blockLevel - 1) * (indentSize * 1.25))}em`,
+        })
           .putText(this._numLOC + this._options.lineNumberPunc)
           .endSpan();
       }
-    } else {
-      // if this line is for pre-conditions (e.g. \REQUIRE)
-      this._html?.beginP(
-        "ps-line",
-        {
-          "text-indent": `${-indentSize}em`,
-          "padding-left": `${indentSize}em`,
-        },
-        this._globalTextStyle.toCSS(),
-      );
+    } else { // if this line is for pre-conditions (e.g. \REQUIRE)
+      this._html?.beginP('ps-line', {
+        'text-indent': `${-indentSize}em`,
+        'padding-left': `${indentSize}em`,
+      }, this._globalTextStyle.toCSS());
     }
   }
 
   _closeLineIfAny() {
-    if (!this._openLine) return;
+    if (!this._openLine)
+      return;
 
     this._html?.endP();
 
@@ -614,11 +612,11 @@ export class Renderer {
   }
 
   _typeKeyword(keyword: string) {
-    this._html?.beginSpan("ps-keyword").putText(keyword).endSpan();
+    this._html?.beginSpan('ps-keyword').putText(keyword).endSpan();
   }
 
   _typeFuncName(funcName: string) {
-    this._html?.beginSpan("ps-funcname").putText(funcName).endSpan();
+    this._html?.beginSpan('ps-funcname').putText(funcName).endSpan();
   }
 
   _typeText(text: string) {
@@ -627,14 +625,14 @@ export class Renderer {
 
   _buildTreeForAllChildren(node: ParseNode) {
     const children = node.children;
-    children.forEach((child) => this._buildTree(child));
+    children.forEach(child => this._buildTree(child));
   }
 
   // The comment nodes at the beginning of blockNode are comments for controls
   // Thus they should be rendered out of block
   _buildCommentsFromBlock(blockNode: ParseNode) {
     const children = blockNode.children;
-    while (children.length > 0 && children[0].type === "comment") {
+    while (children.length > 0 && children[0].type === 'comment') {
       const commentNode = children.shift();
       this._buildTree(commentNode!);
     }
@@ -647,47 +645,49 @@ export class Renderer {
     switch (node.type) {
       // The hierarchicy of build tree: Group (Block) > Line > Text
       // ----------------- Groups -------------------------------------
-      case "root":
-        this._beginGroup("root");
+      case 'root':
+        this._beginGroup('root');
         this._buildTreeForAllChildren(node);
         this._endGroup();
         break;
-      case "algorithm": {
+      case 'algorithm': {
         // First, decide the caption if any
         let lastCaptionNode;
         for (ci = 0; ci < node.children.length; ci++) {
           child = node.children[ci];
-          if (child.type !== "caption") continue;
+          if (child.type !== 'caption')
+            continue;
           lastCaptionNode = child;
           this.captionCount++;
         }
         // Then, build the header for algorithm
         if (lastCaptionNode) {
-          this._beginGroup("algorithm", "with-caption");
+          this._beginGroup('algorithm', 'with-caption');
           this._buildTree(lastCaptionNode);
         } else {
-          this._beginGroup("algorithm");
+          this._beginGroup('algorithm');
         }
         // Then, build other nodes
         for (ci = 0; ci < node.children.length; ci++) {
           child = node.children[ci];
-          if (child.type === "caption") continue;
+          if (child.type === 'caption')
+            continue;
           this._buildTree(child);
         }
         this._endGroup();
         break;
       }
-      case "algorithmic":
+      case 'algorithmic':
         if (this._options.lineNumber) {
-          this._beginGroup("algorithmic", "with-linenum");
+          this._beginGroup('algorithmic', 'with-linenum');
           this._numLOC = 0;
         } else {
-          this._beginGroup("algorithmic");
+          this._beginGroup('algorithmic');
         }
         this._buildTreeForAllChildren(node);
         this._endGroup();
         break;
-      case "block":
+      case 'block':
         // node: <block>
         // ==>
         // HTML: <div class="ps-block"> ... </div>
@@ -696,7 +696,7 @@ export class Renderer {
         this._endBlock();
         break;
       // ----------------- Mixture (Groups + Lines) -------------------
-      case "function": {
+      case 'function': {
         // \FUNCTION{<ordinary>}{<text>} <block> \ENDFUNCTION
         // ==>
         // function <ordinary>(<text>)
@@ -711,9 +711,9 @@ export class Renderer {
         this._newLine();
         this._typeKeyword(`${funcType} `);
         this._typeFuncName(defFuncName);
-        this._typeText("(");
+        this._typeText('(');
         this._buildTree(textNode);
-        this._typeText(")");
+        this._typeText(')');
 
         this._buildCommentsFromBlock(blockNode);
         this._buildTree(blockNode);
@@ -724,7 +724,7 @@ export class Renderer {
         }
         break;
       }
-      case "if": {
+      case 'if': {
         // \IF { <cond> }
         // ==>
         // <p class="ps-line">
@@ -733,10 +733,10 @@ export class Renderer {
         //      <span class="ps-keyword">then</span>
         // </p>
         this._newLine();
-        this._typeKeyword("if ");
+        this._typeKeyword('if ');
         const ifCond = node.children[0];
         this._buildTree(ifCond);
-        this._typeKeyword(" then");
+        this._typeKeyword(' then');
         // <block>
         const ifBlock = node.children[1];
         this._buildCommentsFromBlock(ifBlock);
@@ -754,10 +754,10 @@ export class Renderer {
           //      <span class="ps-keyword">then</span>
           // </p>
           this._newLine();
-          this._typeKeyword("else if ");
+          this._typeKeyword('else if ');
           const elifCond = node.children[2 + 2 * ei];
           this._buildTree(elifCond);
-          this._typeKeyword(" then");
+          this._typeKeyword(' then');
 
           // <block>
           const elifBlock = node.children[2 + 2 * ei + 1];
@@ -775,7 +775,7 @@ export class Renderer {
           //      <span class="ps-keyword">else</span>
           // </p>
           this._newLine();
-          this._typeKeyword("else");
+          this._typeKeyword('else');
 
           // <block>
           const elseBlock = node.children[node.children.length - 1];
@@ -786,11 +786,11 @@ export class Renderer {
         if (!this._options.noEnd) {
           // ENDIF
           this._newLine();
-          this._typeKeyword("end if");
+          this._typeKeyword('end if');
         }
         break;
       }
-      case "loop": {
+      case 'loop': {
         // \FOR{<cond>} or \WHILE{<cond>}
         // ==>
         // <p class="ps-line">
@@ -801,15 +801,15 @@ export class Renderer {
         this._newLine();
         const loopType = node.value;
         const displayLoopName = {
-          for: "for",
-          forall: "for all",
-          while: "while",
+          for: 'for',
+          forall: 'for all',
+          while: 'while',
         };
         // @ts-expect-error It is beyond my ability
         this._typeKeyword(`${displayLoopName[loopType]} `);
         const loopCond = node.children[0];
         this._buildTree(loopCond);
-        this._typeKeyword(" do");
+        this._typeKeyword(' do');
 
         // <block>
         const block = node.children[1];
@@ -823,19 +823,19 @@ export class Renderer {
           //      <span class="ps-keyword">end for</span>
           // </p>
           this._newLine();
-          const endLoopName = loopType === "while" ? "end while" : "end for";
+          const endLoopName = loopType === 'while' ? 'end while' : 'end for';
           this._typeKeyword(endLoopName);
         }
         break;
       }
-      case "repeat": {
+      case 'repeat': {
         // \REPEAT
         // ==>
         // <p class="ps-line">
         //     <span class="ps-keyword">repeat</span>
         // </p>
         this._newLine();
-        this._typeKeyword("repeat");
+        this._typeKeyword('repeat');
 
         // block
         const repeatBlock = node.children[0];
@@ -848,63 +848,65 @@ export class Renderer {
         //     <span class="ps-keyword">until</span>
         // </p>
         this._newLine();
-        this._typeKeyword("until ");
+        this._typeKeyword('until ');
         const repeatCond = node.children[1];
         this._buildTree(repeatCond);
 
         break;
       }
       // ------------------- Lines -------------------
-      case "command": {
+      case 'command': {
         const cmdName = node.value as string;
         const displayCmdName = {
-          break: "break",
-          continue: "continue",
+          break: 'break',
+          continue: 'continue',
         }[cmdName];
 
         this._newLine();
-        if (displayCmdName) this._typeKeyword(displayCmdName);
+        if (displayCmdName)
+          this._typeKeyword(displayCmdName);
         break;
       }
-      case "caption":
+      case 'caption':
         this._newLine();
         this._typeKeyword(`${this._options.titlePrefix} ${this.captionCount} `);
         textNode = node.children[0];
         this._buildTree(textNode);
         break;
-      case "comment":
+      case 'comment':
         textNode = node.children[0];
-        this._html!.beginSpan("ps-comment");
+        this._html!.beginSpan('ps-comment');
         this._html!.putText(this._options.commentDelimiter);
         this._buildTree(textNode);
         this._html!.endSpan();
         break;
-      case "statement": {
+      case 'statement': {
         // statements: \STATE, \ENSURE, \PRINT, \RETURN, etc.
         const stmtName = node.value as string;
         const displayStmtName = {
-          state: "",
-          ensure: "Ensure: ",
-          require: "Require: ",
-          input: "Input: ",
-          output: "Output: ",
-          print: "print ",
-          return: "return ",
+          state: '',
+          ensure: 'Ensure: ',
+          require: 'Require: ',
+          input: 'Input: ',
+          output: 'Output: ',
+          print: 'print ',
+          return: 'return ',
         }[stmtName];
 
         this._newLine();
-        if (displayStmtName) this._typeKeyword(displayStmtName);
+        if (displayStmtName)
+          this._typeKeyword(displayStmtName);
         textNode = node.children[0];
         this._buildTree(textNode);
         break;
       }
       // ------------------- Text -------------------
-      case "open-text": {
+      case 'open-text': {
         const openTextEnv = new TextEnvironment(node.children, this._globalTextStyle);
         this._html?.putHTML(openTextEnv.renderToHTML(this.backend));
         break;
       }
-      case "close-text": {
+      case 'close-text': {
         const outerFontSize = this._globalTextStyle.fontSize();
         const newTextStyle = new TextStyle(outerFontSize);
         const closeTextEnv = new TextEnvironment(node.children, newTextStyle);
