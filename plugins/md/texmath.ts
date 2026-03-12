@@ -1,7 +1,6 @@
 /* eslint-disable regexp/no-super-linear-backtracking */
-import type markdownIt from 'markdown-it';
-import type { RuleBlock } from 'markdown-it/lib/parser_block.mjs';
-import type { RuleInline } from 'markdown-it/lib/parser_inline.mjs';
+import type markdownExit from 'markdown-exit';
+import type { RuleBlock, RuleInline } from 'markdown-exit';
 import Katex from 'katex';
 
 /* ---------------------------------------------------------------------------------------------
@@ -213,7 +212,6 @@ function texmathBlock(rule: Rule): RuleBlock {
       const lineMax = state.lineMax;
       const parentType = state.parentType;
       state.lineMax = curline;
-      // @ts-expect-error should
       state.parentType = 'math';
 
       if (parentType === 'blockquote') // remove all leading '>' inside multiline formula
@@ -315,7 +313,7 @@ function texmathPost(str: string, outerSpace: boolean, end: number) {
     : (nxt < C_0 || nxt > C_9)); // no decimal digit .. after closing '$'
 };
 
-export function markdownItTexMath(md: markdownIt, options: any): void {
+export function markdownItTexMath(md: markdownExit, options?: {delimiters?: string, outerSpace?: boolean, katexOptions?: any, macros?: any}): void {
   const delimiters = mergeDelimiters(options && options.delimiters);
   const outerSpace = (options && options.outerSpace) || false; // inline rules, effectively `dollars` require surrounding spaces, i.e ` $\psi$ `, to be accepted as inline formulas. This is primarily a guard against misinterpreting single `$`'s in normal markdown text (relevant for inline math only. Default: `false`, for backwards compatibility).
   const katexOptions = (options && options.katexOptions) || {};

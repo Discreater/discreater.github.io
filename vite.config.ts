@@ -7,10 +7,10 @@ import Anchor from 'markdown-it-anchor';
 import MarkdownItFootNote from 'markdown-it-footnote';
 import LinkAttributes from 'markdown-it-link-attributes';
 import { simpleGit } from 'simple-git';
-import { presetAttributify, presetIcons, presetUno } from 'unocss';
+import { presetAttributify, presetIcons, presetWind3 } from 'unocss';
 import Unocss from 'unocss/vite';
 import Markdown from 'unplugin-vue-markdown/vite';
-import VueRouter from 'unplugin-vue-router/vite';
+import VueRouter from 'vue-router/vite';
 import { defineConfig } from 'vite';
 import Inspect from 'vite-plugin-inspect';
 import Layouts from 'vite-plugin-vue-layouts-next';
@@ -42,6 +42,7 @@ export default defineConfig({
   },
   plugins: [
     VueRouter({
+      dts: 'src/route-map.d.ts',
       extensions: ['.vue', '.md'],
       // Should be sync, otherwise `vite-plugin-vue-layouts` won't work.
       importMode: (filepath) => {
@@ -71,7 +72,7 @@ export default defineConfig({
     Unocss({
       presets: [
         presetAttributify({}),
-        presetUno({}),
+        presetWind3({}),
         presetIcons({}),
       ],
       transformers: [
@@ -87,6 +88,8 @@ export default defineConfig({
             light: '#363636',
             dark: '#f3f3f3',
           },
+          foreground: 'rgba(99, 226, 183, 0.15)',
+          'link-hover': '#7fe7c4',
         },
         breakpoints: {
           xs: '320px',
@@ -103,9 +106,10 @@ export default defineConfig({
     Markdown({
       wrapperClasses: markdownWrapperClasses,
       headEnabled: true,
-      markdownItSetup(md) {
+      markdownSetup(md) {
         md
           .use(markdownItTakki)
+          //@ts-expect-error markdown-it plugin
           .use(LinkAttributes, {
             pattern: /^https?:\/\//,
             attrs: {
@@ -121,6 +125,7 @@ export default defineConfig({
             commentDelimiter: '▷ ',
           })
           .use(MarkdownItFootNote)
+          //@ts-expect-error markdown-it plugin
           .use(Anchor);
       },
     }),

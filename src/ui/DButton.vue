@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router/auto';
+import { RouterLink } from 'vue-router';
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
