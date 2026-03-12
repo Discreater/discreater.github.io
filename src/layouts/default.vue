@@ -6,7 +6,6 @@ import { articles } from "virtual:article";
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import BlogAnchor from "~/components/BlogAnchor";
 import MyFooter from "~/components/MyFooter.vue";
 import MyHeader from "~/components/MyHeader.vue";
 import QTime from "~/components/QTime.vue";
