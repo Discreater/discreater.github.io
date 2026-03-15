@@ -1,7 +1,25 @@
+@import "tailwindcss" important;
+
+@utility q-trans {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+@utility primary-clickable {
+  @apply q-trans hover:text-green-300;
+}
+
+@plugin "@iconify/tailwind4";
 @import "./markdown.css";
 @import "./highlight.css";
 @import "./pseudocode.css";
 @import "./katex.css";
+
+@theme {
+  --color-foreground: rgba(99, 226, 183, 0.15);
+  --color-strong-light: #363636;
+  --color-strong-dark: #f3f3f3;
+  --color-link-hover: #7fe7c4;
+}
 
 html {
   @apply scroll-smooth;

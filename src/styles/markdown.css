@@ -15,7 +15,7 @@ h5 {
 } */
 
 .prose h1 {
-  @apply text-4xl mt-10px mb-6;
+  @apply text-4xl mt-[10px] mb-6;
 }
 
 .prose h2 {
@@ -24,15 +24,15 @@ h5 {
 
 .prose h2,
 h3 {
-  @apply border-b-1 border-gray/40  pb-0.8;
+  @apply border-b border-gray-400/40 pb-[0.2rem];
 }
 
 .prose h3 {
-  @apply text-2xl mt-4.5 mb-2.3;
+  @apply text-2xl mt-4.5 mb-[0.575rem];
 }
 
 .prose h4 {
-  @apply text-xl mt-5.3 mb-2.67;
+  @apply text-xl mt-[1.325rem] mb-[0.6675rem];
 }
 
 .prose a {
@@ -44,7 +44,7 @@ h3 {
 }
 
 .prose p > code {
-  @apply px-1.6 py-0.8 bg-gray/20 dark:bg-gray/40;
+  @apply px-[0.4rem] py-[0.2rem] bg-gray-400/20 dark:bg-gray-500/40;
   font-size: 85%;
   border-radius: 6px;
 }
@@ -62,11 +62,10 @@ h3 {
 }
 
 .prose img {
-  @apply;
 }
 
 .prose blockquote {
-  @apply px-6 py-5 bg-gray/20 dark:bg-gray/40 mb-4;
+  @apply px-6 py-5 bg-gray-400/20 dark:bg-gray-500/40 mb-4;
   border-left: 5px solid #dbdbdb;
 }
 

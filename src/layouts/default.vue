@@ -60,10 +60,10 @@ onMounted(() => {
     <NLayoutHeader bordered>
       <MyHeader />
     </NLayoutHeader>
-    <section p="y-6 x-6">
-      <div container max-w="320" m="auto" flex space="x-2">
+    <section class="py-6 px-6">
+      <div class="container max-w-7xl m-auto flex space-x-2">
         <!-- z-15 to render above the spotlight (which is z-10) -->
-        <NCard embedded flex-grow z-15>
+        <NCard embedded class="grow z-15">
           <div class="flex gap-2">
             <NGradientText v-if="frontmatter && frontmatter.createdAt" class="block">
               {{ t("article.created_at") }}
@@ -87,7 +87,11 @@ onMounted(() => {
           </div>
         </NCard>
         <aside class="sticky top-4 self-start hidden xl:block max-w-70">
-          <NCard embedded hoverable content-style="padding-left: 0.5rem;padding-right: 0.5rem;">
+          <NCard
+            embedded
+            class="hoverable"
+            content-style="padding-left: 0.5rem;padding-right: 0.5rem;"
+          >
             <DAnchor v-if="currentBlog" class="text-left" :headers="currentBlog.headers" />
           </NCard>
         </aside>

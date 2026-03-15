@@ -1,14 +1,11 @@
 import path, { resolve } from "node:path";
 import VueI18n from "@intlify/unplugin-vue-i18n/vite";
-import transformerDirective from "@unocss/transformer-directives";
 import Vue from "@vitejs/plugin-vue";
 import Anchor from "markdown-it-anchor";
 // @ts-expect-error no-type
 import MarkdownItFootNote from "markdown-it-footnote";
 import LinkAttributes from "markdown-it-link-attributes";
 import { simpleGit } from "simple-git";
-import { presetAttributify, presetIcons, presetWind3 } from "unocss";
-import Unocss from "unocss/vite";
 import Markdown from "unplugin-vue-markdown/vite";
 import VueRouter from "vue-router/vite";
 import { defineConfig } from "vite";
@@ -18,6 +15,7 @@ import { markdownItTakki } from "./plugins/md/md_takki";
 import { markdownItPseudocode } from "./plugins/md/pseudocode_md.js";
 import { markdownItTexMath } from "./plugins/md/texmath";
 import { articlePlugin } from "./plugins/vite/article";
+import tailwindcss from "@tailwindcss/vite";
 
 const markdownWrapperClasses = "prose prose-sm m-auto text-left";
 
@@ -87,32 +85,7 @@ export default defineConfig({
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
 
-    Unocss({
-      presets: [presetAttributify({}), presetWind3({}), presetIcons({})],
-      transformers: [transformerDirective()],
-      shortcuts: {
-        "q-trans": "transition-all duration-300 ease-in-out",
-        "primary-clickable": "q-trans hover:text-green-300",
-      },
-      theme: {
-        colors: {
-          strong: {
-            light: "#363636",
-            dark: "#f3f3f3",
-          },
-          foreground: "rgba(99, 226, 183, 0.15)",
-          "link-hover": "#7fe7c4",
-        },
-        breakpoints: {
-          xs: "320px",
-          sm: "640px",
-          md: "768px",
-          lg: "1024px",
-          xl: "1280px",
-          xxl: "1600px",
-        },
-      },
-    }),
+    tailwindcss(),
 
     // https://github.com/antfu/vite-plugin-md
     Markdown({

@@ -185,7 +185,7 @@ onUnmounted(() => {
       @click.prevent="scrollToHeader(header.slug)"
       :class="[isHighlighted(header.slug) ? 'color-link-hover' : '']"
       :ref="(element) => setAnchorRef(header.slug, element)"
-      class="anchor-item transition-colors ease-out ease-in duration-300 mt-2 pr-2"
+      class="anchor-item transition-colors ease-out duration-300 mt-2 pr-2"
       :style="{ paddingLeft: `${header.level * 1.5 + 0.5}rem` }"
     >
       <a

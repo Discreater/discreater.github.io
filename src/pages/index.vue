@@ -98,7 +98,7 @@ function handleTabChange(value: string) {
   <RouterLink to="/meaningless">
     <QClock class="fixed" />
   </RouterLink>
-  <div flex flex-col items-center>
+  <div class="flex flex-col items-center">
     <NH1>{{ t("intro.whos-site", { name: meta.name }) }}</NH1>
     <NA rel="noreferrer" :href="meta.homeUrl" target="_blank">
       <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
@@ -117,7 +117,7 @@ function handleTabChange(value: string) {
             <NThing>
               <template #avatar>
                 <button
-                  class="text-4xl primary-clickable i-carbon-text-indent text m-auto h-full"
+                  class="text-4xl primary-clickable icon-[carbon--text-indent] m-auto h-full"
                   @click="() => handleBlogTitleClick(blog.routePath)"
                 />
               </template>
