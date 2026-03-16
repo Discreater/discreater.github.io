@@ -1,4 +1,5 @@
 @import "tailwindcss" important;
+@custom-variant dark (&:where(.dark, .dark *));
 
 @utility q-trans {
   @apply transition-all duration-300 ease-in-out;
@@ -15,7 +16,8 @@
 @import "./katex.css";
 
 @theme {
-  --color-foreground: rgba(99, 226, 183, 0.15);
+  --color-foreground-light: rgba(24, 160, 88, 0.1);
+  --color-foregroun-dark: rgba(99, 226, 183, 0.15);
   --color-strong-light: #363636;
   --color-strong-dark: #f3f3f3;
   --color-link-hover: #7fe7c4;

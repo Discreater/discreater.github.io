@@ -98,20 +98,21 @@ function updateHighlightedHeaders() {
 
   const viewportTop = 0;
   const viewportBottom = window.innerHeight;
+  const viewportTopTolerance = 1;
 
-  const positions = flattenedHeaders.value
-    .map((header) => {
-      const element = document.getElementById(header.slug);
-      if (!element) {
-        return null;
-      }
+  const positions = flattenedHeaders.value.flatMap((header) => {
+    const element = document.getElementById(header.slug);
+    if (!element) {
+      return [];
+    }
 
-      return {
+    return [
+      {
         slug: header.slug,
         top: element.getBoundingClientRect().top,
-      };
-    })
-    .filter((item): item is { slug: string; top: number } => item !== null);
+      },
+    ];
+  });
 
   for (let index = 0; index < positions.length; index++) {
     const current = positions[index];
@@ -119,7 +120,8 @@ function updateHighlightedHeaders() {
     const sectionTop = current.top;
     const sectionBottom = next ? next.top : Number.POSITIVE_INFINITY;
 
-    const isVisibleSection = sectionBottom > viewportTop && sectionTop < viewportBottom;
+    const isVisibleSection =
+      sectionBottom > viewportTop + viewportTopTolerance && sectionTop < viewportBottom;
     if (isVisibleSection) {
       nextHighlightedHeaders.add(current.slug);
     }
@@ -176,7 +178,10 @@ onUnmounted(() => {
 <template>
   <div ref="anchorContainerRef" class="anchor-container">
     <span
-      :class="['anchor-highlight-layer', highlightBox.visible ? 'bg-foreground' : '']"
+      :class="[
+        'anchor-highlight-layer',
+        highlightBox.visible ? 'bg-foreground-light dark:bg-foreground-dark' : '',
+      ]"
       :style="highlightLayerStyle"
     />
     <div

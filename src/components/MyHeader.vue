@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import { toggleDark } from "~/logic";
 import { getLocaleDropdownMenuOptions } from "~/logic/locale";
 import DButton from "~/ui/DButton.vue";
+import DButtonGroup from "~/ui/DButtonGroup.vue";
 
 const { t, locale } = useI18n();
 const localeDropdownMenuOptions = getLocaleDropdownMenuOptions();
@@ -14,7 +15,7 @@ function handleLocaleSelect(key: unknown) {
 </script>
 
 <template>
-  <div class="flex justify-center items-center space-x-2 h-12">
+  <DButtonGroup class="gap-2 h-12">
     <DButton to="/" :title="t('button.home')" icon="icon-[carbon--home]" class="text-3xl" />
     <DButton
       class="text-3xl"
@@ -29,5 +30,5 @@ function handleLocaleSelect(key: unknown) {
         :title="t('button.toggle_langs')"
       />
     </NDropdown>
-  </div>
+  </DButtonGroup>
 </template>
