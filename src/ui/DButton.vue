@@ -38,12 +38,7 @@ const buttonClass = computed(() =>
     <span v-if="icon" :class="icon" />
     <span v-if="label" />
   </component>
-  <RouterLink
-    v-else
-    :to="to!"
-    data-d-button
-    :class="[staticClass, buttonClass]"
-  >
+  <RouterLink v-else :to="to!" data-d-button :class="[staticClass, buttonClass]">
     <span v-if="icon" :class="icon" />
     <span v-if="label" />
   </RouterLink>

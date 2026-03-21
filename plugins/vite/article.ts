@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import fm from "front-matter";
-import MarkdownIt from "markdown-it";
+import { MarkdownExit } from "markdown-exit";
 import Anchor from "markdown-it-anchor";
 import { simpleGit } from "simple-git";
 import { normalizePath } from "vite";
@@ -17,7 +17,7 @@ function insertHeader(headers: ArticleHeader[], header: ArticleHeader, level: nu
 
 function extractBodyIt(body: string) {
   const headers: ArticleHeader[] = [];
-  const md = MarkdownIt().use(Anchor, {
+  const md = new MarkdownExit().use(Anchor, {
     callback: (_token, { slug, title }) => {
       const header = {
         title,

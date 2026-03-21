@@ -31,12 +31,10 @@
   "devDependencies": {
     "@iconify-json/carbon": "^1.2.19",
     "@types/katex": "^0.16.8",
-    "@types/markdown-it": "^14.1.2",
     "@vitejs/plugin-vue": "^6.0.5",
     "cheerio": "1.2.0",
     "highlight.js": "^11.11.1",
     "markdown-exit": "1.0.0-beta.9",
-    "markdown-it": "^14.1.1",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-link-attributes": "^4.0.1",
