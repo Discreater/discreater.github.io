@@ -1,4 +1,4 @@
-import type MarkdownExit from "markdown-exit";
+import type { MarkdownExit } from "markdown-exit";
 import hljs from "highlight.js";
 import { addLineNumber } from "./line_number";
 

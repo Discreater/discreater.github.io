@@ -1,15 +1,15 @@
 import { writeFileSync } from "node:fs";
-import MarkdownIt from "markdown-it";
+import { MarkdownExit } from "markdown-exit";
 import { expect, it } from "vitest";
 import { getLines } from "../plugins/md/line_number";
 import { markdownItTakki } from "../plugins/md/md_takki";
 
-it("should work", () => {
-  const md = MarkdownIt().use(markdownItTakki);
+it("should work", async () => {
+  const md = new MarkdownExit().use(markdownItTakki);
 
-  const _rendered = md.render("```cmd\n" + "G:\\Scripts\\multiWindow.xlaunch\n" + "```");
+  const _rendered = await md.renderAsync("```cmd\n" + "G:\\Scripts\\multiWindow.xlaunch\n" + "```");
 
-  writeFileSync("tests/md_taoqi.test.html", _rendered);
+  writeFileSync("tests/md_takki.test.html", _rendered);
 });
 
 it("get lines", () => {
