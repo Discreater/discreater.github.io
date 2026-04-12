@@ -1,5 +1,4 @@
 import path, { resolve } from "node:path";
-import VueI18n from "@intlify/unplugin-vue-i18n/vite";
 import Vue from "@vitejs/plugin-vue";
 import Anchor from "markdown-it-anchor";
 // @ts-expect-error no-type
@@ -9,7 +8,6 @@ import { simpleGit } from "simple-git";
 import Markdown from "unplugin-vue-markdown/vite";
 import VueRouter from "vue-router/vite";
 import { defineConfig } from "vite";
-import Inspect from "vite-plugin-inspect";
 import Layouts from "vite-plugin-vue-layouts-next";
 import { markdownItTakki } from "./plugins/md/md_takki";
 import { markdownItPseudocode } from "./plugins/md/pseudocode_md.js";
@@ -112,18 +110,6 @@ export default defineConfig({
           //@ts-expect-error markdown-it plugin
           .use(Anchor);
       },
-    }),
-
-    // https://github.com/intlify/bundle-tools/tree/main/packages/unplugin-vue-i18n
-    VueI18n({
-      runtimeOnly: true,
-      include: [path.resolve(__dirname, "locales/**")],
-    }),
-
-    // https://github.com/antfu/vite-plugin-inspect
-    Inspect({
-      // change this to enable inspect for debugging
-      enabled: false,
     }),
   ],
 

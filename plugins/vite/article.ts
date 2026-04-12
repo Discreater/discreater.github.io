@@ -17,6 +17,7 @@ function insertHeader(headers: ArticleHeader[], header: ArticleHeader, level: nu
 
 function extractBodyIt(body: string) {
   const headers: ArticleHeader[] = [];
+  // @ts-expect-error Anchor doesn't support markdown-exit yet, but it should work fine.
   const md = new MarkdownExit().use(Anchor, {
     callback: (_token, { slug, title }) => {
       const header = {

@@ -4,7 +4,6 @@ import { NCard, NGradientText, NLayout, NLayoutHeader } from "naive-ui";
 import { articles } from "virtual:article";
 
 import { computed, onMounted, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import MyFooter from "~/components/MyFooter.vue";
 import MyHeader from "~/components/MyHeader.vue";
@@ -12,8 +11,6 @@ import QTime from "~/components/QTime.vue";
 import SpotLight from "~/components/SpotLight.vue";
 import meta from "~/meta";
 import DAnchor from "~/components/DAnchor.vue";
-
-const { t } = useI18n();
 
 const route = useRoute();
 const currentBlog = ref<ArticleInfo | undefined>(
@@ -66,7 +63,7 @@ onMounted(() => {
         <NCard embedded class="grow z-15">
           <div class="flex gap-2">
             <NGradientText v-if="frontmatter && frontmatter.createdAt" class="block">
-              {{ t("article.created_at") }}
+              创建于
               <QTime :time="frontmatter.createdAt" />
             </NGradientText>
             <a
@@ -75,7 +72,7 @@ onMounted(() => {
               :href="blogHistory"
               target="_blank"
             >
-              {{ t("article.changed_at") }}
+              最后修改于
               <QTime :time="frontmatter.changedAt" />
             </a>
           </div>

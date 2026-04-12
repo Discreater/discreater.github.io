@@ -19,7 +19,6 @@ import {
 
 import { articles as allBlogs } from "virtual:article";
 import { h } from "vue";
-import { useI18n } from "vue-i18n";
 import { RouterLink, useRouter } from "vue-router";
 import { routes } from "vue-router/auto-routes";
 import MxlIcon from "~/assets/icons/mxl.png";
@@ -27,7 +26,6 @@ import QClock from "~/components/QClock.vue";
 import meta from "~/meta";
 
 const router = useRouter();
-const { t } = useI18n();
 
 function tags(blog: ArticleInfo) {
   return blog.attributes.tags.split(",").map((tag) => tag.trim());
@@ -99,7 +97,7 @@ function handleTabChange(value: string) {
     <QClock class="fixed" />
   </RouterLink>
   <div class="flex flex-col items-center">
-    <NH1>{{ t("intro.whos-site", { name: meta.name }) }}</NH1>
+    <NH1>{{ meta.name }} 的主页</NH1>
     <NA rel="noreferrer" :href="meta.homeUrl" target="_blank">
       <NAvatar :size="80" :src="MxlIcon" object-fit="cover" />
       <p>{{ meta.name }}</p>
@@ -111,7 +109,7 @@ function handleTabChange(value: string) {
       animated
       @update:value="handleTabChange"
     >
-      <NTabPane name="blogs" :tab="t('intro.blogs')">
+      <NTabPane name="blogs" tab="博客">
         <NList class="px-2">
           <NListItem v-for="blog in blogs" :key="blog.routePath">
             <NThing>
@@ -144,7 +142,7 @@ function handleTabChange(value: string) {
           </NListItem>
         </NList>
       </NTabPane>
-      <NTabPane name="diaries" :tab="t('home.diaries')">
+      <NTabPane name="diaries" tab="日记">
         <NMenu :options="diaries" />
       </NTabPane>
     </NTabs>
