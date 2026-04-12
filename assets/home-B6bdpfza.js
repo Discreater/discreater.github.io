@@ -1,0 +1,1 @@
+import{P as e,R as t,_ as n,p as r,v as i}from"./runtime-core.esm-bundler-3FhRM3zt.js";import{r as a,t as o}from"./SpotLight-8PztO5Yn.js";var s={class:`px-4 py-10 text-center max-w-2xl ml-auto mr-auto text-gray-700 dark:text-gray-200`},c=i({__name:`home`,setup(i){return(i,c)=>{let l=t(`RouterView`);return e(),r(`main`,s,[n(o),n(l),n(a)])}}});export{c as default};
