@@ -1,0 +1,1 @@
+function e(e){return e}var t=e(`n-config-provider`);export{e as n,t};
